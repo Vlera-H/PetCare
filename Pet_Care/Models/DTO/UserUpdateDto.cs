@@ -10,7 +10,7 @@ namespace Pet_Care.Models.DTO
         [EmailAddress]
         public string Email { get; set; } = string.Empty;
 
-        // Nëse dëshiron, shtu fushat shtesë që mund të përditësohen
+        
         public string? PhoneNumber { get; set; }
 
         public DateTime? DateOfBirth { get; set; }

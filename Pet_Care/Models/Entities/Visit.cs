@@ -5,7 +5,7 @@ namespace Pet_Care.Models.Entities
     public class Visit
     {
         public int Id { get; set; }
-        public DateTime VisitDate { get; set; }
+        public DateOnly VisitDate { get; set; }
         public string Reason { get; set; }
 
 

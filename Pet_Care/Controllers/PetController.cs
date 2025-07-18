@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Pet_Care.Data;
-using Pet_Care.Models.Entities;
 using Pet_Care.Models.DTO;
+using Pet_Care.Models.Entities;
+using System.Globalization;
 
 namespace Pet_Care.Controllers
 {
@@ -21,20 +22,41 @@ namespace Pet_Care.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var pets = dbContext.Pets.ToList();
+            var pets = dbContext.Pets
+                .Select(p => new PetDto
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Breed = p.Breed,
+                    BirthDate = p.BirthDate.ToString("yyyy-MM-dd"),
+                    UserId = p.UserId
+                })
+                .ToList();
+
             return Ok(pets);
         }
 
-        // GET: api/Pet/5
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            var pet = dbContext.Pets.Find(id);
+            var pet = dbContext.Pets
+                .Where(p => p.Id == id)
+                .Select(p => new PetDto
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Breed = p.Breed,
+                    BirthDate = p.BirthDate.ToString("yyyy-MM-dd"),
+                    UserId = p.UserId
+                })
+                .FirstOrDefault();
+
             if (pet == null)
                 return NotFound();
 
             return Ok(pet);
         }
+
 
         // POST: api/Pet
         [HttpPost]
@@ -42,6 +64,8 @@ namespace Pet_Care.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
+
+        
 
             var pet = new Pet
             {
@@ -54,8 +78,18 @@ namespace Pet_Care.Controllers
             dbContext.Pets.Add(pet);
             dbContext.SaveChanges();
 
-            return CreatedAtAction(nameof(Get), new { id = pet.Id }, pet);
+            return CreatedAtAction(nameof(Get), new { id = pet.Id }, new PetDto
+            {
+                Id = pet.Id,
+                Name = pet.Name,
+                Breed = pet.Breed,
+                BirthDate = pet.BirthDate.ToString("dd.MM.yyyy"), // output i formatit që dëshiron
+                UserId = pet.UserId
+            });
         }
+
+
+
 
         // PUT: api/Pet/5
         [HttpPut("{id}")]
@@ -70,12 +104,26 @@ namespace Pet_Care.Controllers
 
             pet.Name = petDto.Name;
             pet.Breed = petDto.Breed;
-            pet.BirthDate = petDto.BirthDate;
+
+            // Konverto me format specifik "dd-MM-yyyy"
+            try
+            {
+                pet.BirthDate = DateTime.ParseExact(
+                    petDto.BirthDate,
+                    "dd-MM-yyyy",
+                    System.Globalization.CultureInfo.InvariantCulture
+                );
+            }
+            catch (FormatException)
+            {
+                return BadRequest("Data duhet të jetë në formatin dd-MM-yyyy, p.sh. 18-07-2025.");
+            }
 
             dbContext.SaveChanges();
 
             return NoContent();
         }
+
 
         // DELETE: api/Pet/5
         [HttpDelete("{id}")]

@@ -13,5 +13,15 @@ namespace Pet_Care.Data
         public DbSet<Pet> Pets { get; set; }
         public DbSet<Visit> Visits { get; set; }
         public DbSet<CareTask> CareTasks { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Pet>()
+                .Property(p => p.BirthDate)
+                .HasColumnType("date"); // <-- kjo ruan vetëm datën në DB, pa kohë
+
+            base.OnModelCreating(modelBuilder);
+        }
+
     }
 }

@@ -169,3 +169,4 @@ C:\Users\Admin\source\repos\Pet_Care\Pet_Care\obj\Debug\net8.0\refint\Pet_Care.d
 C:\Users\Admin\source\repos\Pet_Care\Pet_Care\obj\Debug\net8.0\Pet_Care.pdb
 C:\Users\Admin\source\repos\Pet_Care\Pet_Care\obj\Debug\net8.0\Pet_Care.genruntimeconfig.cache
 C:\Users\Admin\source\repos\Pet_Care\Pet_Care\obj\Debug\net8.0\ref\Pet_Care.dll
+C:\Users\Admin\source\repos\Pet_Care\Pet_Care\obj\Debug\net8.0\Pet_Care.sourcelink.json

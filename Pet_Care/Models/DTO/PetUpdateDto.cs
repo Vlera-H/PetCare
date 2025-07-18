@@ -5,7 +5,6 @@ namespace Pet_Care.Models.DTO
     {
         public string Name { get; set; }
         public string Breed { get; set; }
-        public DateTime BirthDate { get; set; }
-
+        public String BirthDate { get; set; }  
     }
 }

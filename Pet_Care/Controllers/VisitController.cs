@@ -95,17 +95,18 @@ namespace Pet_Care.Controllers
             await _context.SaveChangesAsync();
             return NoContent();
         }
-
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var visit = await _context.Visits.FindAsync(id);
-            if (visit == null)
+            var entity = await _context.Visits.FindAsync(id);
+            if (entity == null)
                 return NotFound();
 
-            _context.Visits.Remove(visit);
+            _context.Visits.Remove(entity);
             await _context.SaveChangesAsync();
             return NoContent();
         }
+
+
     }
 }

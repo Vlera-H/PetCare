@@ -14,13 +14,18 @@ namespace Pet_Care.Data
         public DbSet<Visit> Visits { get; set; }
         public DbSet<CareTask> CareTasks { get; set; }
 
+     
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Pet>()
                 .Property(p => p.BirthDate)
-                .HasColumnType("date"); // <-- kjo ruan vetëm datën në DB, pa kohë
+                .HasColumnType("date"); 
 
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Visit>()
+                .Property(v => v.VisitDate)
+                .HasColumnType("date"); 
+
+            base.OnModelCreating(modelBuilder); 
         }
 
     }

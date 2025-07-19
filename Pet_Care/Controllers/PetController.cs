@@ -111,7 +111,8 @@ namespace Pet_Care.Controllers
                 pet.BirthDate = DateTime.ParseExact(
                     petDto.BirthDate,
                     "dd-MM-yyyy",
-                    System.Globalization.CultureInfo.InvariantCulture
+                    CultureInfo.InvariantCulture
+
                 );
             }
             catch (FormatException)

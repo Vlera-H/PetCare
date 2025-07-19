@@ -128,8 +128,8 @@ namespace Pet_Care.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("VisitDate")
-                        .HasColumnType("datetime2");
+                    b.Property<DateOnly>("VisitDate")
+                        .HasColumnType("date");
 
                     b.HasKey("Id");
 

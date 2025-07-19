@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Pet_Care.Data;
 using Pet_Care.Models.DTO;
-using Pet_Care.Models.DTO.Pet_Care.Models.DTOs;
+using Pet_Care.Models.DTOs;
 using Pet_Care.Models.Entities;
 using System.Globalization;
 

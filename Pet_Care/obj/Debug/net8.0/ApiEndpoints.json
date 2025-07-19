@@ -93,6 +93,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Pet_Care.Controllers.CareTaskController",
+    "Method": "DeleteCareTask",
+    "RelativePath": "api/CareTask/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Pet_Care.Controllers.PetController",
     "Method": "GetAll",
     "RelativePath": "api/Pet",
@@ -251,8 +267,8 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Pet_Care.Controllers.VisitController",
-    "Method": "GetAll",
+    "ContainingType": "VisitController",
+    "Method": "GetVisits",
     "RelativePath": "api/Visit",
     "HttpMethod": "GET",
     "IsController": true,
@@ -271,8 +287,8 @@
     ]
   },
   {
-    "ContainingType": "Pet_Care.Controllers.VisitController",
-    "Method": "Create",
+    "ContainingType": "VisitController",
+    "Method": "CreateVisit",
     "RelativePath": "api/Visit",
     "HttpMethod": "POST",
     "IsController": true,
@@ -297,8 +313,8 @@
     ]
   },
   {
-    "ContainingType": "Pet_Care.Controllers.VisitController",
-    "Method": "Get",
+    "ContainingType": "VisitController",
+    "Method": "GetVisit",
     "RelativePath": "api/Visit/{id}",
     "HttpMethod": "GET",
     "IsController": true,
@@ -323,8 +339,8 @@
     ]
   },
   {
-    "ContainingType": "Pet_Care.Controllers.VisitController",
-    "Method": "Update",
+    "ContainingType": "VisitController",
+    "Method": "UpdateVisit",
     "RelativePath": "api/Visit/{id}",
     "HttpMethod": "PUT",
     "IsController": true,
@@ -344,8 +360,8 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Pet_Care.Controllers.VisitController",
-    "Method": "Delete",
+    "ContainingType": "VisitController",
+    "Method": "DeleteVisit",
     "RelativePath": "api/Visit/{id}",
     "HttpMethod": "DELETE",
     "IsController": true,

@@ -1,4 +1,6 @@
-﻿namespace Pet_Care.Models.DTOs
+﻿using System;
+
+namespace Pet_Care.Models.DTOs
 {
     public class CreateVisitDto
     {

@@ -154,6 +154,7 @@ C:\Users\Admin\source\repos\Pet_Care\Pet_Care\obj\Debug\net8.0\Pet_Care.Assembly
 C:\Users\Admin\source\repos\Pet_Care\Pet_Care\obj\Debug\net8.0\Pet_Care.csproj.CoreCompileInputs.cache
 C:\Users\Admin\source\repos\Pet_Care\Pet_Care\obj\Debug\net8.0\Pet_Care.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\Admin\source\repos\Pet_Care\Pet_Care\obj\Debug\net8.0\Pet_Care.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Admin\source\repos\Pet_Care\Pet_Care\obj\Debug\net8.0\Pet_Care.sourcelink.json
 C:\Users\Admin\source\repos\Pet_Care\Pet_Care\obj\Debug\net8.0\rjimswa.dswa.cache.json
 C:\Users\Admin\source\repos\Pet_Care\Pet_Care\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
 C:\Users\Admin\source\repos\Pet_Care\Pet_Care\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
@@ -169,4 +170,3 @@ C:\Users\Admin\source\repos\Pet_Care\Pet_Care\obj\Debug\net8.0\refint\Pet_Care.d
 C:\Users\Admin\source\repos\Pet_Care\Pet_Care\obj\Debug\net8.0\Pet_Care.pdb
 C:\Users\Admin\source\repos\Pet_Care\Pet_Care\obj\Debug\net8.0\Pet_Care.genruntimeconfig.cache
 C:\Users\Admin\source\repos\Pet_Care\Pet_Care\obj\Debug\net8.0\ref\Pet_Care.dll
-C:\Users\Admin\source\repos\Pet_Care\Pet_Care\obj\Debug\net8.0\Pet_Care.sourcelink.json

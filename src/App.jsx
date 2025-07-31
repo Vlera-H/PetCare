@@ -1,12 +1,11 @@
+import Hero from './components/Hero';
 
-import './App.css'
+const App = () => {
+    return (
+        <div className='w-full max-w-[1440px] mx-auto bg-orange-quaternary relative'>
+            <Hero />
+        </div>
+    );
+};
 
-function App() {
-
-  return (
-    <>
-    </>
-  )
-}
-
-export default App
+export default App;

@@ -1,0 +1,43 @@
+.welcome-container {
+  min-height: 100vh;
+  background: linear-gradient(to bottom right, #ffe9c6, #d2b48c);
+}
+
+.text-orange {
+  color: #ff8c00;
+}
+
+.text-brown {
+  color: #5c4033;
+}
+
+.welcome-box {
+  background-color: white;
+  max-width: 400px;
+}
+
+.custom-btn {
+  font-weight: bold;
+  border-radius: 8px;
+}
+
+.btn-orange {
+  background-color: #ff8c00;
+  color: white;
+  border: none;
+}
+
+.btn-orange:hover {
+  background-color: #e67600;
+  color: white;
+}
+
+.btn-outline-brown {
+  border: 2px solid #5c4033;
+  color: #5c4033;
+}
+
+.btn-outline-brown:hover {
+  background-color: #5c4033;
+  color: white;
+}

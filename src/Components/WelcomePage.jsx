@@ -11,7 +11,7 @@ const WelcomePage = () => {
         <h1 className="mb-3 fw-bold text-orange">Pet Care</h1>
         <p className="mb-4 text-muted">Healthy pet care at your fingertips…</p>
         <img
-          src="/dog.png" // vendos një foto në public/dog.png ose ndrysho linkun
+          src="/img/dog.png"
           alt="Cute Dog"
           className="img-fluid rounded mb-4"
           style={{ maxWidth: '250px' }}

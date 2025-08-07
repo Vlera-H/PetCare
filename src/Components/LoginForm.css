@@ -1,11 +1,15 @@
 /* Container i përgjithshëm */
+
 .login-container {
   min-height: 100vh;
+  width: 100vw;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
   background: linear-gradient(to bottom right, #ffe9c6, #d2b48c);
   padding: 2rem;
+  box-sizing: border-box;
 }
 
 /* Kutia e login-it */
@@ -98,3 +102,81 @@
     font-size: 2.2rem;
   }
 }
+/* Zgjidhje për hapësirat e bardha anash */
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+/* Login box background enhancement */
+.login-box {
+  background: linear-gradient(to bottom right, #fff8f0, #fdf6ed);
+  /* ose përdor këtë për më shumë ngjyrë: background: #fef9f3; */
+  position: relative;
+}
+
+/* Welcome subtitle */
+.login-subtitle {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  color: #a37448;
+  margin-bottom: 1.5rem;
+}
+
+/* Sign up text */
+.signup-text {
+  font-size: 0.95rem;
+  margin-top: 1.5rem;
+  color: #5c4033;
+}
+
+.signup-text a {
+  color: #ff8c00;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.signup-text a:hover {
+  text-decoration: underline;
+}
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+/* Butoni Sign Up si më i dukshëm */
+.signup-btn {
+  margin-top: 1rem;
+  color: #5c4033;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.signup-btn:hover {
+  color: #e67600;
+  text-decoration: underline;
+}
+
+/* Shigjeta për kthim */
+.back-arrow {
+  position: absolute;
+  top: 20px;
+  left: 25px;
+  font-size: 1.5rem;
+  color: #5c4033;
+  cursor: pointer;
+  font-weight: bold;
+  transition: transform 0.2s ease;
+}
+
+.back-arrow:hover {
+  transform: translateX(-5px);
+}
+
+

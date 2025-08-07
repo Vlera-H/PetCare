@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
-import { Form, Button, Alert, Container } from 'react-bootstrap';
+import { Form, Button, Alert } from 'react-bootstrap';
 import axios from 'axios';
 import './LoginForm.css';
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -32,16 +35,14 @@ const LoginForm = () => {
   };
 
   return (
-    <Container className="login-container">
+    <div className="login-container">
+      <div className="back-arrow" onClick={() => navigate('/welcome')}>
+        &#8592;
+      </div>
+
       <div className="login-box">
         <div className="login-icon-circle">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="28"
-            height="28"
-            fill="white"
-            viewBox="0 0 16 16"
-          >
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="white" viewBox="0 0 16 16">
             <path d="M3 14s-1 0-1-1 1-4 6-4 6 4 6 4 0 1-1 1H3z" />
             <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
           </svg>
@@ -83,8 +84,12 @@ const LoginForm = () => {
             LOGIN
           </Button>
         </Form>
+
+        <Button variant="link" className="signup-btn" onClick={() => navigate('/register')}>
+          Don’t have an account? <strong>Sign up</strong>
+        </Button>
       </div>
-    </Container>
+    </div>
   );
 };
 

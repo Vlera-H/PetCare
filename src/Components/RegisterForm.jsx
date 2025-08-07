@@ -40,7 +40,8 @@ const RegisterForm = () => {
         &#8592;
       </div>
 
-      <div className="login-box" style={{ maxWidth: '400px', marginTop: '120px' }}>
+    <div className="login-box register-box">
+
         {/* Përdor e njëjta ikonë si në login */}
         <div className="login-icon-circle">
           <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="white" viewBox="0 0 16 16">
@@ -88,7 +89,7 @@ const RegisterForm = () => {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              placeholder="example@example.com"
+              placeholder="Enter your email"
               required
               className="form-control-custom"
             />

@@ -146,3 +146,34 @@
     font-size: 0.9rem;
   }
 }
+
+/* Register form specific adjustments - slightly smaller */
+.register-box {
+  margin-top: 40px;
+  max-height: 90vh;
+  overflow-y: auto;
+  max-width: 360px;      /* ishte 400px më herët */
+  padding: 1.4rem 1.2rem; /* ishte 1.8rem 1.5rem */
+}
+
+.register-box .form-label-custom {
+  font-size: 0.8rem;
+}
+
+.register-box .form-control-custom {
+  padding: 0.45rem 0.7rem;
+  font-size: 0.85rem;
+}
+
+.register-box .custom-btn {
+  font-size: 0.95rem;
+  padding: 0.45rem;
+}
+
+.register-box .signup-btn {
+  font-size: 0.85rem;
+}
+
+.register-box .back-arrow {
+  font-size: 1.5rem;
+}

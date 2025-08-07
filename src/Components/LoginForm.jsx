@@ -61,7 +61,7 @@ const LoginForm = () => {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              placeholder="example@example.com"
+              placeholder="Enter your email"
               required
               className="form-control-custom"
             />

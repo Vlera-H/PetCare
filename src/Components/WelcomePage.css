@@ -1,8 +1,24 @@
-.welcome-container {
+.welcome-fullscreen {
   min-height: 100vh;
+  width: 100%;
   background: linear-gradient(to bottom right, #ffe9c6, #d2b48c);
+  padding: 2rem;
+  gap: 2rem;
 }
 
+.welcome-text {
+  max-width: 600px;
+}
+
+.welcome-image img {
+  max-width: 500px;
+  width: 100%;
+  height: auto;
+  border-radius: 1.5rem;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+/* Text colors */
 .text-orange {
   color: #ff8c00;
 }
@@ -11,16 +27,15 @@
   color: #5c4033;
 }
 
-.welcome-box {
-  background-color: white;
-  max-width: 400px;
-}
-
+/* Custom button styles */
 .custom-btn {
-  font-weight: bold;
-  border-radius: 8px;
+  font-weight: 600;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  transition: all 0.3s ease-in-out;
 }
 
+/* Orange button */
 .btn-orange {
   background-color: #ff8c00;
   color: white;
@@ -29,15 +44,53 @@
 
 .btn-orange:hover {
   background-color: #e67600;
-  color: white;
+  transform: scale(1.05);
 }
 
+/* Outline brown */
 .btn-outline-brown {
   border: 2px solid #5c4033;
   color: #5c4033;
+  background-color: transparent;
 }
 
 .btn-outline-brown:hover {
   background-color: #5c4033;
   color: white;
+  transform: scale(1.05);
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .welcome-fullscreen {
+    flex-direction: column-reverse;
+    text-align: center;
+    padding: 1.5rem;
+  }
+
+  .welcome-text h1 {
+    font-size: 2.5rem;
+  }
+
+  .welcome-image img {
+    max-width: 90%;
+    margin: 0 auto;
+  }
+}
+
+
+.welcome-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 4rem;
+  letter-spacing: 1px;
+  color: #5c4033;
+  margin-bottom: 0.2rem;
+}
+
+.welcome-subtitle {
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem;
+  color: #ff8c00;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
 }

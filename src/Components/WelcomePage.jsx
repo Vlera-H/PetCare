@@ -1,34 +1,32 @@
 import React from 'react';
-import { Container, Button } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import './WelcomePage.css'; // ky është për stilin që e shtojmë më poshtë
+import './WelcomePage.css';
 
 const WelcomePage = () => {
   return (
-    <div className="welcome-container d-flex justify-content-center align-items-center">
-      <Container className="text-center p-4 rounded shadow welcome-box">
-        <h2 className="mb-3 text-brown">Welcome to</h2>
-        <h1 className="mb-3 fw-bold text-orange">Pet Care</h1>
-        <p className="mb-4 text-muted">Healthy pet care at your fingertips…</p>
-        <img
-          src="/img/dog.png"
-          alt="Cute Dog"
-          className="img-fluid rounded mb-4"
-          style={{ maxWidth: '250px' }}
-        />
-        <div className="d-grid gap-3">
+    <div className="welcome-fullscreen d-flex flex-column flex-lg-row align-items-center justify-content-center text-center text-lg-start">
+      <div className="welcome-text p-4">
+        <h1 className="display-3 fw-bold text-brown">Welcome to</h1>
+        <h1 className="display-2 fw-bold text-orange mb-3">Pet Care</h1>
+        <p className="lead text-muted mb-5">Smart care tasks and visit tracking – for happier pets.
+</p>
+        <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center justify-content-lg-start">
           <Link to="/login">
-            <Button variant="outline-brown" size="lg" className="custom-btn">
-              Log in
+            <Button variant="outline-brown" size="lg" className="custom-btn px-4">
+              🔐 Log in
             </Button>
           </Link>
           <Link to="/register">
-            <Button variant="orange" size="lg" className="custom-btn">
-              Sign up
+            <Button variant="orange" size="lg" className="custom-btn px-4">
+              🐾 Sign up
             </Button>
           </Link>
         </div>
-      </Container>
+      </div>
+      <div className="welcome-image">
+        <img src="/img/8.png" alt="Dog and Cat" className="img-fluid" />
+      </div>
     </div>
   );
 };

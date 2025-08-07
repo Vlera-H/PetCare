@@ -78,7 +78,7 @@ const LoginForm = () => {
         </div>
 
         <h3 className="text-center mb-4" style={{ color: '#D2691E', fontWeight: '700' }}>
-          LOGIN TO YOUR ACCOUNT
+          LOGIN
         </h3>
 
         {message && <Alert variant="success">{message}</Alert>}

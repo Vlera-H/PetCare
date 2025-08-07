@@ -48,7 +48,7 @@ const LoginForm = () => {
           </svg>
         </div>
 
-        <h3 className="login-title">LOGIN</h3>
+        <h3 className="login-title">SIGN IN</h3>
 
         {message && <Alert variant="success">{message}</Alert>}
         {error && <Alert variant="danger">{error}</Alert>}
@@ -81,7 +81,7 @@ const LoginForm = () => {
           </Form.Group>
 
           <Button type="submit" className="custom-btn">
-            LOGIN
+            SIGN IN
           </Button>
         </Form>
 

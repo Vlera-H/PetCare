@@ -6,28 +6,28 @@
   align-items: center;
   justify-content: center;
   background: linear-gradient(to bottom right, #ffe9c6, #d2b48c);
-  padding: 2rem;
+  padding: 1.5rem; /* zvogëluar */
   box-sizing: border-box;
-  position: relative; /* KJO E RËNDËSISHME */
+  position: relative;
+  overflow-y: auto; /* në rast se duhet scroll */
 }
 
-/* Kutia e login-it */
 .login-box {
-  background: #ffffff;
-  padding: 2.5rem 2rem;
+  background: linear-gradient(to bottom right, #fff8f0, #fdf6ed);
+  padding: 1.8rem 1.5rem; /* më pak se 2.5rem */
   border-radius: 1.5rem;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
   width: 100%;
   max-width: 400px;
   text-align: center;
-    margin-top: 160px;
+  position: relative;
+  margin-top: 80px; /* zvogëluar nga 120-160 */
 }
 
-/* Ikona sipër */
 .login-icon-circle {
   background-color: #5c4033;
-  width: 60px;
-  height: 60px;
+  width: 50px;  /* më e vogël */
+  height: 50px;
   border-radius: 50%;
   margin: 0 auto 1rem;
   display: flex;
@@ -35,29 +35,33 @@
   justify-content: center;
 }
 
-/* Titulli */
+.login-icon-circle svg {
+  width: 24px;
+  height: 24px;
+}
+
 .login-title {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 2.5rem;
+  font-size: 2rem; /* zvogëluar nga 2.5rem */
   color: #5c4033;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem; /* pak më pak */
   letter-spacing: 1px;
 }
 
-/* Label-at */
 .form-label-custom {
   font-weight: 600;
   color: #5c4033;
   text-align: left;
   display: block;
+  font-size: 0.85rem; /* pak më i vogël */
+  margin-bottom: 0.3rem;
 }
 
-/* Input fields */
 .form-control-custom {
   border-radius: 8px;
   border: 2px solid #ff8c00;
-  padding: 0.6rem 0.75rem;
-  font-size: 1rem;
+  padding: 0.5rem 0.75rem; /* më kompakt */
+  font-size: 0.9rem; /* më i vogël */
   transition: border-color 0.3s ease-in-out;
 }
 
@@ -66,15 +70,22 @@
   box-shadow: 0 0 0 0.2rem rgba(255, 140, 0, 0.25);
 }
 
-/* Butoni LOGIN */
+.mb-3 {
+  margin-bottom: 0.75rem !important; /* pak më pak hapësirë mes fushave */
+}
+
+.mb-4 {
+  margin-bottom: 1rem !important;
+}
+
 .custom-btn {
   background-color: #ff8c00;
   color: #fff;
   border: none;
   width: 100%;
   font-weight: 600;
-  font-size: 1.1rem;
-  padding: 0.6rem;
+  font-size: 1rem; /* pak më i vogël */
+  padding: 0.5rem; /* më kompakt */
   border-radius: 10px;
   transition: background-color 0.3s, transform 0.2s;
 }
@@ -84,99 +95,32 @@
   transform: scale(1.03);
 }
 
-/* Mesazhet e Alert */
 .alert {
-  font-size: 0.95rem;
-  padding: 0.5rem 1rem;
-  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  padding: 0.4rem 0.8rem;
+  margin-bottom: 0.8rem;
   border-radius: 8px;
 }
 
-/* Responsive tweaks */
-@media (max-width: 576px) {
-  .login-box {
-    padding: 2rem 1.5rem;
-  }
-
-  .login-title {
-    font-size: 2.2rem;
-  }
-}
-/* Zgjidhje për hapësirat e bardha anash */
-body, html {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-}
-
-/* Login box background enhancement */
-.login-box {
-  background: linear-gradient(to bottom right, #fff8f0, #fdf6ed);
-  padding: 2.5rem 2rem;
-  border-radius: 1.5rem;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
-  width: 100%;
-  max-width: 400px;
-  text-align: center;
-  position: relative;
-  margin-top: 120px; /* shtuar që të mos mbulohet nga fotoja */
-}
-
-
-/* Welcome subtitle */
-.login-subtitle {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.1rem;
-  color: #a37448;
-  margin-bottom: 1.5rem;
-}
-
-/* Sign up text */
-.signup-text {
-  font-size: 0.95rem;
-  margin-top: 1.5rem;
-  color: #5c4033;
-}
-
-.signup-text a {
-  color: #ff8c00;
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.signup-text a:hover {
-  text-decoration: underline;
-}
-html, body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  overflow-x: hidden;
-}
-
-/* Butoni Sign Up si më i dukshëm */
 .signup-btn {
-  margin-top: 1rem;
+  margin-top: 0.8rem;
   color: #5c4033;
   font-weight: 600;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   text-decoration: none;
   transition: color 0.3s ease;
 }
-
 
 .signup-btn:hover {
   color: #e67600;
   text-decoration: underline;
 }
 
-/* Shigjeta për kthim */
 .back-arrow {
   position: absolute;
-  top: 20px;
-  left: 25px;
-  font-size: 1.5rem;
+  top: 15px;
+  left: 20px;
+  font-size: 1.3rem;
   color: #5c4033;
   cursor: pointer;
   font-weight: bold;
@@ -187,17 +131,18 @@ html, body {
   transform: translateX(-5px);
 }
 
-/* Imazhi i qenit dhe maces */
-.pets-image {
-  width: 100px;
-  height: auto;
-  object-fit: contain;
-  position: absolute;
-  top: -60px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 2;
+/* Për responsive, zvogëlo pak më shumë */
+@media (max-width: 576px) {
+  .login-box {
+    padding: 1.5rem 1rem;
+    margin-top: 60px;
+  }
+
+  .login-title {
+    font-size: 1.7rem;
+  }
+
+  .custom-btn {
+    font-size: 0.9rem;
+  }
 }
-
-
-

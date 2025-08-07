@@ -14,7 +14,7 @@ const WelcomePage = () => {
         <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center justify-content-lg-start">
           <Link to="/login">
             <Button variant="outline-brown" size="lg" className="custom-btn px-4">
-              🔐 Log in
+              🔐 Sign in
             </Button>
           </Link>
           <Link to="/register">

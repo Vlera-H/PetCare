@@ -24,7 +24,6 @@ const LoginForm = () => {
       setMessage('');
       const res = await axios.post('https://localhost:26590/Controllers/AuthController/Login', formData);
       setMessage('Login successful! Welcome ' + res.data.user.firstName);
-      
       localStorage.setItem('accessToken', res.data.accessToken);
       localStorage.setItem('refreshToken', res.data.refreshToken);
     } catch (err) {
@@ -33,39 +32,9 @@ const LoginForm = () => {
   };
 
   return (
-    <Container
-      className="d-flex flex-column align-items-center justify-content-center"
-      style={{
-        minHeight: '100vh',
-        background: 'linear-gradient(180deg, #FFA500 0%, #D2691E 100%)'
-      }}
-    >
-      <div
-        style={{
-          backgroundColor: '#fff',
-          borderRadius: '15px',
-          boxShadow: '0 8px 20px rgba(210, 105, 30, 0.3)',
-          width: '380px',
-          padding: '30px',
-          position: 'relative',
-          marginTop: '20px'
-        }}
-      >
-        {/* Icon Circle */}
-        <div
-          style={{
-            backgroundColor: '#D2691E',
-            width: '60px',
-            height: '60px',
-            borderRadius: '50%',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            position: 'absolute',
-            top: '-30px',
-            left: 'calc(50% - 30px)'
-          }}
-        >
+    <Container className="login-container">
+      <div className="login-box">
+        <div className="login-icon-circle">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="28"
@@ -78,18 +47,14 @@ const LoginForm = () => {
           </svg>
         </div>
 
-        <h3 className="text-center mb-4" style={{ color: '#D2691E', fontWeight: '700' }}>
-          LOGIN 
-        </h3>
+        <h3 className="login-title">LOGIN</h3>
 
         {message && <Alert variant="success">{message}</Alert>}
         {error && <Alert variant="danger">{error}</Alert>}
 
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3" controlId="formEmail">
-            <Form.Label style={{ color: '#D2691E', fontWeight: '600', fontSize: '0.8rem' }}>
-              EMAIL
-            </Form.Label>
+            <Form.Label className="form-label-custom">EMAIL</Form.Label>
             <Form.Control
               type="email"
               name="email"
@@ -97,18 +62,12 @@ const LoginForm = () => {
               onChange={handleChange}
               placeholder="example@example.com"
               required
-              style={{
-                borderColor: '#FFA500',
-                borderRadius: '5px',
-                boxShadow: '0 2px 6px rgba(255, 165, 0, 0.3)'
-              }}
+              className="form-control-custom"
             />
           </Form.Group>
 
           <Form.Group className="mb-4" controlId="formPassword">
-            <Form.Label style={{ color: '#D2691E', fontWeight: '600', fontSize: '0.8rem' }}>
-              PASSWORD
-            </Form.Label>
+            <Form.Label className="form-label-custom">PASSWORD</Form.Label>
             <Form.Control
               type="password"
               name="password"
@@ -116,35 +75,11 @@ const LoginForm = () => {
               onChange={handleChange}
               placeholder="Enter your password"
               required
-              style={{
-                borderColor: '#FFA500',
-                borderRadius: '5px',
-                boxShadow: '0 2px 6px rgba(255, 165, 0, 0.3)'
-              }}
+              className="form-control-custom"
             />
           </Form.Group>
 
-          <Button
-            type="submit"
-            className="w-100"
-            style={{
-              backgroundColor: '#FFA500',
-              border: 'none',
-              borderRadius: '25px',
-              padding: '10px 0',
-              fontWeight: '600',
-              boxShadow: '0 4px 10px rgba(210, 105, 30, 0.4)',
-              color: 'white',
-              fontSize: '1rem',
-              transition: 'background-color 0.3s ease'
-            }}
-            onMouseEnter={e => {
-              e.target.style.backgroundColor = '#D2691E';
-            }}
-            onMouseLeave={e => {
-              e.target.style.backgroundColor = '#FFA500';
-            }}
-          >
+          <Button type="submit" className="custom-btn">
             LOGIN
           </Button>
         </Form>

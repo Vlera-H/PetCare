@@ -1,147 +1,100 @@
+/* Container i përgjithshëm */
 .login-container {
   min-height: 100vh;
-  background: linear-gradient(to bottom right, #ffe9c6, #d2b48c);
-  padding: 2rem;
   display: flex;
   justify-content: center;
   align-items: center;
+  background: linear-gradient(to bottom right, #ffe9c6, #d2b48c);
+  padding: 2rem;
 }
 
+/* Kutia e login-it */
 .login-box {
-  background-color: white;
+  background: #ffffff;
+  padding: 2.5rem 2rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
   width: 100%;
-  max-width: 420px;
-  border-radius: 15px;
-  box-shadow: 0 8px 20px rgba(92, 64, 51, 0.25); /* ngjyrë brown e zbutur */
-  padding: 30px;
-  position: relative;
-  margin-top: 20px;
-  box-sizing: border-box;
+  max-width: 400px;
+  text-align: center;
 }
 
-/* Ikona e rrethuar */
+/* Ikona sipër */
 .login-icon-circle {
-  background-color: #5c4033; /* brown */
+  background-color: #5c4033;
   width: 60px;
   height: 60px;
   border-radius: 50%;
+  margin: 0 auto 1rem;
   display: flex;
-  justify-content: center;
   align-items: center;
-  position: absolute;
-  top: -30px;
-  left: calc(50% - 30px);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  justify-content: center;
 }
 
 /* Titulli */
 .login-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.5rem;
   color: #5c4033;
-  font-weight: 700;
-  font-family: 'Bebas Neue', cursive;
-  font-size: 2.8rem;
-  margin-bottom: 1rem;
-  text-align: center;
+  margin-bottom: 1.5rem;
+  letter-spacing: 1px;
 }
 
-/* Mesazh nën titull */
-.login-subtitle {
-  color: #ff8c00;
-  font-weight: 600;
-  font-family: 'Playfair Display', serif;
-  font-size: 1.4rem;
-  margin-bottom: 2rem;
-  text-align: center;
-}
-
-/* Etiketat e inputeve */
+/* Label-at */
 .form-label-custom {
-  color: #5c4033;
   font-weight: 600;
-  font-size: 0.85rem;
+  color: #5c4033;
+  text-align: left;
+  display: block;
 }
 
-/* Input fushat */
+/* Input fields */
 .form-control-custom {
   border-radius: 8px;
-  border: 1.5px solid #ff8c00;
-  box-shadow: 0 2px 6px rgba(255, 140, 0, 0.3);
+  border: 2px solid #ff8c00;
+  padding: 0.6rem 0.75rem;
   font-size: 1rem;
-  padding: 10px 12px;
+  transition: border-color 0.3s ease-in-out;
 }
 
-/* Butoni */
+.form-control-custom:focus {
+  border-color: #e67600;
+  box-shadow: 0 0 0 0.2rem rgba(255, 140, 0, 0.25);
+}
+
+/* Butoni LOGIN */
 .custom-btn {
   background-color: #ff8c00;
+  color: #fff;
   border: none;
-  border-radius: 25px;
-  padding: 12px 0;
-  font-weight: 600;
-  color: white;
-  font-size: 1rem;
-  box-shadow: 0 4px 10px rgba(92, 64, 51, 0.4);
   width: 100%;
-  transition: background-color 0.3s ease;
-  cursor: pointer;
-  user-select: none;
-}
-
-.custom-btn:hover,
-.custom-btn:focus {
-  background-color: #5c4033;
-  transform: scale(1.05);
-  outline: none;
-}
-
-/* Alert mesazhet */
-.alert-success, .alert-danger {
-  font-size: 0.9rem;
   font-weight: 600;
+  font-size: 1.1rem;
+  padding: 0.6rem;
+  border-radius: 10px;
+  transition: background-color 0.3s, transform 0.2s;
 }
 
-/* Responsive për mobile */
+.custom-btn:hover {
+  background-color: #e67600;
+  transform: scale(1.03);
+}
+
+/* Mesazhet e Alert */
+.alert {
+  font-size: 0.95rem;
+  padding: 0.5rem 1rem;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+}
+
+/* Responsive tweaks */
 @media (max-width: 576px) {
   .login-box {
-    padding: 20px 15px;
-    margin-top: 10px;
+    padding: 2rem 1.5rem;
   }
 
   .login-title {
     font-size: 2.2rem;
-  }
-
-  .login-subtitle {
-    font-size: 1.2rem;
-    margin-bottom: 1.2rem;
-  }
-
-  .form-control-custom {
-    font-size: 0.95rem;
-    padding: 9px 10px;
-  }
-
-  .custom-btn {
-    font-size: 0.95rem;
-    padding: 10px 0;
-  }
-}
-
-@media (max-width: 400px) {
-  .login-title {
-    font-size: 1.8rem;
-  }
-
-  .login-subtitle {
-    font-size: 1rem;
-  }
-
-  .form-control-custom {
-    font-size: 0.9rem;
-    padding: 8px 9px;
-  }
-
-  .custom-btn {
-    font-size: 0.9rem;
-    padding: 9px 0;
   }
 }

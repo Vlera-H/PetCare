@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Button, Alert, Container } from 'react-bootstrap';
 import axios from 'axios';
+import './LoginForm.css';
 
 const LoginForm = () => {
   const [formData, setFormData] = useState({
@@ -78,7 +79,7 @@ const LoginForm = () => {
         </div>
 
         <h3 className="text-center mb-4" style={{ color: '#D2691E', fontWeight: '700' }}>
-          LOGIN
+          LOGIN 
         </h3>
 
         {message && <Alert variant="success">{message}</Alert>}

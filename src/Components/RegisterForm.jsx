@@ -42,7 +42,7 @@ const RegisterForm = () => {
 
     <div className="login-box register-box">
 
-        {/* Përdor e njëjta ikonë si në login */}
+       
         <div className="login-icon-circle">
           <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="white" viewBox="0 0 16 16">
             <path d="M3 14s-1 0-1-1 1-4 6-4 6 4 6 4 0 1-1 1H3z" />
@@ -54,78 +54,107 @@ const RegisterForm = () => {
 
         {message && <Alert variant="success">{message}</Alert>}
         {error && <Alert variant="danger">{error}</Alert>}
+<Form onSubmit={handleSubmit}>
+  {/* FIRST NAME */}
+  <Form.Group className="mb-3" controlId="formFirstName">
+    <Form.Label className="form-label-custom">FIRST NAME</Form.Label>
+    <Form.Control
+      type="text"
+      name="firstName"
+      value={formData.firstName}
+      onChange={handleChange}
+      placeholder="Enter your first name"
+      required
+      className="form-control-custom"
+    />
+  </Form.Group>
 
-        <Form onSubmit={handleSubmit}>
-          <Form.Group className="mb-3" controlId="formFirstName">
-            <Form.Label className="form-label-custom">FIRST NAME</Form.Label>
-            <Form.Control
-              type="text"
-              name="firstName"
-              value={formData.firstName}
-              onChange={handleChange}
-              placeholder="Enter your first name"
-              required
-              className="form-control-custom"
-            />
-          </Form.Group>
+  {/* LAST NAME */}
+  <Form.Group className="mb-3" controlId="formLastName">
+    <Form.Label className="form-label-custom">LAST NAME</Form.Label>
+    <Form.Control
+      type="text"
+      name="lastName"
+      value={formData.lastName}
+      onChange={handleChange}
+      placeholder="Enter your last name"
+      required
+      className="form-control-custom"
+    />
+  </Form.Group>
 
-          <Form.Group className="mb-3" controlId="formLastName">
-            <Form.Label className="form-label-custom">LAST NAME</Form.Label>
-            <Form.Control
-              type="text"
-              name="lastName"
-              value={formData.lastName}
-              onChange={handleChange}
-              placeholder="Enter your last name"
-              required
-              className="form-control-custom"
-            />
-          </Form.Group>
+  {/* EMAIL */}
+  <Form.Group className="mb-3" controlId="formEmail">
+    <Form.Label className="form-label-custom">EMAIL</Form.Label>
+    <Form.Control
+      type="email"
+      name="email"
+      value={formData.email}
+      onChange={handleChange}
+      placeholder="Enter your email"
+      required
+      className="form-control-custom"
+    />
+  </Form.Group>
 
-          <Form.Group className="mb-3" controlId="formEmail">
-            <Form.Label className="form-label-custom">EMAIL</Form.Label>
-            <Form.Control
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="Enter your email"
-              required
-              className="form-control-custom"
-            />
-          </Form.Group>
+  {/* PASSWORD */}
+  <Form.Group className="mb-4" controlId="formPassword">
+    <Form.Label className="form-label-custom">PASSWORD</Form.Label>
+    <Form.Control
+      type="password"
+      name="password"
+      value={formData.password}
+      onChange={handleChange}
+      placeholder="Enter your password"
+      required
+      className="form-control-custom"
+    />
+  </Form.Group>
 
-          <Form.Group className="mb-4" controlId="formPassword">
-            <Form.Label className="form-label-custom">PASSWORD</Form.Label>
-            <Form.Control
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              placeholder="Enter your password"
-              required
-              className="form-control-custom"
-            />
-          </Form.Group>
+  {/* Forgot Password link */}
+  <div style={{ textAlign: 'right', marginBottom: '0.8rem' }}>
+    <Button
+      variant="link"
+      style={{ color: '#007bff', padding: 0, fontSize: '0.85rem' }}
+      onClick={() => navigate('/forgot-password')}
+    >
+      Forgot Password?
+    </Button>
+  </div>
 
-          <Button type="submit" className="custom-btn">
-            SIGN UP
-          </Button>
-        </Form>
+  {/* Butoni Create Account */}
+  <Button type="submit" className="custom-btn mb-3">
+    CREATE ACCOUNT
+  </Button>
 
-        <Button variant="link" className="signup-btn" onClick={() => navigate('/login')}>
-          Already have an account? <strong>Sign in</strong>
-        </Button>
+  {/* Terms & Privacy */}
+  <Form.Group controlId="formBasicCheckbox" className="mb-3 text-start">
+    <Form.Check
+      type="checkbox"
+      label={
+        <span style={{ fontSize: '0.85rem' }}>
+          I agree to the{' '}
+          <a href="/privacy-policy" style={{ color: '#007bff' }}>
+            Privacy Policy
+          </a>{' '}
+          and{' '}
+          <a href="/terms-of-service" style={{ color: '#007bff' }}>
+            Terms of Service
+          </a>
+        </span>
+      }
+      required
+    />
+  </Form.Group>
+
+  {/* Sign In link */}
+  <Button variant="link" className="signup-btn" onClick={() => navigate('/login')}>
+    Already have an account? <strong>Sign in</strong>
+  </Button>
+</Form>
+
 
         <div style={{ textAlign: 'right', marginBottom: '1rem' }}>
-          <Button
-            variant="link"
-            className="signup-btn"
-            onClick={() => navigate('/forgot-password')}
-            style={{ padding: 0, fontSize: '0.85rem' }}
-          >
-            Forgot Password?
-          </Button>
         </div>
       </div>
     </div>

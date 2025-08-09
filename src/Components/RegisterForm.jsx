@@ -27,7 +27,7 @@ const RegisterForm = () => {
     try {
       setError('');
       setMessage('');
-      const res = await axios.post('https://localhost:26590/Controllers/AuthController', formData);
+      const res = await axios.post('https://localhost:7259/api/Auth/register', formData);
       setMessage(res.data.message);
     } catch (err) {
       setError(err.response?.data || 'Registration failed');

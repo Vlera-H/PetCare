@@ -22,21 +22,37 @@ const LoginForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    setMessage('');
+    setError('');
+
+    // Basic validation
+    if (!formData.email || !formData.password) {
+      setError('Ju lutem plotësoni të gjitha fushat.');
+      return;
+    }
+
     try {
-      setError('');
-      setMessage('');
-      const res = await axios.post('https://localhost:26590/Controllers/AuthController/Login', formData);
-      setMessage('Login successful! Welcome ' + res.data.user.firstName);
+      // Rregullo URL-në sipas backend-it tënd
+      const res = await axios.post('https://localhost:7259/api/Auth/login', formData);
+
+      // Ruaj tokenat
       localStorage.setItem('accessToken', res.data.accessToken);
       localStorage.setItem('refreshToken', res.data.refreshToken);
+
+      setMessage('Login successful! Welcome ' + (res.data.user?.firstName || ''));
+
+      // Redirect në dashboard
+      navigate('/dashboard');
     } catch (err) {
-      setError(err.response?.data || 'Login failed');
+      // Kontrollo mesazhin e gabimit nga backend
+      const serverMessage = err.response?.data || 'Login failed';
+      setError(typeof serverMessage === 'string' ? serverMessage : JSON.stringify(serverMessage));
     }
   };
 
   return (
     <div className="login-container">
-      <div className="back-arrow" onClick={() => navigate('/welcome')}>
+      <div className="back-arrow" onClick={() => navigate('/welcome')} style={{ cursor: 'pointer' }}>
         &#8592;
       </div>
 
@@ -80,7 +96,7 @@ const LoginForm = () => {
             />
           </Form.Group>
 
-          <Button type="submit" className="custom-btn">
+          <Button type="submit" className="custom-btn" disabled={!formData.email || !formData.password}>
             SIGN IN
           </Button>
         </Form>
@@ -92,4 +108,5 @@ const LoginForm = () => {
     </div>
   );
 };
-export default LoginForm; 
+
+export default LoginForm;

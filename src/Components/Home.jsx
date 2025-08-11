@@ -1,6 +1,8 @@
 import React, { useMemo, useState } from 'react';
 import { Button, Container, Row, Col, Card, Form, Modal } from 'react-bootstrap';
 import AppNavbar from './AppNavbar';
+import Sidebar from './Sidebar';
+import './Home.css';
 import PetList from './PetList';
 import CareTaskList from './CareTaskList';
 import VisitsList from './VisitsList';
@@ -78,95 +80,92 @@ const Home = () => {
   };
 
   return (
-    <div>
-      <AppNavbar />
+    <div className="pc-layout">
+      <Sidebar />
 
-      <Container className="my-4">
-        <Row className="align-items-end g-3">
-          <Col xs={12} md={6}>
-            <Form.Label className="fw-semibold">Select Pet</Form.Label>
-            <Form.Select value={selectedPetId || ''} onChange={(e) => setSelectedPetId(Number(e.target.value) || null)}>
-              {pets.map(p => (
-                <option key={p.id} value={p.id}>{p.name} — {p.breed}</option>
-              ))}
-              {!pets.length && <option value="">No pets yet</option>}
-            </Form.Select>
-          </Col>
-          <Col xs={12} md="auto" className="d-flex gap-2">
-            <Button variant="primary" onClick={() => setShowPetModal(true)}>+ Add Pet</Button>
-            <Button variant="outline-primary" disabled={!selectedPetId} onClick={() => setShowTaskModal(true)}>+ Add Task</Button>
-            <Button variant="outline-secondary" disabled={!selectedPetId} onClick={() => setShowVisitModal(true)}>+ Add Visit</Button>
-          </Col>
-        </Row>
+      <main className="pc-content">
+        <div className="pc-header">
+          <h3 className="m-0" style={{ color: '#5c4033' }}>Home</h3>
+          <AppNavbar />
+        </div>
 
-        <Row className="my-4 g-3">
-          <Col md={4}>
-            <Card className="h-100 shadow-sm">
-              <Card.Body>
-                <Card.Title>Total Pets</Card.Title>
-                <Card.Text className="display-6 m-0">{totalPets}</Card.Text>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col md={4}>
-            <Card className="h-100 shadow-sm">
-              <Card.Body>
-                <Card.Title>Pending Tasks</Card.Title>
-                <Card.Text className="display-6 m-0">{pendingTasksCount}</Card.Text>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col md={4}>
-            <Card className="h-100 shadow-sm">
-              <Card.Body>
-                <Card.Title>Upcoming Visits</Card.Title>
-                <Card.Text className="display-6 m-0">{upcomingVisitsCount}</Card.Text>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
-
-        {selectedPet && (
-          <Row className="align-items-center mb-3">
-            <Col>
-              <h4 className="m-0">{selectedPet.name} — {selectedPet.breed}</h4>
-              <small className="text-muted">Born: {new Date(selectedPet.birthDate).toLocaleDateString()}</small>
+        <Container fluid className="px-0">
+          <Row className="align-items-end g-3">
+            <Col xs={12} md={6}>
+              <Form.Label className="fw-semibold">Select Pet</Form.Label>
+              <Form.Select value={selectedPetId || ''} onChange={(e) => setSelectedPetId(Number(e.target.value) || null)}>
+                {pets.map(p => (
+                  <option key={p.id} value={p.id}>{p.name} — {p.breed}</option>
+                ))}
+                {!pets.length && <option value="">No pets yet</option>}
+              </Form.Select>
+            </Col>
+            <Col xs={12} md="auto" className="d-flex gap-2">
+              <Button variant="primary" onClick={() => setShowPetModal(true)}>+ Add Pet</Button>
+              <Button variant="outline-primary" disabled={!selectedPetId} onClick={() => setShowTaskModal(true)}>+ Add Task</Button>
+              <Button variant="outline-secondary" disabled={!selectedPetId} onClick={() => setShowVisitModal(true)}>+ Add Visit</Button>
             </Col>
           </Row>
-        )}
 
-        <Row className="g-4">
-          <Col lg={6}>
-            <div className="d-flex justify-content-between align-items-center mb-2">
-              <h5 className="m-0">Care Tasks</h5>
+          <div className="pc-kpis my-3">
+            <div className="pc-card">
+              <h6>Total Pets</h6>
+              <div className="pc-metric">{totalPets}</div>
             </div>
-            <CareTaskList tasks={tasksForPet} />
-            <div className="d-flex gap-2 mt-2">
-              {tasksForPet.map(t => (
-                <div key={t.id} className="d-flex align-items-center gap-2">
-                  <Button size="sm" variant={t.isCompleted ? 'secondary' : 'success'} onClick={() => handleToggleTask(t.id)}>
-                    {t.isCompleted ? 'Mark Pending' : 'Mark Done'}
-                  </Button>
-                  <Button size="sm" variant="outline-danger" onClick={() => handleDeleteTask(t.id)}>Delete</Button>
-                </div>
-              ))}
+            <div className="pc-card">
+              <h6>Pending Tasks</h6>
+              <div className="pc-metric">{pendingTasksCount}</div>
             </div>
-          </Col>
-          <Col lg={6}>
-            <div className="d-flex justify-content-between align-items-center mb-2">
-              <h5 className="m-0">Visits</h5>
+            <div className="pc-card">
+              <h6>Upcoming Visits</h6>
+              <div className="pc-metric">{upcomingVisitsCount}</div>
             </div>
-            <VisitsList visits={visitsForPet} />
-          </Col>
-        </Row>
+          </div>
 
-        <Row className="g-4 mt-4">
-          <Col>
-            <h5>All Pets</h5>
-            <PetList pets={pets} />
-          </Col>
-        </Row>
-      </Container>
+          {selectedPet && (
+            <Row className="align-items-center mb-2">
+              <Col>
+                <h5 className="m-0" style={{ color: '#5c4033' }}>{selectedPet.name} — {selectedPet.breed}</h5>
+                <small className="text-muted">Born: {new Date(selectedPet.birthDate).toLocaleDateString()}</small>
+              </Col>
+            </Row>
+          )}
+
+          <Row className="g-4">
+            <Col lg={6}>
+              <div className="pc-section-title">
+                <h6 className="m-0">Care Tasks</h6>
+              </div>
+              <CareTaskList tasks={tasksForPet} />
+              <div className="d-flex gap-2 mt-2 flex-wrap">
+                {tasksForPet.map(t => (
+                  <div key={t.id} className="d-flex align-items-center gap-2">
+                    <Button size="sm" variant={t.isCompleted ? 'secondary' : 'success'} onClick={() => handleToggleTask(t.id)}>
+                      {t.isCompleted ? 'Mark Pending' : 'Mark Done'}
+                    </Button>
+                    <Button size="sm" variant="outline-danger" onClick={() => handleDeleteTask(t.id)}>Delete</Button>
+                  </div>
+                ))}
+              </div>
+            </Col>
+            <Col lg={6}>
+              <div className="pc-section-title">
+                <h6 className="m-0">Visits</h6>
+              </div>
+              <VisitsList visits={visitsForPet} />
+            </Col>
+          </Row>
+
+          <Row className="g-4 mt-3">
+            <Col>
+              <div className="pc-section-title">
+                <h6 className="m-0">All Pets</h6>
+              </div>
+              <PetList pets={pets} />
+            </Col>
+          </Row>
+        </Container>
+      </main>
 
       {/* Add Pet Modal */}
       <Modal show={showPetModal} onHide={() => setShowPetModal(false)}>

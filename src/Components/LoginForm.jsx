@@ -4,16 +4,15 @@ import axios from 'axios';
 import './LoginForm.css';
 import { useNavigate } from 'react-router-dom';
 
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://localhost:7259';
+
 const LoginForm = () => {
   const navigate = useNavigate();
 
-  const [formData, setFormData] = useState({
-    email: '',
-    password: ''
-  });
-
+  const [formData, setFormData] = useState({ email: '', password: '' });
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
+  const [submitting, setSubmitting] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -21,32 +20,45 @@ const LoginForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     setMessage('');
     setError('');
+    setSubmitting(true);
 
-    // Basic validation
     if (!formData.email || !formData.password) {
       setError('Ju lutem plotësoni të gjitha fushat.');
+      setSubmitting(false);
       return;
     }
 
     try {
-      // Rregullo URL-në sipas backend-it tënd
-      const res = await axios.post('https://localhost:7259/api/Auth/login', formData);
+     const res = await axios.post('/api/Auth/login', formData, {
+  baseURL: API_BASE_URL,
+});
 
-      // Ruaj tokenat
+
       localStorage.setItem('accessToken', res.data.accessToken);
       localStorage.setItem('refreshToken', res.data.refreshToken);
 
       setMessage('Login successful! Welcome ' + (res.data.user?.firstName || ''));
-
-      // Redirect në dashboard
       navigate('/dashboard');
     } catch (err) {
-      // Kontrollo mesazhin e gabimit nga backend
-      const serverMessage = err.response?.data || 'Login failed';
-      setError(typeof serverMessage === 'string' ? serverMessage : JSON.stringify(serverMessage));
+      console.error('Axios error:', {
+        message: err.message,
+        code: err.code,
+        status: err.response?.status,
+        data: err.response?.data,
+      });
+
+      const status = err.response?.status;
+      const data = err.response?.data;
+      const friendlyMessage =
+        (typeof data === 'string' && data) ||
+        data?.message ||
+        (status ? `HTTP ${status} - ${err.message || 'Login failed'}` : (err.message || 'Network Error'));
+
+      setError(friendlyMessage);
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -96,8 +108,12 @@ const LoginForm = () => {
             />
           </Form.Group>
 
-          <Button type="submit" className="custom-btn" disabled={!formData.email || !formData.password}>
-            SIGN IN
+          <Button
+            type="submit"
+            className="custom-btn"
+            disabled={submitting || !formData.email || !formData.password}
+          >
+            {submitting ? 'Signing in...' : 'SIGN IN'}
           </Button>
         </Form>
 

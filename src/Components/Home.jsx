@@ -5,7 +5,9 @@ import './WelcomePage.css';
 import PetList from './PetList';
 import CareTaskList from './CareTaskList';
 import VisitsList from './VisitsList';
-import { pets, careTasks, visits } from '../data/demoData';
+import demoData from '../data/demoData';
+
+const { pets, careTasks, visits } = demoData;
 
 const Home = () => {
   const totalPets = pets.length;

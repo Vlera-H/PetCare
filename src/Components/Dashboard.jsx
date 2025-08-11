@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import PetList from './PetList';
 import CareTaskList from './CareTaskList';
 import VisitsList from './VisitsList';
-import { pets as demoPets, careTasks as demoCareTasks, visits as demoVisits } from '../data/demoData';
+import demoData from '../data/demoData';
 
 const Dashboard = () => {
   // Të dhëna demo për pets, tasks dhe visits
-  const [pets] = useState(demoPets);
-  const [careTasks] = useState(demoCareTasks);
-  const [visits] = useState(demoVisits);
+  const [pets] = useState(demoData.pets);
+  const [careTasks] = useState(demoData.careTasks);
+  const [visits] = useState(demoData.visits);
 
   return (
     <div className="container my-4">

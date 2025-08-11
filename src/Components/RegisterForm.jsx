@@ -30,8 +30,26 @@ const RegisterForm = () => {
       const res = await axios.post('https://localhost:7259/api/Auth/register', formData);
       setMessage(res.data.message);
     } catch (err) {
-      setError(err.response?.data || 'Registration failed');
+  const data = err.response?.data;
+
+  if (!data) {
+    setError('Registration failed');
+  } else if (typeof data === 'string') {
+    setError(data);
+  } else if (typeof data === 'object') {
+    if (data.errors) {
+      const messages = Object.values(data.errors).flat().join(' ');
+      setError(messages);
+    } else if (data.title) {
+      setError(data.title);
+    } else {
+      setError('Registration failed');
     }
+  } else {
+    setError('Registration failed');
+  }
+}
+
   };
 
   return (

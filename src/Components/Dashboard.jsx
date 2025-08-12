@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PetList from './PetList';
-import CareTaskList from './CareTaskList';
+import CareTaskList from './CareTaskPage';
 import VisitsList from './VisitsList';
 import demoData from '../data/demoData';
 

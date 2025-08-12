@@ -23,9 +23,9 @@ const Sidebar = () => {
           <span className="pc-icon">🐶</span>
           <span>Pets</span>
         </Nav.Link>
-        <Nav.Link as={Link} to="/care" className={isActive('/care') ? 'active' : ''}>
+        <Nav.Link as={Link} to="/tasks" className={isActive('/tasks') ? 'active' : ''}>
           <span className="pc-icon">📝</span>
-          <span>Care</span>
+          <span>Tasks</span>
         </Nav.Link>
         <Nav.Link as={Link} to="/visits" className={isActive('/visits') ? 'active' : ''}>
           <span className="pc-icon">🩺</span>
@@ -42,3 +42,5 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
+
+

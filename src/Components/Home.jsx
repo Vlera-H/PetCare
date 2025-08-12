@@ -1,10 +1,10 @@
 import React, { useMemo, useState } from 'react';
-import { Button, Container, Row, Col, Card, Form, Modal } from 'react-bootstrap';
-import AppNavbar from './AppNavbar';
+import { Button, Container, Row, Col, Form, Modal } from 'react-bootstrap';
+// import AppNavbar from './AppNavbar';
 import Sidebar from './Sidebar';
 import './Home.css';
 import PetList from './PetList';
-import CareTaskList from './CareTaskList';
+import CareTaskList from './CareTaskPage';
 import VisitsList from './VisitsList';
 import demoData from '../data/demoData';
 
@@ -86,7 +86,6 @@ const Home = () => {
       <main className="pc-content">
         <div className="pc-header">
           <h3 className="m-0" style={{ color: '#5c4033' }}>Home</h3>
-          <AppNavbar />
         </div>
 
         <Container fluid className="px-0">

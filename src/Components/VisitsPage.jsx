@@ -1,31 +1,35 @@
 import React, { useMemo, useState } from 'react';
-import { Button, Form, Modal } from 'react-bootstrap';
+import { Button, Container, Row, Col, Form, Table } from 'react-bootstrap';
 import Sidebar from './Sidebar';
-import './Home.css';
-import VisitList from './VisitList';
-import { useData } from '../context/DataContext';
+import AppNavbar from './AppNavbar';
+import { useData } from './DataContext';
 
 const generateNextId = (items) => (items.length ? Math.max(...items.map(i => i.id)) + 1 : 1);
 
 const VisitsPage = () => {
   const { pets, visits, setVisits } = useData();
-  const [selectedPetId, setSelectedPetId] = useState(pets[0]?.id || null);
-  const [showVisitModal, setShowVisitModal] = useState(false);
-  const [visitForm, setVisitForm] = useState({ visitDate: '', reason: '' });
 
-  const visitsForPet = useMemo(() => visits.filter(v => !selectedPetId || v.petId === selectedPetId), [visits, selectedPetId]);
+  const [form, setForm] = useState({ reason: '', visitDate: '', petId: pets[0]?.id || '' });
 
-  const handleAddVisit = () => {
-    if (!selectedPetId) return;
+  const visitsForSelectedPet = useMemo(
+    () => (form.petId ? visits.filter(v => v.petId === Number(form.petId)) : visits),
+    [visits, form.petId]
+  );
+
+  const handleAdd = () => {
+    if (!form.reason || !form.visitDate || !form.petId) return;
     const newVisit = {
       id: generateNextId(visits),
-      visitDate: visitForm.visitDate,
-      reason: visitForm.reason,
-      petId: selectedPetId,
+      reason: form.reason,
+      visitDate: form.visitDate,
+      petId: Number(form.petId),
     };
     setVisits(prev => [...prev, newVisit]);
-    setVisitForm({ visitDate: '', reason: '' });
-    setShowVisitModal(false);
+    setForm(f => ({ ...f, reason: '', visitDate: '' }));
+  };
+
+  const deleteVisit = (visitId) => {
+    setVisits(prev => prev.filter(v => v.id !== visitId));
   };
 
   return (
@@ -34,45 +38,66 @@ const VisitsPage = () => {
       <main className="pc-content">
         <div className="pc-header">
           <h3 className="m-0" style={{ color: '#5c4033' }}>Visits</h3>
-          <div className="d-flex align-items-center gap-2">
-            <Form.Select size="sm" value={selectedPetId || ''} onChange={(e) => setSelectedPetId(Number(e.target.value) || null)}>
-              {pets.map(p => (
-                <option key={p.id} value={p.id}>{p.name}</option>
-              ))}
-            </Form.Select>
-            <Button variant="primary" onClick={() => setShowVisitModal(true)}>+ Add Visit</Button>
-          </div>
+          <AppNavbar />
         </div>
+        <Container fluid>
+          <Row className="g-3 align-items-end">
+            <Col xs={12} md={4}>
+              <Form.Label className="fw-semibold">Reason</Form.Label>
+              <Form.Control value={form.reason} onChange={(e) => setForm(f => ({ ...f, reason: e.target.value }))} />
+            </Col>
+            <Col xs={12} md={3}>
+              <Form.Label className="fw-semibold">Visit Date</Form.Label>
+              <Form.Control type="date" value={form.visitDate} onChange={(e) => setForm(f => ({ ...f, visitDate: e.target.value }))} />
+            </Col>
+            <Col xs={12} md={3}>
+              <Form.Label className="fw-semibold">Pet</Form.Label>
+              <Form.Select value={form.petId} onChange={(e) => setForm(f => ({ ...f, petId: e.target.value }))}>
+                <option value="">Select pet</option>
+                {pets.map(p => (
+                  <option key={p.id} value={p.id}>{p.name} — {p.breed}</option>
+                ))}
+              </Form.Select>
+            </Col>
+            <Col xs={12} md="auto">
+              <Button onClick={handleAdd} disabled={!form.reason || !form.visitDate || !form.petId}>+ Add Visit</Button>
+            </Col>
+          </Row>
 
-        <div className="pc-section-title">
-          <h6 className="m-0">Visits for {pets.find(p => p.id === selectedPetId)?.name || 'All'}</h6>
-        </div>
-        <VisitList visits={visitsForPet} />
-
-        <Modal show={showVisitModal} onHide={() => setShowVisitModal(false)}>
-          <Modal.Header closeButton>
-            <Modal.Title>Add Visit</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Form>
-              <Form.Group className="mb-3">
-                <Form.Label>Reason</Form.Label>
-                <Form.Control value={visitForm.reason} onChange={(e) => setVisitForm(f => ({ ...f, reason: e.target.value }))} />
-              </Form.Group>
-              <Form.Group>
-                <Form.Label>Visit Date</Form.Label>
-                <Form.Control type="date" value={visitForm.visitDate} onChange={(e) => setVisitForm(f => ({ ...f, visitDate: e.target.value }))} />
-              </Form.Group>
-            </Form>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={() => setShowVisitModal(false)}>Cancel</Button>
-            <Button variant="primary" onClick={handleAddVisit} disabled={!visitForm.reason || !visitForm.visitDate || !selectedPetId}>Add Visit</Button>
-          </Modal.Footer>
-        </Modal>
+          <Row className="g-3 mt-3">
+            <Col>
+              <Table striped hover responsive>
+                <thead>
+                  <tr>
+                    <th>Visit Date</th>
+                    <th>Reason</th>
+                    <th>Pet</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {visitsForSelectedPet.map(visit => {
+                    const pet = pets.find(p => p.id === visit.petId);
+                    return (
+                      <tr key={visit.id}>
+                        <td>{new Date(visit.visitDate).toLocaleDateString()}</td>
+                        <td>{visit.reason}</td>
+                        <td>{pet ? pet.name : visit.petId}</td>
+                        <td>
+                          <Button size="sm" variant="outline-danger" onClick={() => deleteVisit(visit.id)}>Delete</Button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </Table>
+            </Col>
+          </Row>
+        </Container>
       </main>
     </div>
   );
 };
 
 export default VisitsPage;
+

@@ -21,7 +21,9 @@ export const DataProvider = ({ children }) => {
 };
 
 export const useData = () => {
-  const ctx = useContext(DataContext);
-  if (!ctx) throw new Error('useData must be used within a DataProvider');
-  return ctx;
+  const context = useContext(DataContext);
+  if (!context) {
+    throw new Error('useData must be used within a DataProvider');
+  }
+  return context;
 };

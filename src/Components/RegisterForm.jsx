@@ -144,9 +144,9 @@ const RegisterForm = () => {
   <Button type="submit" className="custom-btn mb-3">
     CREATE ACCOUNT
   </Button>
-
+{/* 
   {/* Terms & Privacy */}
-  <Form.Group controlId="formBasicCheckbox" className="mb-3 text-start">
+  {/* <Form.Group controlId="formBasicCheckbox" className="mb-3 text-start">
     <Form.Check
       type="checkbox"
       label={
@@ -163,7 +163,7 @@ const RegisterForm = () => {
       }
       required
     />
-  </Form.Group>
+  </Form.Group> */}
 
   {/* Sign In link */}
   <Button variant="link" className="signup-btn" onClick={() => navigate('/login')}>

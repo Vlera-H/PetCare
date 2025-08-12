@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { Button, Container, Row, Col, Card, Form, Modal } from 'react-bootstrap';
+import { Button, Container, Row, Col, Form, Modal } from 'react-bootstrap';
 import AppNavbar from './AppNavbar';
 import Sidebar from './Sidebar';
 import './Home.css';

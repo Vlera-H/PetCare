@@ -16,4 +16,6 @@ const visits = [
   { id: 3, visitDate: '2025-08-05', reason: 'Vaccination', petId: 3 },
 ];
 
-export default { pets, careTasks, visits };
+const demoData = { pets, careTasks, visits };
+
+export default demoData;

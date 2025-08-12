@@ -2,25 +2,15 @@ import React from 'react';
 
 const PetList = ({ pets }) => {
   return (
-    <table className="table table-striped">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Breed</th>
-          <th>Birth Date</th>
-        </tr>
-      </thead>
-      <tbody>
-        {pets.map(pet => (
-          <tr key={pet.id}>
-            <td>{pet.name}</td>
-            <td>{pet.breed}</td>
-            <td>{new Date(pet.birthDate).toLocaleDateString()}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <ul>
+      {pets.map(pet => (
+        <li key={pet.id}>
+          {pet.name} — {pet.breed} — {new Date(pet.birthDate).toLocaleDateString()}
+        </li>
+      ))}
+    </ul>
   );
 };
 
 export default PetList;
+

@@ -19,15 +19,15 @@ const Sidebar = () => {
           <span className="pc-icon">📊</span>
           <span>Dashboard</span>
         </Nav.Link>
-        <Nav.Link as={Link} to="#" disabled>
+        <Nav.Link as={Link} to="/pets" className={isActive('/pets') ? 'active' : ''}>
           <span className="pc-icon">🐶</span>
           <span>Pets</span>
         </Nav.Link>
-        <Nav.Link as={Link} to="#" disabled>
+        <Nav.Link as={Link} to="/care" className={isActive('/care') ? 'active' : ''}>
           <span className="pc-icon">📝</span>
-          <span>Tasks</span>
+          <span>Care</span>
         </Nav.Link>
-        <Nav.Link as={Link} to="#" disabled>
+        <Nav.Link as={Link} to="/visits" className={isActive('/visits') ? 'active' : ''}>
           <span className="pc-icon">🩺</span>
           <span>Visits</span>
         </Nav.Link>

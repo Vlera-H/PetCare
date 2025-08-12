@@ -61,7 +61,7 @@ const Home = () => {
           <Row className="welcome-fullscreen align-items-center" style={{ paddingTop: 0, paddingBottom: '1.25rem' }}>
             <Col lg={6} className="welcome-text">
               <h1 className="welcome-title">Welcome{firstName ? `, ${firstName}` : ''}</h1>
-              <h2 className="welcome-subtitle">Your Pet Care Dashboard</h2>
+              {/*<h2 className="welcome-subtitle">Your Pet Care Dashboard</h2>*/}
               <p className="text-muted mb-4">
                 Track pets, care tasks, and visits all in one place. Select a pet to focus or jump into managing details.
               </p>

@@ -15,22 +15,28 @@ const CareGuide = () => {
 
         <Container fluid className="py-2">
           <Alert variant="info" className="mb-3">
-            Një udhëzues i thjeshtë dhe praktik për kujdesin ndaj kafshëve shtëpiake. Zgjidh seksionet më poshtë për këshilla të shpejta.
+            A friendly, practical guide to everyday pet care. Browse the sections below for quick, useful tips.
           </Alert>
 
           <Row className="g-3">
             <Col lg={4}>
               <Card className="h-100 shadow-sm">
+                <Card.Img
+                  variant="top"
+                  src="/img/washingphoyo.png"
+                  alt="Bathing your pet"
+                  style={{ objectFit: 'cover', maxHeight: 180 }}
+                />
                 <Card.Body>
-                  <Card.Title>🛁 Larja</Card.Title>
+                  <Card.Title>🛁 Bathing</Card.Title>
                   <Card.Text>
-                    Si t’i lajmë në mënyrë të sigurt dhe pa stres.
+                    How to bathe safely and keep the experience calm.
                   </Card.Text>
                   <ListGroup variant="flush">
-                    <ListGroup.Item>Përdorni shampo të përshtatshme për llojin e kafshës.</ListGroup.Item>
-                    <ListGroup.Item>Shmangni ujin shumë të nxehtë ose të ftohtë.</ListGroup.Item>
-                    <ListGroup.Item>Thani lehtë me peshqir dhe, sipas nevojës, me tharëse në temperaturë të ulët.</ListGroup.Item>
-                    <ListGroup.Item>Shmangni kontaktin e shampos me sytë dhe veshët.</ListGroup.Item>
+                    <ListGroup.Item>Use a pet-appropriate shampoo for the species/breed.</ListGroup.Item>
+                    <ListGroup.Item>Avoid water that is too hot or too cold.</ListGroup.Item>
+                    <ListGroup.Item>Dry gently with a towel; use a low-heat dryer if needed.</ListGroup.Item>
+                    <ListGroup.Item>Keep shampoo away from eyes and ears.</ListGroup.Item>
                   </ListGroup>
                 </Card.Body>
               </Card>
@@ -39,15 +45,15 @@ const CareGuide = () => {
             <Col lg={4}>
               <Card className="h-100 shadow-sm">
                 <Card.Body>
-                  <Card.Title>🚶‍♀️ Ecja</Card.Title>
+                  <Card.Title>🚶‍♀️ Walking</Card.Title>
                   <Card.Text>
-                    Rutinë e shëndetshme për shëtitje dhe lojëra.
+                    Build a healthy routine for walks and play.
                   </Card.Text>
                   <ListGroup variant="flush">
-                    <ListGroup.Item>Përshtat kohëzgjatjen sipas moshës dhe racës.</ListGroup.Item>
-                    <ListGroup.Item>Përdorni gjithmonë zinxhir ose parzmore të rehatshme.</ListGroup.Item>
-                    <ListGroup.Item>Mbani ujë të freskët gjatë ditëve të nxehta.</ListGroup.Item>
-                    <ListGroup.Item>Kontrolloni putrat pas ecjes në terrene të ashpra.</ListGroup.Item>
+                    <ListGroup.Item>Adjust duration by age, health, and breed.</ListGroup.Item>
+                    <ListGroup.Item>Use a comfortable leash or harness at all times.</ListGroup.Item>
+                    <ListGroup.Item>Bring fresh water on hot days.</ListGroup.Item>
+                    <ListGroup.Item>Check paw pads after rough terrain.</ListGroup.Item>
                   </ListGroup>
                 </Card.Body>
               </Card>
@@ -56,15 +62,15 @@ const CareGuide = () => {
             <Col lg={4}>
               <Card className="h-100 shadow-sm">
                 <Card.Body>
-                  <Card.Title>🍽️ Ushqimi</Card.Title>
+                  <Card.Title>🍽️ Feeding</Card.Title>
                   <Card.Text>
-                    Balancimi i vakteve dhe porcioneve të duhura.
+                    Balance meals and portions the right way.
                   </Card.Text>
                   <ListGroup variant="flush">
-                    <ListGroup.Item>Zgjidh ushqim cilësor të përshtatshëm për moshën.</ListGroup.Item>
-                    <ListGroup.Item>Respekto oraret dhe sasinë e rekomanduar.</ListGroup.Item>
-                    <ListGroup.Item>Shmang ushqimet e dëmshme si çokollata, qepa, rrushi.</ListGroup.Item>
-                    <ListGroup.Item>Siguro ujë të freskët gjatë gjithë ditës.</ListGroup.Item>
+                    <ListGroup.Item>Choose quality food suited to your pet's age.</ListGroup.Item>
+                    <ListGroup.Item>Stick to consistent schedules and portions.</ListGroup.Item>
+                    <ListGroup.Item>Avoid harmful foods like chocolate, onions, and grapes.</ListGroup.Item>
+                    <ListGroup.Item>Provide fresh water throughout the day.</ListGroup.Item>
                   </ListGroup>
                 </Card.Body>
               </Card>
@@ -75,12 +81,12 @@ const CareGuide = () => {
             <Col lg={6}>
               <Card className="h-100 shadow-sm">
                 <Card.Body>
-                  <Card.Title>🩺 Këshilla të përgjithshme shëndeti</Card.Title>
+                  <Card.Title>🩺 General Health Tips</Card.Title>
                   <ListGroup variant="flush">
-                    <ListGroup.Item>Vizita të rregullta te veterineri për vaksinime dhe kontroll.</ListGroup.Item>
-                    <ListGroup.Item>Ruan peshën e shëndetshme me aktivitet dhe dietë të balancuar.</ListGroup.Item>
-                    <ListGroup.Item>Mbaj kalendar për trajtimet antiparazitare.</ListGroup.Item>
-                    <ListGroup.Item>Vëzhgo ndryshimet në sjellje dhe oreks.</ListGroup.Item>
+                    <ListGroup.Item>Schedule regular vet visits for vaccines and check-ups.</ListGroup.Item>
+                    <ListGroup.Item>Maintain a healthy weight with activity and balanced diet.</ListGroup.Item>
+                    <ListGroup.Item>Track parasite prevention on a calendar.</ListGroup.Item>
+                    <ListGroup.Item>Watch for changes in behavior and appetite.</ListGroup.Item>
                   </ListGroup>
                 </Card.Body>
               </Card>
@@ -88,12 +94,12 @@ const CareGuide = () => {
             <Col lg={6}>
               <Card className="h-100 shadow-sm">
                 <Card.Body>
-                  <Card.Title>💡 Truke praktike</Card.Title>
+                  <Card.Title>💡 Handy Tricks</Card.Title>
                   <ListGroup variant="flush">
-                    <ListGroup.Item>Përdor shpërblime të vogla për trajnime pozitive.</ListGroup.Item>
-                    <ListGroup.Item>Krijo një hapësirë të qetë për pushim.</ListGroup.Item>
-                    <ListGroup.Item>Rrotullo lodrat për të shmangur mërzinë.</ListGroup.Item>
-                    <ListGroup.Item>Përshtat rutinën me ritmin e kafshës tënde.</ListGroup.Item>
+                    <ListGroup.Item>Use small rewards for positive training.</ListGroup.Item>
+                    <ListGroup.Item>Create a quiet, cozy rest spot.</ListGroup.Item>
+                    <ListGroup.Item>Rotate toys regularly to prevent boredom.</ListGroup.Item>
+                    <ListGroup.Item>Adapt routines to your pet’s natural rhythm.</ListGroup.Item>
                   </ListGroup>
                 </Card.Body>
               </Card>

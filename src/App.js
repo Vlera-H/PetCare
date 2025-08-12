@@ -10,6 +10,7 @@ import Home from './Components/Home';
 import PetsPage from './Components/PetsPage';
 import CareTasksPage from './Components/CareTasksPage';
 import VisitsPage from './Components/VisitsPage';
+import CareGuide from './Components/CareGuide';
 import { DataProvider } from './Components/DataContext';
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
           <Route path="/pets" element={<PetsPage />} />
           <Route path="/tasks" element={<CareTasksPage />} />
           <Route path="/visits" element={<VisitsPage />} />
+          <Route path="/care-guide" element={<CareGuide />} />
 
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>

@@ -92,6 +92,7 @@ const Home = () => {
               <Button size="sm" variant="success" onClick={() => navigate('/pets')}>+ Add Pet</Button>
               <Button size="sm" variant="success" onClick={() => navigate('/tasks')} disabled={!pets.length}>+ Add Task</Button>
               <Button size="sm" variant="success" onClick={() => navigate('/visits')} disabled={!pets.length}>+ Add Visit</Button>
+              <Button size="sm" variant="outline-dark" onClick={() => navigate('/care-guide')}>📘 Care Guide</Button>
             </Col>
           </Row>
         </Container>

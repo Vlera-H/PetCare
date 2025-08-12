@@ -13,6 +13,7 @@ import PetsPage from './Components/PetsPage';
 import VisitsPage from './Components/VisitsPage';
 import { DataProvider } from './Components/DataContext';
 import CareTasksList from './Components/CareTaskList';
+import CareGuide from './Components/CareGuide';
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
           <Route path="/pets" element={<PetsPage />} />
           <Route path="/tasks" element={<CareTasksList />} />
           <Route path="/visits" element={<VisitsPage />} />
+           <Route path="/care-guide" element={<CareGuide />} />
 
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

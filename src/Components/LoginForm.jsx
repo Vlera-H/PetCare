@@ -31,16 +31,18 @@ const LoginForm = () => {
     }
 
     try {
-     const res = await axios.post('/api/Auth/login', formData, {
-  baseURL: API_BASE_URL,
-});
-
+      const res = await axios.post('/api/Auth/login', formData, {
+        baseURL: API_BASE_URL,
+      });
 
       localStorage.setItem('accessToken', res.data.accessToken);
       localStorage.setItem('refreshToken', res.data.refreshToken);
+      if (res.data.user?.firstName) {
+        localStorage.setItem('firstName', res.data.user.firstName);
+      }
 
       setMessage('Login successful! Welcome ' + (res.data.user?.firstName || ''));
-      navigate('/dashboard');
+      navigate('/');
     } catch (err) {
       console.error('Axios error:', {
         message: err.message,

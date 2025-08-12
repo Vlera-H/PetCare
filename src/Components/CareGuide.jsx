@@ -46,7 +46,7 @@ const CareGuide = () => {
               <Card className="h-100 shadow-sm">
                  <Card.Img
                   variant="top"
-                  src="/img/walk.png"
+                  src="/img/dogi.png"
                   alt="Walking your pet"
                   style={{ objectFit: 'cover', maxHeight: 180 }}
                 />
@@ -67,6 +67,12 @@ const CareGuide = () => {
 
             <Col lg={4}>
               <Card className="h-100 shadow-sm">
+                 <Card.Img
+                  variant="top"
+                  src="/img/dy.jpg"
+                  alt="Feeding your pet"
+                  style={{ objectFit: 'cover', maxHeight: 180 }}
+                />
                 <Card.Body>
                   <Card.Title>🍽️ Feeding</Card.Title>
                   <Card.Text>

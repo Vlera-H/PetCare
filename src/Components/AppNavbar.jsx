@@ -1,4 +1,4 @@
-import React from 'react';
+ import React from 'react';
 import { Navbar, Nav, Container, Button } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -19,13 +19,16 @@ const AppNavbar = () => {
         <Navbar.Collapse id="main-nav">
           <Nav className="me-auto">
             <Nav.Link as={Link} to="/">Home</Nav.Link>
-            <Nav.Link as={Link} to="/dashboard">Dashboard</Nav.Link>
+            {/* Dashboard link removed */}
           </Nav>
           <div className="d-flex gap-2">
             <Button variant="outline-secondary" size="sm" onClick={() => navigate('/profile')}>
               Profile
             </Button>
-            <Button variant="dark" size="sm" onClick={handleLogout}>
+            <Button variant="outline-secondary" size="sm" onClick={() => navigate('/care-guide')}>
+              🐾 Pet Care Guide
+            </Button>
+             <Button variant="dark" size="sm" onClick={handleLogout}>
               Logout
             </Button>
           </div>
@@ -36,3 +39,4 @@ const AppNavbar = () => {
 };
 
 export default AppNavbar;
+

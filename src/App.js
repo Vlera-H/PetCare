@@ -9,7 +9,7 @@ import WelcomePage from './Components/WelcomePage';
 import Dashboard from './Components/Dashboard';
 import Home from './Components/Home';
 import PetsPage from './Components/PetsPage';
-//import CareTasksPage from './Components/CareTaskPage';
+import CareTasksPage from './Components/CareTaskPage';
 import VisitsPage from './Components/VisitsPage';
 import { DataProvider } from './Components/DataContext';
 import CareTasksList from './Components/CareTaskList';

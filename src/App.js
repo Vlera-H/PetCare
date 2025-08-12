@@ -9,10 +9,10 @@ import WelcomePage from './Components/WelcomePage';
 import Dashboard from './Components/Dashboard';
 import Home from './Components/Home';
 import PetsPage from './Components/PetsPage';
-import CareTasksPage from './Components/CareTaskPage';
+//import CareTasksPage from './Components/CareTaskPage';
 import VisitsPage from './Components/VisitsPage';
 import { DataProvider } from './Components/DataContext';
-//import CareTasksPage from './Components/CareTaskPage';
+import CareTasksList from './Components/CareTaskList';
 
 function App() {
   return (
@@ -28,7 +28,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
 
           <Route path="/pets" element={<PetsPage />} />
-          <Route path="/tasks" element={<CareTasksPage />} />
+          <Route path="/tasks" element={<CareTasksList />} />
           <Route path="/visits" element={<VisitsPage />} />
 
           <Route path="*" element={<Navigate to="/" replace />} />

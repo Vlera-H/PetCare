@@ -20,6 +20,8 @@
   position: sticky;
   top: 0;
   height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .pc-brand {
@@ -38,7 +40,8 @@
   padding: 0.6rem 0.75rem;
 }
 
-.pc-nav .nav-link.active, .pc-nav .nav-link:hover {
+.pc-nav .nav-link.active,
+.pc-nav .nav-link:hover {
   background: #fff2e0;
   color: var(--pc-brown);
 }
@@ -52,6 +55,12 @@
   height: 1px;
   background: var(--pc-border);
   margin: 0.75rem 0;
+}
+
+.pc-sidebar-footer {
+  margin-top: auto;
+  border-top: 1px solid var(--pc-border);
+  padding-top: 0.75rem;
 }
 
 .pc-content {
@@ -76,7 +85,7 @@
   border: 1px solid var(--pc-border);
   border-radius: 14px;
   padding: 1rem;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
 }
 
 .pc-card h6 {

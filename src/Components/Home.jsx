@@ -1,12 +1,12 @@
 import React, { useMemo, useState } from 'react';
-import { Button, Container, Row, Col, Form, Modal } from 'react-bootstrap';
-// import AppNavbar from './AppNavbar';
-import Sidebar from './Sidebar';
-import './Home.css';
+import { Button, Container, Row, Col, Card, Form, Modal } from 'react-bootstrap';
+import AppNavbar from './AppNavbar';
 import PetList from './PetList';
-import CareTaskList from './CareTaskPage';
+import CareTaskList from './CareTaskList';
 import VisitsList from './VisitsList';
 import demoData from '../data/demoData';
+import './Home.css'; 
+import Sidebar from './Sidebar';
 
 const generateNextId = (items) => (items.length ? Math.max(...items.map(i => i.id)) + 1 : 1);
 
@@ -16,9 +16,18 @@ const Home = () => {
   const [visits, setVisits] = useState(demoData.visits);
   const [selectedPetId, setSelectedPetId] = useState(pets[0]?.id || null);
 
-  const selectedPet = useMemo(() => pets.find(p => p.id === selectedPetId) || null, [pets, selectedPetId]);
-  const tasksForPet = useMemo(() => careTasks.filter(t => !selectedPetId || t.petId === selectedPetId), [careTasks, selectedPetId]);
-  const visitsForPet = useMemo(() => visits.filter(v => !selectedPetId || v.petId === selectedPetId), [visits, selectedPetId]);
+  const selectedPet = useMemo(
+    () => pets.find(p => p.id === selectedPetId) || null,
+    [pets, selectedPetId]
+  );
+  const tasksForPet = useMemo(
+    () => careTasks.filter(t => !selectedPetId || t.petId === selectedPetId),
+    [careTasks, selectedPetId]
+  );
+  const visitsForPet = useMemo(
+    () => visits.filter(v => !selectedPetId || v.petId === selectedPetId),
+    [visits, selectedPetId]
+  );
 
   const totalPets = pets.length;
   const pendingTasksCount = tasksForPet.filter(t => !t.isCompleted).length;
@@ -37,7 +46,12 @@ const Home = () => {
   const [visitForm, setVisitForm] = useState({ visitDate: '', reason: '' });
 
   const handleAddPet = () => {
-    const newPet = { id: generateNextId(pets), name: petForm.name, breed: petForm.breed, birthDate: petForm.birthDate };
+    const newPet = {
+      id: generateNextId(pets),
+      name: petForm.name,
+      breed: petForm.breed,
+      birthDate: petForm.birthDate
+    };
     setPets(prev => [...prev, newPet]);
     setSelectedPetId(newPet.id);
     setPetForm({ name: '', breed: '', birthDate: '' });
@@ -59,7 +73,9 @@ const Home = () => {
   };
 
   const handleToggleTask = (taskId) => {
-    setCareTasks(prev => prev.map(t => t.id === taskId ? { ...t, isCompleted: !t.isCompleted } : t));
+    setCareTasks(prev =>
+      prev.map(t => t.id === taskId ? { ...t, isCompleted: !t.isCompleted } : t)
+    );
   };
 
   const handleDeleteTask = (taskId) => {
@@ -83,18 +99,21 @@ const Home = () => {
     <div className="pc-layout">
       <Sidebar />
 
-      <main className="pc-content">
-        <div className="pc-header">
-          <h3 className="m-0" style={{ color: '#5c4033' }}>Home</h3>
-        </div>
+      <div className="pc-content">
+        <AppNavbar />
 
-        <Container fluid className="px-0">
+        <Container className="my-4">
           <Row className="align-items-end g-3">
             <Col xs={12} md={6}>
               <Form.Label className="fw-semibold">Select Pet</Form.Label>
-              <Form.Select value={selectedPetId || ''} onChange={(e) => setSelectedPetId(Number(e.target.value) || null)}>
+              <Form.Select
+                value={selectedPetId || ''}
+                onChange={(e) => setSelectedPetId(Number(e.target.value) || null)}
+              >
                 {pets.map(p => (
-                  <option key={p.id} value={p.id}>{p.name} — {p.breed}</option>
+                  <option key={p.id} value={p.id}>
+                    {p.name} — {p.breed}
+                  </option>
                 ))}
                 {!pets.length && <option value="">No pets yet</option>}
               </Form.Select>
@@ -106,25 +125,37 @@ const Home = () => {
             </Col>
           </Row>
 
-          <div className="pc-kpis my-3">
-            <div className="pc-card">
-              <h6>Total Pets</h6>
-              <div className="pc-metric">{totalPets}</div>
-            </div>
-            <div className="pc-card">
-              <h6>Pending Tasks</h6>
-              <div className="pc-metric">{pendingTasksCount}</div>
-            </div>
-            <div className="pc-card">
-              <h6>Upcoming Visits</h6>
-              <div className="pc-metric">{upcomingVisitsCount}</div>
-            </div>
-          </div>
+          <Row className="my-4 g-3">
+            <Col md={4}>
+              <Card className="h-100 shadow-sm">
+                <Card.Body>
+                  <Card.Title>Total Pets</Card.Title>
+                  <Card.Text className="display-6 m-0">{totalPets}</Card.Text>
+                </Card.Body>
+              </Card>
+            </Col>
+            <Col md={4}>
+              <Card className="h-100 shadow-sm">
+                <Card.Body>
+                  <Card.Title>Pending Tasks</Card.Title>
+                  <Card.Text className="display-6 m-0">{pendingTasksCount}</Card.Text>
+                </Card.Body>
+              </Card>
+            </Col>
+            <Col md={4}>
+              <Card className="h-100 shadow-sm">
+                <Card.Body>
+                  <Card.Title>Upcoming Visits</Card.Title>
+                  <Card.Text className="display-6 m-0">{upcomingVisitsCount}</Card.Text>
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
 
           {selectedPet && (
-            <Row className="align-items-center mb-2">
+            <Row className="align-items-center mb-3">
               <Col>
-                <h5 className="m-0" style={{ color: '#5c4033' }}>{selectedPet.name} — {selectedPet.breed}</h5>
+                <h4 className="m-0">{selectedPet.name} — {selectedPet.breed}</h4>
                 <small className="text-muted">Born: {new Date(selectedPet.birthDate).toLocaleDateString()}</small>
               </Col>
             </Row>
@@ -132,112 +163,144 @@ const Home = () => {
 
           <Row className="g-4">
             <Col lg={6}>
-              <div className="pc-section-title">
-                <h6 className="m-0">Care Tasks</h6>
+              <div className="d-flex justify-content-between align-items-center mb-2">
+                <h5 className="m-0">Care Tasks</h5>
               </div>
               <CareTaskList tasks={tasksForPet} />
-              <div className="d-flex gap-2 mt-2 flex-wrap">
+              <div className="d-flex gap-2 mt-2">
                 {tasksForPet.map(t => (
                   <div key={t.id} className="d-flex align-items-center gap-2">
-                    <Button size="sm" variant={t.isCompleted ? 'secondary' : 'success'} onClick={() => handleToggleTask(t.id)}>
+                    <Button
+                      size="sm"
+                      variant={t.isCompleted ? 'secondary' : 'success'}
+                      onClick={() => handleToggleTask(t.id)}
+                    >
                       {t.isCompleted ? 'Mark Pending' : 'Mark Done'}
                     </Button>
-                    <Button size="sm" variant="outline-danger" onClick={() => handleDeleteTask(t.id)}>Delete</Button>
+                    <Button
+                      size="sm"
+                      variant="outline-danger"
+                      onClick={() => handleDeleteTask(t.id)}
+                    >
+                      Delete
+                    </Button>
                   </div>
                 ))}
               </div>
             </Col>
             <Col lg={6}>
-              <div className="pc-section-title">
-                <h6 className="m-0">Visits</h6>
+              <div className="d-flex justify-content-between align-items-center mb-2">
+                <h5 className="m-0">Visits</h5>
               </div>
               <VisitsList visits={visitsForPet} />
             </Col>
           </Row>
 
-          <Row className="g-4 mt-3">
+          <Row className="g-4 mt-4">
             <Col>
-              <div className="pc-section-title">
-                <h6 className="m-0">All Pets</h6>
-              </div>
+              <h5>All Pets</h5>
               <PetList pets={pets} />
             </Col>
           </Row>
         </Container>
-      </main>
 
-      {/* Add Pet Modal */}
-      <Modal show={showPetModal} onHide={() => setShowPetModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Add New Pet</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group className="mb-3">
-              <Form.Label>Name</Form.Label>
-              <Form.Control value={petForm.name} onChange={(e) => setPetForm(f => ({ ...f, name: e.target.value }))} />
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>Breed</Form.Label>
-              <Form.Control value={petForm.breed} onChange={(e) => setPetForm(f => ({ ...f, breed: e.target.value }))} />
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Birth Date</Form.Label>
-              <Form.Control type="date" value={petForm.birthDate} onChange={(e) => setPetForm(f => ({ ...f, birthDate: e.target.value }))} />
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowPetModal(false)}>Cancel</Button>
-          <Button variant="primary" onClick={handleAddPet} disabled={!petForm.name || !petForm.breed || !petForm.birthDate}>Add Pet</Button>
-        </Modal.Footer>
-      </Modal>
+        {/* Add Pet Modal */}
+        <Modal show={showPetModal} onHide={() => setShowPetModal(false)}>
+          <Modal.Header closeButton>
+            <Modal.Title>Add New Pet</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form>
+              <Form.Group className="mb-3">
+                <Form.Label>Name</Form.Label>
+                <Form.Control
+                  value={petForm.name}
+                  onChange={(e) => setPetForm(f => ({ ...f, name: e.target.value }))}
+                />
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Breed</Form.Label>
+                <Form.Control
+                  value={petForm.breed}
+                  onChange={(e) => setPetForm(f => ({ ...f, breed: e.target.value }))}
+                />
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>Birth Date</Form.Label>
+                <Form.Control
+                  type="date"
+                  value={petForm.birthDate}
+                  onChange={(e) => setPetForm(f => ({ ...f, birthDate: e.target.value }))}
+                />
+              </Form.Group>
+            </Form>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setShowPetModal(false)}>Cancel</Button>
+            <Button variant="primary" onClick={handleAddPet} disabled={!petForm.name || !petForm.breed || !petForm.birthDate}>Add Pet</Button>
+          </Modal.Footer>
+        </Modal>
 
-      {/* Add Task Modal */}
-      <Modal show={showTaskModal} onHide={() => setShowTaskModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Add Care Task</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group className="mb-3">
-              <Form.Label>Description</Form.Label>
-              <Form.Control value={taskForm.description} onChange={(e) => setTaskForm(f => ({ ...f, description: e.target.value }))} />
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Due Date</Form.Label>
-              <Form.Control type="date" value={taskForm.dueDate} onChange={(e) => setTaskForm(f => ({ ...f, dueDate: e.target.value }))} />
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowTaskModal(false)}>Cancel</Button>
-          <Button variant="primary" onClick={handleAddTask} disabled={!taskForm.description || !taskForm.dueDate || !selectedPetId}>Add Task</Button>
-        </Modal.Footer>
-      </Modal>
+        {/* Add Task Modal */}
+        <Modal show={showTaskModal} onHide={() => setShowTaskModal(false)}>
+          <Modal.Header closeButton>
+            <Modal.Title>Add Care Task</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form>
+              <Form.Group className="mb-3">
+                <Form.Label>Description</Form.Label>
+                <Form.Control
+                  value={taskForm.description}
+                  onChange={(e) => setTaskForm(f => ({ ...f, description: e.target.value }))}
+                />
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>Due Date</Form.Label>
+                <Form.Control
+                  type="date"
+                  value={taskForm.dueDate}
+                  onChange={(e) => setTaskForm(f => ({ ...f, dueDate: e.target.value }))}
+                />
+              </Form.Group>
+            </Form>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setShowTaskModal(false)}>Cancel</Button>
+            <Button variant="primary" onClick={handleAddTask} disabled={!taskForm.description || !taskForm.dueDate || !selectedPetId}>Add Task</Button>
+          </Modal.Footer>
+        </Modal>
 
-      {/* Add Visit Modal */}
-      <Modal show={showVisitModal} onHide={() => setShowVisitModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Add Visit</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group className="mb-3">
-              <Form.Label>Reason</Form.Label>
-              <Form.Control value={visitForm.reason} onChange={(e) => setVisitForm(f => ({ ...f, reason: e.target.value }))} />
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Visit Date</Form.Label>
-              <Form.Control type="date" value={visitForm.visitDate} onChange={(e) => setVisitForm(f => ({ ...f, visitDate: e.target.value }))} />
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowVisitModal(false)}>Cancel</Button>
-          <Button variant="primary" onClick={handleAddVisit} disabled={!visitForm.reason || !visitForm.visitDate || !selectedPetId}>Add Visit</Button>
-        </Modal.Footer>
-      </Modal>
+        {/* Add Visit Modal */}
+        <Modal show={showVisitModal} onHide={() => setShowVisitModal(false)}>
+          <Modal.Header closeButton>
+            <Modal.Title>Add Visit</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form>
+              <Form.Group className="mb-3">
+                <Form.Label>Reason</Form.Label>
+                <Form.Control
+                  value={visitForm.reason}
+                  onChange={(e) => setVisitForm(f => ({ ...f, reason: e.target.value }))}
+                />
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>Visit Date</Form.Label>
+                <Form.Control
+                  type="date"
+                  value={visitForm.visitDate}
+                  onChange={(e) => setVisitForm(f => ({ ...f, visitDate: e.target.value }))}
+                />
+              </Form.Group>
+            </Form>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setShowVisitModal(false)}>Cancel</Button>
+            <Button variant="primary" onClick={handleAddVisit} disabled={!visitForm.reason || !visitForm.visitDate || !selectedPetId}>Add Visit</Button>
+          </Modal.Footer>
+        </Modal>
+      </div>
     </div>
   );
 };

@@ -20,6 +20,9 @@ const AppNavbar = () => {
           <Nav className="me-auto">
             <Nav.Link as={Link} to="/">Home</Nav.Link>
             <Nav.Link as={Link} to="/dashboard">Dashboard</Nav.Link>
+            <Nav.Link as={Link} to="/pets">Pets</Nav.Link>
+            <Nav.Link as={Link} to="/tasks">Tasks</Nav.Link>
+            <Nav.Link as={Link} to="/visits">Visits</Nav.Link>
           </Nav>
           <div className="d-flex gap-2">
             <Button

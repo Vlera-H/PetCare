@@ -7,23 +7,31 @@ import LoginForm from './Components/LoginForm';
 import WelcomePage from './Components/WelcomePage';
 import Dashboard from './Components/Dashboard';
 import Home from './Components/Home';
+import PetsPage from './Components/PetsPage';
+import CareTasksPage from './Components/CareTasksPage';
+import VisitsPage from './Components/VisitsPage';
+import { DataProvider } from './Components/DataContext';
 
 function App() {
   return (
     <Router>
-      <Routes>
-        
-        <Route path="/welcome" element={<WelcomePage />} />
-        
-        
-        <Route path="/welcome" element={<WelcomePage />} />
-        <Route path="/login" element={<LoginForm />} />
-        <Route path="/register" element={<RegisterForm />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/home" element={<Home />} />
+      <DataProvider>
+        <Routes>
+          <Route path="/welcome" element={<WelcomePage />} />
+          <Route path="/login" element={<LoginForm />} />
+          <Route path="/register" element={<RegisterForm />} />
 
-        <Route path="*" element={<Navigate to="/welcome" />} />
-      </Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+
+          <Route path="/pets" element={<PetsPage />} />
+          <Route path="/tasks" element={<CareTasksPage />} />
+          <Route path="/visits" element={<VisitsPage />} />
+
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
+      </DataProvider>
     </Router>
   );
 }

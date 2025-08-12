@@ -6,22 +6,19 @@ import RegisterForm from './Components/RegisterForm';
 import LoginForm from './Components/LoginForm';
 import WelcomePage from './Components/WelcomePage';
 import Dashboard from './Components/Dashboard';
+import Home from './Components/Home';
+import ProtectedRoute from './Components/ProtectedRoute';
 
 function App() {
   return (
     <Router>
       <Routes>
-        
-        <Route path="/welcome" element={<WelcomePage />} />
-        
-        
         <Route path="/welcome" element={<WelcomePage />} />
         <Route path="/login" element={<LoginForm />} />
         <Route path="/register" element={<RegisterForm />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        
-       
-        <Route path="*" element={<Navigate to="/welcome" />} />
+        <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+        <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>
   );

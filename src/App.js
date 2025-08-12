@@ -12,6 +12,7 @@ import { DataProvider } from './context/DataContext';
 import PetsPage from './Components/PetsPage';
 import CarePage from './Components/CarePage';
 import VisitsPage from './Components/VisitsPage';
+import SettingsPage from './Components/SettingsPage';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="/pets" element={<ProtectedRoute><PetsPage /></ProtectedRoute>} />
           <Route path="/care" element={<ProtectedRoute><CarePage /></ProtectedRoute>} />
           <Route path="/visits" element={<ProtectedRoute><VisitsPage /></ProtectedRoute>} />
+          <Route path="/settings" element={<ProtectedRoute><SettingsPage /></ProtectedRoute>} />
 
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>

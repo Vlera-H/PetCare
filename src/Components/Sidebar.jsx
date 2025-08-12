@@ -1,11 +1,18 @@
 import React from 'react';
 import { Nav } from 'react-bootstrap';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const Sidebar = () => {
   const { pathname } = useLocation();
+  const navigate = useNavigate();
 
   const isActive = (to) => pathname === to;
+
+  const handleLogout = () => {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    navigate('/welcome');
+  };
 
   return (
     <aside className="pc-sidebar">
@@ -31,12 +38,20 @@ const Sidebar = () => {
           <span className="pc-icon">🩺</span>
           <span>Visits</span>
         </Nav.Link>
-        <div className="pc-divider" />
-        <Nav.Link as={Link} to="#" disabled>
-          <span className="pc-icon">⚙️</span>
-          <span>Settings</span>
-        </Nav.Link>
       </Nav>
+
+      <div className="pc-sidebar-footer">
+        <Nav className="flex-column pc-nav">
+          <Nav.Link as={Link} to="/settings" className={isActive('/settings') ? 'active' : ''}>
+            <span className="pc-icon">⚙️</span>
+            <span>Settings</span>
+          </Nav.Link>
+          <Nav.Link onClick={handleLogout}>
+            <span className="pc-icon">🚪</span>
+            <span>Logout</span>
+          </Nav.Link>
+        </Nav>
+      </div>
     </aside>
   );
 };

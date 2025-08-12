@@ -20,6 +20,8 @@
   position: sticky;
   top: 0;
   height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .pc-brand {
@@ -52,6 +54,12 @@
   height: 1px;
   background: var(--pc-border);
   margin: 0.75rem 0;
+}
+
+.pc-sidebar-footer {
+  margin-top: auto;
+  border-top: 1px solid var(--pc-border);
+  padding-top: 0.75rem;
 }
 
 .pc-content {

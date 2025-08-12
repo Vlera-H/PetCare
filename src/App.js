@@ -29,7 +29,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
 
           <Route path="/pets" element={<PetsPage />} />
-          <Route path="/tasks" element={<CareTasksList />} />
+          <Route path="/tasks" element={<CareTasksPage />} />
           <Route path="/visits" element={<VisitsPage />} />
            <Route path="/care-guide" element={<CareGuide />} />
 

@@ -85,11 +85,11 @@ const Home = () => {
                 </Form.Select>
               </Form.Group>
 
-              <div className="d-flex flex-wrap align-items-center gap-2 mt-2">
+              {/* <div className="d-flex flex-wrap align-items-center gap-2 mt-2">
                 <span className="text-brown">Wanna add a new pet?</span>
                 <Button size="sm" className="custom-btn btn-orange" onClick={() => navigate('/pets')}>Add Pet</Button>
                 <Button size="sm" variant="outline-brown" className="custom-btn" onClick={() => navigate('/care-guide')}>Care Guide</Button>
-              </div>
+              </div> */}
             </Col>
             <Col lg={6} className="welcome-image text-center">
               <img src="/img/pets.png" alt="Happy pets" className="home-hero-img" />

@@ -179,3 +179,13 @@
     grid-template-columns: 1fr;
   }
 }
+.pc-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  gap: 1rem; /* distanca mes elementeve */
+  padding-left: 3rem; /* shton një hapsirë nga e majta që e largon titullin nga shigjeta */
+  position: relative;
+}
+

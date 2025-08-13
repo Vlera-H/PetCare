@@ -46,7 +46,7 @@ const Home = () => {
   // Metrics removed as per request
 
   return (
-    <div>
+    <div className="home-background">
       <AppNavbar />
 
       <Container fluid className="px-0">
@@ -55,8 +55,13 @@ const Home = () => {
           <Col lg={7} className="home-hero-content">
             <h1 className="home-hero-title">Welcome{firstName ? `, ${firstName}` : ''}</h1>
             <p className="home-hero-subtitle">Keep your pets happy and healthy. Track their upcoming visits and care tasks in one place.</p>
+            <div className="home-inline-links">
+              <button className="mini-link btn btn-link p-0" onClick={() => navigate('/pets')}>Manage Pets</button>
+              <button className="mini-link btn btn-link p-0" onClick={() => navigate('/tasks')}>Manage Care Tasks</button>
+              <button className="mini-link btn btn-link p-0" onClick={() => navigate('/visits')}>Manage Visits</button>
+            </div>
             <div className="mt-2">
-              <Button variant="outline-brown" className="custom-btn" onClick={() => navigate('/dashboard')}>Wanna see your insights?</Button>
+              <button className="home-inline-cta btn btn-link p-0" onClick={() => navigate('/dashboard')}>Wanna see your insights?</button>
             </div>
           </Col>
           <Col lg={5} className="home-hero-image text-center">
@@ -72,8 +77,8 @@ const Home = () => {
         {/* Insights just after hero (removed cards as requested) */}
 
         {/* Upcoming panels at the very end */}
-        <div style={{ height: '1rem' }} />
-        <Row className="g-3 panels-offset">
+        <div style={{ height: '2rem' }} />
+        <Row className="g-3 panels-offset" style={{ marginTop: '2rem' }}>
           <Col lg={6}>
             <Card className="shadow-sm h-100">
               <Card.Body>

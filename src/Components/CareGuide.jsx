@@ -69,7 +69,7 @@ const CareGuide = () => {
               <Card className="h-100 shadow-sm">
                  <Card.Img
                   variant="top"
-                  src="/img/dy.jpg"
+                  src="/img/food.png"
                   alt="Feeding your pet"
                   style={{ objectFit: 'cover', maxHeight: 180 }}
                 />

@@ -356,8 +356,8 @@
 .home-inline-cta { color: #5c4033 !important; text-decoration: underline; font-weight: 700; }
 
 /* Compact circular mini actions */
-.mini-circles { display: flex; flex-direction: row; flex-wrap: wrap; gap: 1rem; align-items: center; margin-top: 0.25rem; }
-.mini-circle-item { display: flex; flex-direction: column; align-items: center; gap: 0.35rem; }
+.mini-circles { display: flex !important; flex-direction: row !important; flex-wrap: wrap; gap: 1rem; align-items: center; margin-top: 0.25rem; width: 100%; }
+.mini-circle-item { display: flex; flex-direction: column; align-items: center; gap: 0.35rem; flex: 0 0 auto; }
 .mini-circle {
   width: 100px; height: 100px; border-radius: 999px;
   background: #ffffffaa; border: 1px solid var(--pc-border);

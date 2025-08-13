@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useMemo } from 'react';
 import { Button, Container, Row, Col, Card } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import AppNavbar from './AppNavbar';
@@ -16,13 +16,6 @@ const tips = [
 const Home = () => {
   const navigate = useNavigate();
   const { pets, careTasks, visits } = useData();
-
-  const [firstName, setFirstName] = useState('');
-
-  useEffect(() => {
-    const storedName = localStorage.getItem('firstName') || '';
-    setFirstName(storedName);
-  }, []);
 
   const nextVisit = useMemo(() => {
     const today = new Date();
@@ -45,12 +38,6 @@ const Home = () => {
     const pet = pets.find(p => p.id === t.petId) || null;
     return { ...t, pet };
   }, [careTasks, pets]);
-
-  const stats = useMemo(() => ({
-    totalPets: pets.length,
-    totalTasks: careTasks.length,
-    totalVisits: visits.length,
-  }), [pets.length, careTasks.length, visits.length]);
 
   const recentActivity = useMemo(() => {
     const taskActs = careTasks.slice(-3).map(t => ({

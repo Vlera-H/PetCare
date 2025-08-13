@@ -356,16 +356,17 @@
 .home-inline-cta { color: #5c4033 !important; text-decoration: underline; font-weight: 700; }
 
 /* Compact circular mini actions */
-.mini-circles { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; margin-top: 0.25rem; }
+.mini-circles { display: flex; flex-direction: column; gap: 1rem; justify-content: space-between; align-items: flex-start; margin-top: 0.25rem; min-height: 360px; }
 .mini-circle-item { display: flex; flex-direction: column; align-items: center; gap: 0.35rem; }
 .mini-circle {
-  width: 78px; height: 78px; border-radius: 999px;
+  width: 100px; height: 100px; border-radius: 999px;
   background: #ffffffaa; border: 1px solid var(--pc-border);
   display: flex; align-items: center; justify-content: center;
   box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+  overflow: hidden;
 }
 .mini-circle:hover { background: #fff; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
-.mini-circle-icon { font-size: 1.5rem; }
+.mini-circle-icon { font-size: 1.8rem; }
 .mini-circle-label { color: #5c4033; font-weight: 700; font-size: 0.9rem; white-space: nowrap; }
 
 @media (max-width: 992px) {

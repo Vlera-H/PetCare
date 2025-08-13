@@ -1,5 +1,5 @@
 import React, { useMemo, useEffect, useState } from 'react';
-import { Button, Container, Row, Col, Card, ProgressBar } from 'react-bootstrap';
+import { Button, Container, Row, Col, Card } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import AppNavbar from './AppNavbar';
 import './Home.css';
@@ -43,11 +43,7 @@ const Home = () => {
   }, [careTasks, pets]);
 
   // Insights metrics
-  const totalPets = pets.length;
-  const totalTasks = careTasks.length;
-  const completedTasks = careTasks.filter(t => t.isCompleted).length;
-  const completionRate = totalTasks ? Math.round((completedTasks / totalTasks) * 100) : 0;
-  const upcomingVisitsCount = upcomingVisits.length;
+  // Metrics removed as per request
 
   return (
     <div>
@@ -73,51 +69,7 @@ const Home = () => {
           </Col>
         </Row>
 
-        {/* Insights just after hero */}
-        <Row className="g-3 insights-row">
-          <Col md={4}>
-            <Card className="shadow-sm metric-card h-100">
-              <Card.Body>
-                <div className="metric-header">
-                  <div className="icon-circle">📝</div>
-                  <div>
-                    <div className="metric-label">Tasks Completed</div>
-                    <div className="metric-value">{completedTasks}/{totalTasks}</div>
-                  </div>
-                </div>
-                <ProgressBar className="mt-2" now={completionRate} label={`${completionRate}%`} visuallyHidden={false} />
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col md={4}>
-            <Card className="shadow-sm metric-card h-100">
-              <Card.Body>
-                <div className="metric-header">
-                  <div className="icon-circle">📅</div>
-                  <div>
-                    <div className="metric-label">Upcoming Visits</div>
-                    <div className="metric-value">{upcomingVisitsCount}</div>
-                  </div>
-                </div>
-                <div className="metric-foot text-muted small">Next: {upcomingVisits[0] ? upcomingVisits[0].date.toLocaleDateString() : '—'}</div>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col md={4}>
-            <Card className="shadow-sm metric-card h-100">
-              <Card.Body>
-                <div className="metric-header">
-                  <div className="icon-circle">🐶</div>
-                  <div>
-                    <div className="metric-label">Total Pets</div>
-                    <div className="metric-value">{totalPets}</div>
-                  </div>
-                </div>
-                <div className="metric-foot text-muted small">Profiles up to date keep care easier</div>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
+        {/* Insights just after hero (removed cards as requested) */}
 
         {/* Upcoming panels at the very end */}
         <div style={{ height: '1rem' }} />

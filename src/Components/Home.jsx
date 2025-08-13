@@ -1,7 +1,6 @@
 import React, { useMemo, useState, useEffect } from 'react';
-import { Button, Container, Row, Col, Form } from 'react-bootstrap';
+import { Button, Container, Row, Col, Form, ProgressBar, Card } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import AppNavbar from './AppNavbar';
 import Sidebar from './Sidebar';
 import './Home.css';
 import { useData } from './DataContext';
@@ -38,6 +37,12 @@ const Home = () => {
   const pendingTasksCount = tasksForPet.filter(t => !t.isCompleted).length;
   const upcomingVisitsCount = visitsForPet.length;
 
+  const selectedTasksTotal = tasksForPet.length;
+  const selectedTasksCompleted = tasksForPet.filter(t => t.isCompleted).length;
+  const selectedTasksPct = selectedTasksTotal ? Math.round((selectedTasksCompleted / selectedTasksTotal) * 100) : 0;
+  const nextPendingTasks = tasksForPet.filter(t => !t.isCompleted).sort((a,b) => new Date(a.dueDate) - new Date(b.dueDate)).slice(0,3);
+  const nextVisits = visitsForPet.sort((a,b) => new Date(a.visitDate) - new Date(b.visitDate)).slice(0,3);
+
   return (
     <div className={`pc-layout ${isSidebarOpen ? '' : 'sidebar-closed'}`}>
       {isSidebarOpen && <Sidebar />}
@@ -52,8 +57,13 @@ const Home = () => {
 
       <main className="pc-content">
         <div className="pc-header">
-          <h3 className="m-0" style={{ color: '#5c4033' }}>Home</h3>
-          <AppNavbar />
+          <div />
+          <div className="d-flex gap-2">
+            <Button variant="outline-brown" className="custom-btn" onClick={() => navigate('/pets')}>Pets</Button>
+            <Button variant="outline-brown" className="custom-btn" onClick={() => navigate('/tasks')}>Tasks</Button>
+            <Button variant="outline-brown" className="custom-btn" onClick={() => navigate('/visits')}>Visits</Button>
+            <Button variant="orange" className="custom-btn btn-orange" onClick={() => navigate('/care-guide')}>Care Guide</Button>
+          </div>
         </div>
 
         <Container fluid className="px-0">
@@ -61,16 +71,9 @@ const Home = () => {
           <Row className="welcome-fullscreen align-items-center" style={{ paddingTop: 0, paddingBottom: '1.25rem' }}>
             <Col lg={6} className="welcome-text">
               <h1 className="welcome-title">Welcome{firstName ? `, ${firstName}` : ''}</h1>
-              <h2 className="welcome-subtitle">Your Pet Care Dashboard</h2>
               <p className="text-muted mb-4">
                 Track pets, care tasks, and visits all in one place. Select a pet to focus or jump into managing details.
               </p>
-
-              <div className="d-flex flex-wrap gap-2 mb-3">
-                <Button variant="outline-brown" className="custom-btn" onClick={() => navigate('/pets')}>Manage Pets</Button>
-                <Button variant="orange" className="custom-btn btn-orange" onClick={() => navigate('/tasks')} disabled={!pets.length}>Manage Tasks</Button>
-                <Button variant="outline-brown" className="custom-btn" onClick={() => navigate('/visits')} disabled={!pets.length}>Manage Visits</Button>
-              </div>
 
               <Form.Group className="mb-3" style={{ maxWidth: 420 }}>
                 <Form.Label className="fw-semibold">Focus Pet</Form.Label>
@@ -92,11 +95,11 @@ const Home = () => {
               </div>
             </Col>
             <Col lg={6} className="welcome-image text-center">
-              <img src="/img/animals-hero.png" alt="Happy pets" className="home-hero-img" />
+              <img src="/img/pets.png" alt="Happy pets" className="home-hero-img" />
             </Col>
           </Row>
 
-          {/* KPI cards */}
+          {/* Overall KPI cards */}
           <div className="home-kpis my-3">
             <div className="pc-card">
               <h6>Total Pets</h6>
@@ -112,12 +115,63 @@ const Home = () => {
             </div>
           </div>
 
-          {/* Quick glance of selected pet */}
+          {/* Focus pet status */}
           {selectedPet && (
-            <Row className="align-items-center mb-2">
-              <Col>
-                <h5 className="m-0" style={{ color: '#5c4033' }}>{selectedPet.name} — {selectedPet.breed}</h5>
-                <small className="text-muted">Born: {new Date(selectedPet.birthDate).toLocaleDateString()}</small>
+            <Row className="g-3 mt-1">
+              <Col lg={6}>
+                <Card className="shadow-sm h-100">
+                  <Card.Body>
+                    <Card.Title className="d-flex justify-content-between align-items-center">
+                      <span>{selectedPet.name} — {selectedPet.breed}</span>
+                      <small className="text-muted">Born: {new Date(selectedPet.birthDate).toLocaleDateString()}</small>
+                    </Card.Title>
+                    <div className="mb-2">
+                      <strong>Task Progress</strong>
+                      <ProgressBar now={selectedTasksPct} label={`${selectedTasksPct}%`} className="mt-1" visuallyHidden={false} />
+                      <div className="text-muted small mt-1">{selectedTasksCompleted} of {selectedTasksTotal} tasks completed</div>
+                    </div>
+                    <div>
+                      <strong>Visits</strong>
+                      <div className="text-muted small">{visitsForPet.length} total</div>
+                    </div>
+                  </Card.Body>
+                </Card>
+              </Col>
+              <Col lg={6}>
+                <Row className="g-3">
+                  <Col md={12}>
+                    <Card className="shadow-sm">
+                      <Card.Body>
+                        <Card.Title>Next pending tasks</Card.Title>
+                        {nextPendingTasks.length ? (
+                          <ul className="mb-0">
+                            {nextPendingTasks.map(t => (
+                              <li key={t.id}>{t.description} — {new Date(t.dueDate).toLocaleDateString()}</li>
+                            ))}
+                          </ul>
+                        ) : (
+                          <div className="text-muted small">No pending tasks</div>
+                        )}
+                      </Card.Body>
+                    </Card>
+                  </Col>
+                  <Col md={12}>
+                    <Card className="shadow-sm">
+                      <Card.Body>
+                        <Card.Title>Upcoming visits</Card.Title>
+                        {nextVisits.length ? (
+                          <ul className="mb-0">
+                            {nextVisits.map(v => (
+                              <li key={v.id}>{new Date(v.visitDate).toLocaleDateString()} — {v.reason}</li>
+                            ))}
+                          </ul>
+                        ) : (
+                          <div className="text-muted small">No upcoming visits</div>
+                        )}
+                      </Card.Body>
+                    </Card>
+                  </Col>
+                </Row>
               </Col>
             </Row>
           )}

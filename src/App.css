@@ -36,3 +36,87 @@
     transform: rotate(360deg);
   }
 }
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Themed navbar active link */
+.navbar .nav-link.active,
+.navbar .nav-link.show,
+.navbar .nav-link:focus,
+.navbar .nav-link:hover {
+  color: #5c4033 !important;
+}
+.navbar .nav-link.active {
+  font-weight: 700;
+  border-bottom: 2px solid #ff8c00;
+}
+
+/* Dropdown three-dot alignment tweak */
+#settings-menu .dropdown-toggle::after {
+  display: none;
+}
+
+/* Bigger brand */
+.brand-big { 
+  font-size: 1.4rem !important; 
+  font-weight: 900 !important; 
+}
+
+/* Ensure settings menu stays right */
+.navbar .ms-auto { margin-left: auto !important; }
+
+/* Navbar trailing settings to far right */
+.navbar .navbar-collapse { display: flex !important; }
+.navbar .navbar-collapse .ms-auto { margin-left: auto !important; }
+
+/* Taller header */
+.header-tall { padding-top: 0.5rem !important; padding-bottom: 0.5rem !important; }
+
+/* Global back arrow (brown, top-left) */
+.back-arrow {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  color: #5c4033;
+  font-size: 24px;
+  line-height: 1;
+  z-index: 1050;
+  cursor: pointer;
+  text-decoration: none;
+}

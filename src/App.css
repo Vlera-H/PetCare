@@ -53,3 +53,9 @@
 #settings-menu .dropdown-toggle::after {
   display: none;
 }
+
+/* Bigger brand */
+.brand-big { font-size: 1.4rem !important; font-weight: 900 !important; }
+
+/* Ensure settings menu stays right */
+.navbar .ms-auto { margin-left: auto !important; }

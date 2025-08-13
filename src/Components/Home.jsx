@@ -64,7 +64,7 @@ const Home = () => {
         </Row>
 
         {/* Upcoming panels */}
-        <Row className="g-3 mt-1">
+        <Row className="g-3 panels-offset">
           <Col lg={6}>
             <Card className="shadow-sm h-100">
               <Card.Body>

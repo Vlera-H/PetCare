@@ -278,6 +278,7 @@
   border: 1px solid var(--pc-border);
   border-radius: 16px;
   padding: 1rem 1.25rem;
+  margin-top: 0.5rem;
 }
 .home-hero-title { font-size: 2rem; font-weight: 900; color: var(--pc-brown); margin-bottom: 0.25rem; }
 .home-hero-subtitle { color: #7a6a60; max-width: 720px; }
@@ -289,6 +290,7 @@
 .home-list-item { padding: 0.6rem 0.5rem; border: 1px dashed #ead9c7; border-radius: 10px; background: #fff; }
 .home-list-item:hover { background: #fff7ef; }
 .home-muted { color: #7a6a60; font-size: 0.9rem; }
+.panels-offset { margin-top: 0.75rem; }
 
 @media (max-width: 992px) {
   .pc-layout {

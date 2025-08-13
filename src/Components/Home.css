@@ -320,6 +320,33 @@
 .home-inline-cta { font-size: 0.9rem; font-weight: 600; color: #5c4033; text-decoration: underline; }
 .home-inline-cta:hover { color: #3f2d25; }
 
+/* Ensure Home fills background */
+.home-background, body, html {
+  background: linear-gradient(to bottom right, #ffe9c6, #d2b48c) !important;
+}
+
+/* Mini cards */
+.mini-cards { min-height: 220px; }
+.mini-card {
+  background: #ffffffaa;
+  border: 1px solid var(--pc-border);
+  border-radius: 12px;
+  padding: 0.75rem 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: #5c4033;
+}
+.mini-card:hover { background: #fff; box-shadow: 0 8px 16px rgba(0,0,0,0.08); }
+.mini-card-icon { font-size: 1.25rem; }
+.mini-card-text { font-weight: 800; }
+
+/* Brown links */
+.mini-link, .home-inline-cta { color: #5c4033 !important; }
+
+/* Hero stretch */
+.home-hero { min-height: 280px; }
+
 @media (max-width: 992px) {
   .pc-layout {
     grid-template-columns: 1fr;

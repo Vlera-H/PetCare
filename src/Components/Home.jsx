@@ -51,18 +51,25 @@ const Home = () => {
 
       <Container fluid className="px-0">
         {/* Welcome band with image */}
-        <Row className="g-3 align-items-center home-hero">
-          <Col lg={7} className="home-hero-content">
+        <Row className="g-3 align-items-stretch home-hero">
+          <Col lg={7} className="home-hero-content d-flex flex-column">
             <h1 className="home-hero-title">Welcome{firstName ? `, ${firstName}` : ''}</h1>
             <p className="home-hero-subtitle">Keep your pets happy and healthy. Track their upcoming visits and care tasks in one place.</p>
-            <div className="home-inline-links">
-              <button className="mini-link btn btn-link p-0" onClick={() => navigate('/pets')}>Manage Pets</button>
-              <button className="mini-link btn btn-link p-0" onClick={() => navigate('/tasks')}>Manage Care Tasks</button>
-              <button className="mini-link btn btn-link p-0" onClick={() => navigate('/visits')}>Manage Visits</button>
+            <div className="mini-cards d-flex flex-column gap-2 flex-grow-1">
+              <button className="mini-card text-start" onClick={() => navigate('/pets')}>
+                <span className="mini-card-icon">🐶</span>
+                <span className="mini-card-text">Manage Pets</span>
+              </button>
+              <button className="mini-card text-start" onClick={() => navigate('/tasks')}>
+                <span className="mini-card-icon">📝</span>
+                <span className="mini-card-text">Manage Care Tasks</span>
+              </button>
+              <button className="mini-card text-start" onClick={() => navigate('/visits')}>
+                <span className="mini-card-icon">🩺</span>
+                <span className="mini-card-text">Manage Visits</span>
+              </button>
             </div>
-            <div className="mt-2">
-              <button className="home-inline-cta btn btn-link p-0" onClick={() => navigate('/dashboard')}>Wanna see your insights?</button>
-            </div>
+            <button className="home-inline-cta btn btn-link align-self-start p-0 mt-2" onClick={() => navigate('/dashboard')}>Wanna see your insights?</button>
           </Col>
           <Col lg={5} className="home-hero-image text-center">
             <img

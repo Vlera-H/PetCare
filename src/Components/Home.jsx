@@ -59,6 +59,9 @@ const Home = () => {
           <Col lg={7} className="home-hero-content">
             <h1 className="home-hero-title">Welcome{firstName ? `, ${firstName}` : ''}</h1>
             <p className="home-hero-subtitle">Keep your pets happy and healthy. Track their upcoming visits and care tasks in one place.</p>
+            <div className="mt-2">
+              <Button variant="outline-brown" className="custom-btn" onClick={() => navigate('/dashboard')}>Wanna see your insights?</Button>
+            </div>
           </Col>
           <Col lg={5} className="home-hero-image text-center">
             <img
@@ -116,7 +119,8 @@ const Home = () => {
           </Col>
         </Row>
 
-        {/* Upcoming panels at the end */}
+        {/* Upcoming panels at the very end */}
+        <div style={{ height: '1rem' }} />
         <Row className="g-3 panels-offset">
           <Col lg={6}>
             <Card className="shadow-sm h-100">

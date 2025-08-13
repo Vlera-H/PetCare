@@ -94,8 +94,8 @@ const Home = () => {
 
         {/* Upcoming panels at the very end */}
         <div style={{ height: '2rem' }} />
-        <Row className="g-3 panels-offset" style={{ marginTop: '2rem' }}>
-          <Col lg={6}>
+        <Row className="g-3 panels-offset justify-content-center" style={{ marginTop: '2rem' }}>
+          <Col lg={5}>
             <Card className="shadow-sm h-100 panel-brown">
               <Card.Body>
                 <div className="home-card-title">Upcoming Visits</div>
@@ -120,7 +120,7 @@ const Home = () => {
             </Card>
           </Col>
 
-          <Col lg={6}>
+          <Col lg={5}>
             <Card className="shadow-sm h-100 panel-orange">
               <Card.Body>
                 <div className="home-card-title">Upcoming Care Tasks</div>

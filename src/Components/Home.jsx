@@ -84,7 +84,7 @@ const Home = () => {
               className="home-hero-img"
               onError={(e) => { e.currentTarget.style.display = 'none'; }}
             />
-            <div className="mt-2">
+            <div className="mt-2 d-flex justify-content-end">
               <button className="home-inline-cta btn btn-link p-0" onClick={() => navigate('/dashboard')}>Wanna see your insights?</button>
             </div>
           </Col>

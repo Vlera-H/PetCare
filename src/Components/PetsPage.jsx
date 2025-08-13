@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Container, Row, Col, Form, Table, Card } from 'react-bootstrap';
+import { Button, Container, Row, Col, Form, Table } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useData } from './DataContext';
 
@@ -21,46 +21,30 @@ const PetsPage = () => {
     <div className="pets-background">
       <Container fluid className="py-3">
         <span className="back-arrow" onClick={() => navigate('/')}>←</span>
-        <h3 className="m-0" style={{ color: '#5c4033', paddingLeft: '2rem' }}>Pets</h3>
+        <h3 className="m-0 text-center" style={{ color: '#5c4033' }}>Pets</h3>
 
-        {/* Small intro and image (compact) */}
-        <Row className="g-3 align-items-center mt-1">
-          <Col md={8}>
-            <p className="mb-0" style={{ color: '#6f5b50' }}>
-              We’re happy you’re taking care of your pets. Keep profiles updated and track routines for a happier, healthier life together.
-            </p>
+        {/* Horizontal add form (focus) */}
+        <Row className="g-3 align-items-end mt-2">
+          <Col xs={12} md={4}>
+            <Form.Label className="fw-semibold">Name</Form.Label>
+            <Form.Control value={form.name} onChange={(e) => setForm(f => ({ ...f, name: e.target.value }))} />
           </Col>
-          <Col md={4} className="text-md-end text-center">
-            <img src="/img/pets-hero.png" alt="Pets" className="pets-hero-img-small" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
+          <Col xs={12} md={4}>
+            <Form.Label className="fw-semibold">Breed</Form.Label>
+            <Form.Control value={form.breed} onChange={(e) => setForm(f => ({ ...f, breed: e.target.value }))} />
+          </Col>
+          <Col xs={12} md={3}>
+            <Form.Label className="fw-semibold">Birth Date</Form.Label>
+            <Form.Control type="date" value={form.birthDate} onChange={(e) => setForm(f => ({ ...f, birthDate: e.target.value }))} />
+          </Col>
+          <Col xs={12} md="auto">
+            <Button onClick={handleAdd} disabled={!form.name || !form.breed || !form.birthDate}>+ Add Pet</Button>
           </Col>
         </Row>
 
-        {/* Main content: Add form (focus) + Pets table */}
-        <Row className="g-3 mt-2">
-          <Col md={4} lg={3}>
-            <Card className="shadow-sm">
-              <Card.Body>
-                <div className="fw-bold mb-2" style={{ color: '#5c4033' }}>Add new pet</div>
-                <Form>
-                  <Form.Group className="mb-2">
-                    <Form.Label className="fw-semibold">Name</Form.Label>
-                    <Form.Control value={form.name} onChange={(e) => setForm(f => ({ ...f, name: e.target.value }))} />
-                  </Form.Group>
-                  <Form.Group className="mb-2">
-                    <Form.Label className="fw-semibold">Breed</Form.Label>
-                    <Form.Control value={form.breed} onChange={(e) => setForm(f => ({ ...f, breed: e.target.value }))} />
-                  </Form.Group>
-                  <Form.Group className="mb-3">
-                    <Form.Label className="fw-semibold">Birth Date</Form.Label>
-                    <Form.Control type="date" value={form.birthDate} onChange={(e) => setForm(f => ({ ...f, birthDate: e.target.value }))} />
-                  </Form.Group>
-                  <Button className="w-100" onClick={handleAdd} disabled={!form.name || !form.breed || !form.birthDate}>+ Add Pet</Button>
-                </Form>
-              </Card.Body>
-            </Card>
-          </Col>
-
-          <Col md={8} lg={9}>
+        {/* Pets list */}
+        <Row className="g-3 mt-3">
+          <Col>
             <Table striped hover responsive>
               <thead>
                 <tr>
@@ -79,6 +63,13 @@ const PetsPage = () => {
                 ))}
               </tbody>
             </Table>
+          </Col>
+        </Row>
+
+        {/* Small image below */}
+        <Row className="mt-2">
+          <Col className="text-center">
+            <img src="/img/pets-hero.png" alt="Pets" className="pets-hero-img-small" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
           </Col>
         </Row>
       </Container>

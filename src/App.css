@@ -36,3 +36,20 @@
     transform: rotate(360deg);
   }
 }
+
+/* Themed navbar active link */
+.navbar .nav-link.active,
+.navbar .nav-link.show,
+.navbar .nav-link:focus,
+.navbar .nav-link:hover {
+  color: #5c4033 !important;
+}
+.navbar .nav-link.active {
+  font-weight: 700;
+  border-bottom: 2px solid #ff8c00;
+}
+
+/* Dropdown three-dot alignment tweak */
+#settings-menu .dropdown-toggle::after {
+  display: none;
+}

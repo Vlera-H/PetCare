@@ -27,6 +27,17 @@ const Home = () => {
     return { ...v, pet };
   }, [visits, pets]);
 
+  const nextCareTask = useMemo(() => {
+    const today = new Date();
+    const futureTasks = careTasks
+      .filter(t => !t.isCompleted && new Date(t.dueDate) >= new Date(today.toDateString()))
+      .sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
+    if (!futureTasks.length) return null;
+    const t = futureTasks[0];
+    const pet = pets.find(p => p.id === t.petId) || null;
+    return { ...t, pet };
+  }, [careTasks, pets]);
+
   const stats = useMemo(() => ({
     totalPets: pets.length,
     totalTasks: careTasks.length,
@@ -77,10 +88,10 @@ const Home = () => {
           </Col>
         </Row>
 
-        {/* Next Vet Visit highlight */}
+        {/* Next highlights */}
         <Row className="g-3 mt-1">
-          <Col lg={12}>
-            <Card className="shadow-sm">
+          <Col lg={6}>
+            <Card className="shadow-sm h-100">
               <Card.Body>
                 <Card.Title>Next Vet Visit</Card.Title>
                 {nextVisit ? (
@@ -93,6 +104,24 @@ const Home = () => {
                   </div>
                 ) : (
                   <div className="text-muted">No upcoming visits scheduled.</div>
+                )}
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col lg={6}>
+            <Card className="shadow-sm h-100">
+              <Card.Body>
+                <Card.Title>Next Care Task</Card.Title>
+                {nextCareTask ? (
+                  <div className="d-flex flex-wrap gap-3 align-items-center">
+                    <div className="flex-grow-1">
+                      <div className="fw-semibold text-brown">{nextCareTask.description}</div>
+                      <div className="text-muted small">Due {new Date(nextCareTask.dueDate).toLocaleDateString()} — {nextCareTask.pet ? nextCareTask.pet.name : `Pet #${nextCareTask.petId}`}</div>
+                    </div>
+                    <Button variant="orange" className="custom-btn btn-orange" onClick={() => navigate('/tasks')}>View tasks</Button>
+                  </div>
+                ) : (
+                  <div className="text-muted">No pending tasks.</div>
                 )}
               </Card.Body>
             </Card>

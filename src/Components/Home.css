@@ -260,6 +260,9 @@
 .metric-card .metric-label { font-weight: 700; color: var(--pc-brown); }
 .metric-card .metric-value { font-size: 1.5rem; font-weight: 800; color: var(--pc-orange); }
 .metric-card .metric-foot { margin-top: 0.5rem; }
+.insights-row { margin-top: 0.5rem; }
+.metric-card { border-radius: 14px; }
+.metric-card .metric-header .icon-circle { width: 36px; height: 36px; }
 
 /* Timeline */
 .timeline { display: flex; flex-direction: column; gap: 0.75rem; }

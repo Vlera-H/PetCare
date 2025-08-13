@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Container, Row, Col, Form, Table } from 'react-bootstrap';
+import { Button, Container, Row, Col, Form, Table, Card } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useData } from './DataContext';
 
@@ -23,22 +23,60 @@ const PetsPage = () => {
         <span className="back-arrow" onClick={() => navigate('/')}>←</span>
         <h3 className="m-0 text-center" style={{ color: '#5c4033' }}>Pets</h3>
 
-        {/* Horizontal add form (focus) */}
-        <Row className="g-3 align-items-end mt-2">
+        {/* Message and photo as two cards */}
+        <Row className="g-3 align-items-stretch mt-2">
+          <Col md={7}>
+            <Card className="shadow-sm h-100 pets-hero-card">
+              <Card.Body>
+                <h2 className="pets-hero-title-large">We’re glad you’re caring for your pets</h2>
+                <p className="pets-hero-subtitle mb-0">
+                  Consistent care, updated profiles, and a little love every day make a big difference. We’re here to help you keep everything in one place.
+                </p>
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col md={5}>
+            <Card className="shadow-sm h-100 pets-hero-card text-center d-flex align-items-center justify-content-center">
+              <Card.Body className="d-flex align-items-center justify-content-center">
+                <img 
+                  src="/img/pets-hero.png" 
+                  alt="Pets" 
+                  className="pets-hero-img" 
+                  onError={(e) => { e.currentTarget.style.display = 'none'; }} 
+                />
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+
+        {/* Horizontal add form */}
+        <Row className="g-3 align-items-end mt-3">
           <Col xs={12} md={4}>
             <Form.Label className="fw-semibold">Name</Form.Label>
-            <Form.Control value={form.name} onChange={(e) => setForm(f => ({ ...f, name: e.target.value }))} />
+            <Form.Control 
+              value={form.name} 
+              onChange={(e) => setForm(f => ({ ...f, name: e.target.value }))} 
+            />
           </Col>
           <Col xs={12} md={4}>
             <Form.Label className="fw-semibold">Breed</Form.Label>
-            <Form.Control value={form.breed} onChange={(e) => setForm(f => ({ ...f, breed: e.target.value }))} />
+            <Form.Control 
+              value={form.breed} 
+              onChange={(e) => setForm(f => ({ ...f, breed: e.target.value }))} 
+            />
           </Col>
           <Col xs={12} md={3}>
             <Form.Label className="fw-semibold">Birth Date</Form.Label>
-            <Form.Control type="date" value={form.birthDate} onChange={(e) => setForm(f => ({ ...f, birthDate: e.target.value }))} />
+            <Form.Control 
+              type="date" 
+              value={form.birthDate} 
+              onChange={(e) => setForm(f => ({ ...f, birthDate: e.target.value }))} 
+            />
           </Col>
           <Col xs={12} md="auto">
-            <Button onClick={handleAdd} disabled={!form.name || !form.breed || !form.birthDate}>+ Add Pet</Button>
+            <Button onClick={handleAdd} disabled={!form.name || !form.breed || !form.birthDate}>
+              + Add Pet
+            </Button>
           </Col>
         </Row>
 
@@ -68,16 +106,6 @@ const PetsPage = () => {
                 ))}
               </tbody>
             </Table>
-          </Col>
-        </Row>
-
-        {/* Small image and message below */}
-        <Row className="mt-2">
-          <Col className="text-center">
-            <img src="/img/pets-hero.png" alt="Pets" className="pets-hero-img-small" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
-            <div className="mt-2" style={{ color: '#6f5b50', fontSize: '0.95rem' }}>
-              Thanks for caring for your pets. Keep profiles up to date to make daily care easier.
-            </div>
           </Col>
         </Row>
       </Container>

@@ -379,6 +379,14 @@
 .panel-brown .home-list-item, .panel-orange .home-list-item { padding: 0.45rem 0.6rem; border-radius: 8px; }
 .panel-brown .home-muted, .panel-orange .home-muted { font-size: 0.85rem; }
 
+/* Pets page background */
+.pets-background { min-height: 100vh; background: linear-gradient(to bottom right, #ffe9c6, #d2b48c); }
+.pets-hero { background: transparent; padding: 0.5rem 0.25rem; }
+.pets-hero-title { color: #5c4033; font-weight: 900; margin: 0; }
+.pets-hero-subtitle { color: #6f5b50; max-width: 720px; }
+.pets-hero-img { max-width: 420px; width: 100%; height: auto; border-radius: 1rem; box-shadow: 0 10px 20px rgba(0,0,0,0.12); }
+.pet-card img { object-fit: cover; max-height: 140px; }
+
 @media (max-width: 992px) {
   .pc-layout {
     grid-template-columns: 1fr;

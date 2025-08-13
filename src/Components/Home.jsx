@@ -43,32 +43,54 @@ const Home = () => {
   }, [careTasks, pets]);
 
   return (
-    <div>
+    <div className="home-background">
       <AppNavbar />
 
       <Container fluid className="px-0">
-        <Row className="g-3 align-items-center home-hero">
-          <Col lg={7} className="home-hero-content">
+        {/* Welcome band with image */}
+        <Row className="g-3 align-items-stretch home-hero">
+          <Col lg={7} className="home-hero-content d-flex flex-column">
             <h1 className="home-hero-title">Welcome{firstName ? `, ${firstName}` : ''}</h1>
             <p className="home-hero-subtitle">Keep your pets happy and healthy. Track their upcoming visits and care tasks in one place.</p>
-            <div className="mt-2">
-              <Button variant="outline-brown" className="custom-btn" onClick={() => navigate('/dashboard')}>Wanna see your insights?</Button>
+            <div className="mini-circles">
+              <div className="mini-circle-item">
+                <button className="mini-circle" onClick={() => navigate('/pets')}>
+                  <span className="mini-circle-icon">🐶</span>
+                </button>
+                <button className="mini-circle-label btn btn-link p-0" onClick={() => navigate('/pets')}>Manage Pets</button>
+              </div>
+              <div className="mini-circle-item">
+                <button className="mini-circle" onClick={() => navigate('/tasks')}>
+                  <span className="mini-circle-icon">📝</span>
+                </button>
+                <button className="mini-circle-label btn btn-link p-0" onClick={() => navigate('/tasks')}>Manage Care Tasks</button>
+              </div>
+              <div className="mini-circle-item">
+                <button className="mini-circle" onClick={() => navigate('/visits')}>
+                  <span className="mini-circle-icon">🩺</span>
+                </button>
+                <button className="mini-circle-label btn btn-link p-0" onClick={() => navigate('/visits')}>Manage Visits</button>
+              </div>
             </div>
           </Col>
           <Col lg={5} className="home-hero-image text-center">
             <img
               src="/img/pets.png"
-              alt="Happy pets"
+              alt="Happy dog"
               className="home-hero-img"
               onError={(e) => { e.currentTarget.style.display = 'none'; }}
             />
+            <div className="mt-2 d-flex justify-content-end">
+              <button className="home-inline-cta btn btn-link p-0" onClick={() => navigate('/dashboard')}>Wanna see your insights?</button>
+            </div>
           </Col>
         </Row>
 
-        <div style={{ height: '1rem' }} />
-        <Row className="g-3 panels-offset">
+        {/* Upcoming panels at the very end */}
+        <div style={{ height: '2rem' }} />
+        <Row className="g-3 panels-offset" style={{ marginTop: '2rem' }}>
           <Col lg={6}>
-            <Card className="shadow-sm h-100">
+            <Card className="shadow-sm h-100 panel-brown">
               <Card.Body>
                 <div className="home-card-title">Upcoming Visits</div>
                 {upcomingVisits.length ? (
@@ -93,7 +115,7 @@ const Home = () => {
           </Col>
 
           <Col lg={6}>
-            <Card className="shadow-sm h-100">
+            <Card className="shadow-sm h-100 panel-orange">
               <Card.Body>
                 <div className="home-card-title">Upcoming Care Tasks</div>
                 {upcomingTasks.length ? (
@@ -123,6 +145,7 @@ const Home = () => {
 };
 
 export default Home;
+
 
 
 

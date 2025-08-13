@@ -372,6 +372,13 @@
 /* Align image and insights link to right edge */
 .home-hero-image .home-hero-img { display: block; margin-left: auto; }
 
+/* Slightly compact upcoming panels */
+.panel-brown .card-body, .panel-orange .card-body { padding: 0.8rem 0.9rem; }
+.panel-brown .home-card-title, .panel-orange .home-card-title { font-size: 1rem; }
+.panel-brown .home-list, .panel-orange .home-list { gap: 0.4rem; }
+.panel-brown .home-list-item, .panel-orange .home-list-item { padding: 0.45rem 0.6rem; border-radius: 8px; }
+.panel-brown .home-muted, .panel-orange .home-muted { font-size: 0.85rem; }
+
 @media (max-width: 992px) {
   .pc-layout {
     grid-template-columns: 1fr;

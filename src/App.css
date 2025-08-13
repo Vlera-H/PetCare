@@ -63,3 +63,6 @@
 /* Navbar trailing settings to far right */
 .navbar .navbar-collapse { display: flex !important; }
 .navbar .navbar-collapse .ms-auto { margin-left: auto !important; }
+
+/* Taller header */
+.header-tall { padding-top: 0.5rem !important; padding-bottom: 0.5rem !important; }

@@ -1,15 +1,15 @@
-import React from 'react';
-import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Navbar, Nav, Container, NavDropdown, Modal, Button } from 'react-bootstrap';
 import { NavLink, useNavigate } from 'react-router-dom';
 
 const AppNavbar = () => {
   const navigate = useNavigate();
+  const [showLogout, setShowLogout] = useState(false);
 
-  const handleLogout = () => {
-    const confirmed = window.confirm('Are you sure you want to log out?');
-    if (!confirmed) return;
+  const confirmLogout = () => {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
+    setShowLogout(false);
     navigate('/welcome');
   };
 
@@ -36,12 +36,30 @@ const AppNavbar = () => {
               <NavDropdown align="end" title="⋮" id="settings-menu">
                 <NavDropdown.Item onClick={() => navigate('/profile')}>Edit Profile</NavDropdown.Item>
                 <NavDropdown.Divider />
-                <NavDropdown.Item onClick={handleLogout}>Log out</NavDropdown.Item>
+                <NavDropdown.Item onClick={() => setShowLogout(true)}>Log out</NavDropdown.Item>
               </NavDropdown>
             </Nav>
           </div>
         </Navbar.Collapse>
       </Container>
+
+      {/* Styled logout confirmation modal */}
+      <Modal show={showLogout} onHide={() => setShowLogout(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Log out</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Are you sure you want to log out?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="outline-secondary" onClick={() => setShowLogout(false)}>
+            Cancel
+          </Button>
+          <Button variant="dark" onClick={confirmLogout}>
+            Log out
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Navbar>
   );
 };

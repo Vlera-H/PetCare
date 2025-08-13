@@ -347,6 +347,14 @@
 /* Hero stretch */
 .home-hero { min-height: 280px; }
 
+/* Colored panels */
+.panel-brown { background: #fff2e0; border-color: #e8c8a0; }
+.panel-orange { background: #ffedd9; border-color: #f3caa1; }
+.panel-brown .home-list-item, .panel-orange .home-list-item { background: #ffffff; }
+
+/* Insights link stronger brown */
+.home-inline-cta { color: #5c4033 !important; text-decoration: underline; font-weight: 700; }
+
 @media (max-width: 992px) {
   .pc-layout {
     grid-template-columns: 1fr;

@@ -59,3 +59,7 @@
 
 /* Ensure settings menu stays right */
 .navbar .ms-auto { margin-left: auto !important; }
+
+/* Navbar trailing settings to far right */
+.navbar .navbar-collapse { display: flex !important; }
+.navbar .navbar-collapse .ms-auto { margin-left: auto !important; }

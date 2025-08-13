@@ -87,7 +87,7 @@ const Home = () => {
         <div style={{ height: '2rem' }} />
         <Row className="g-3 panels-offset" style={{ marginTop: '2rem' }}>
           <Col lg={6}>
-            <Card className="shadow-sm h-100">
+            <Card className="shadow-sm h-100 panel-brown">
               <Card.Body>
                 <div className="home-card-title">Upcoming Visits</div>
                 {upcomingVisits.length ? (
@@ -112,7 +112,7 @@ const Home = () => {
           </Col>
 
           <Col lg={6}>
-            <Card className="shadow-sm h-100">
+            <Card className="shadow-sm h-100 panel-orange">
               <Card.Body>
                 <div className="home-card-title">Upcoming Care Tasks</div>
                 {upcomingTasks.length ? (

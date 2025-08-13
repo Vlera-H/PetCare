@@ -23,6 +23,17 @@ const PetsPage = () => {
         <span className="back-arrow" onClick={() => navigate('/')}>←</span>
         <h3 className="m-0 text-center" style={{ color: '#5c4033' }}>Pets</h3>
 
+        {/* Large message and photo */}
+        <Row className="g-3 align-items-center pets-hero-banner mt-2">
+          <Col md={7}>
+            <h2 className="pets-hero-title-large">Bravo for caring for your pets!</h2>
+            <p className="pets-hero-subtitle">Consistent care, updated profiles, and a little love every day make a big difference. Keep going — they count on you, and we’re here to help.</p>
+          </Col>
+          <Col md={5} className="text-md-end text-center">
+            <img src="/img/pets-hero.png" alt="Pets" className="pets-hero-img" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
+          </Col>
+        </Row>
+
         {/* Horizontal add form (focus) */}
         <Row className="g-3 align-items-end mt-2">
           <Col xs={12} md={4}>
@@ -63,13 +74,6 @@ const PetsPage = () => {
                 ))}
               </tbody>
             </Table>
-          </Col>
-        </Row>
-
-        {/* Small image below */}
-        <Row className="mt-2">
-          <Col className="text-center">
-            <img src="/img/pets-hero.png" alt="Pets" className="pets-hero-img-small" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
           </Col>
         </Row>
       </Container>

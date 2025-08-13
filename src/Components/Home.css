@@ -386,6 +386,8 @@
 .pets-hero-subtitle { color: #6f5b50; max-width: 720px; }
 .pets-hero-img { max-width: 420px; width: 100%; height: auto; border-radius: 1rem; box-shadow: 0 10px 20px rgba(0,0,0,0.12); }
 .pets-hero-img-small { max-width: 260px; width: 100%; height: auto; border-radius: 0.75rem; box-shadow: 0 8px 16px rgba(0,0,0,0.1); }
+.pets-hero-banner { background: transparent; }
+.pets-hero-title-large { color: #5c4033; font-weight: 900; font-size: 2rem; margin: 0 0 0.25rem 0; }
 .pet-card img { object-fit: cover; max-height: 140px; }
 
 @media (max-width: 992px) {

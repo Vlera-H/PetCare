@@ -35,10 +35,8 @@ const VisitsPage = () => {
   return (
     <div>
       <Container fluid className="py-3">
-        <div className="d-flex align-items-center gap-2 mb-3">
-          <button className="btn btn-link p-0" style={{ color: '#5c4033' }} onClick={() => navigate('/')}>←</button>
-          <h3 className="m-0" style={{ color: '#5c4033' }}>Visits</h3>
-        </div>
+        <span className="back-arrow" onClick={() => navigate('/')}>←</span>
+        <h3 className="m-0 mb-3" style={{ color: '#5c4033', paddingLeft: '2rem' }}>Visits</h3>
 
         <Row className="g-3 align-items-end">
           <Col xs={12} md={4}>

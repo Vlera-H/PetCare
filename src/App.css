@@ -66,3 +66,16 @@
 
 /* Taller header */
 .header-tall { padding-top: 0.5rem !important; padding-bottom: 0.5rem !important; }
+
+/* Global back arrow (brown, top-left) */
+.back-arrow {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  color: #5c4033;
+  font-size: 24px;
+  line-height: 1;
+  z-index: 1050;
+  cursor: pointer;
+  text-decoration: none;
+}

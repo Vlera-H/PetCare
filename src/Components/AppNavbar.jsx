@@ -19,27 +19,11 @@ const AppNavbar = () => {
         <Navbar.Collapse id="main-nav">
           <Nav className="me-auto">
             <Nav.Link as={Link} to="/">Home</Nav.Link>
-            <Nav.Link as={Link} to="/dashboard">Dashboard</Nav.Link>
             <Nav.Link as={Link} to="/pets">Pets</Nav.Link>
-            <Nav.Link as={Link} to="/tasks">Tasks</Nav.Link>
+            <Nav.Link as={Link} to="/tasks">Care Tasks</Nav.Link>
             <Nav.Link as={Link} to="/visits">Visits</Nav.Link>
+            <Nav.Link as={Link} to="/care-guide">Care Guide</Nav.Link>
           </Nav>
-          <div className="d-flex gap-2">
-            <Button
-              variant="outline-secondary"
-              size="sm"
-              onClick={() => navigate('/profile')}
-            >
-              Profile
-            </Button>
-            <Button
-              variant="dark"
-              size="sm"
-              onClick={handleLogout}
-            >
-              Logout
-            </Button>
-          </div>
         </Navbar.Collapse>
       </Container>
     </Navbar>

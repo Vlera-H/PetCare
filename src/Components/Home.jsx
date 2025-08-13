@@ -75,7 +75,7 @@ const Home = () => {
                 <button className="mini-circle-label btn btn-link p-0" onClick={() => navigate('/visits')}>Manage Visits</button>
               </div>
             </div>
-            <button className="home-inline-cta btn btn-link align-self-start p-0 mt-2" onClick={() => navigate('/dashboard')}>Wanna see your insights?</button>
+            
           </Col>
           <Col lg={5} className="home-hero-image text-center">
             <img
@@ -84,6 +84,9 @@ const Home = () => {
               className="home-hero-img"
               onError={(e) => { e.currentTarget.style.display = 'none'; }}
             />
+            <div className="mt-2">
+              <button className="home-inline-cta btn btn-link p-0" onClick={() => navigate('/dashboard')}>Wanna see your insights?</button>
+            </div>
           </Col>
         </Row>
 

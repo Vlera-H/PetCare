@@ -21,7 +21,7 @@ const PetsPage = () => {
     <div>
       <Container fluid className="py-3">
         <div className="d-flex align-items-center gap-2 mb-3">
-          <Button variant="link" className="p-0" onClick={() => navigate('/')}>← Back to Home</Button>
+          <button className="btn btn-link p-0" style={{ color: '#5c4033' }} onClick={() => navigate('/')}>←</button>
           <h3 className="m-0" style={{ color: '#5c4033' }}>Pets</h3>
         </div>
 

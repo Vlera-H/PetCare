@@ -74,45 +74,6 @@ const Home = () => {
       <AppNavbar />
 
       <Container fluid className="px-0">
-        {/* Hero */}
-        <Row className="welcome-fullscreen align-items-center" style={{ paddingTop: 0, paddingBottom: '1.25rem' }}>
-          <Col lg={6} className="welcome-text">
-            <h1 className="welcome-title">Welcome{firstName ? `, ${firstName}` : ''}</h1>
-            <p className="text-muted mb-4">
-              Manage your pets, care tasks, and visits with a clean, friendly dashboard.
-            </p>
-            <Row className="g-3">
-              <Col md={4}>
-                <Card className="shadow-sm h-100 pc-card" role="button" onClick={() => navigate('/pets')}>
-                  <Card.Body>
-                    <Card.Title className="text-brown">🐶 Manage Pets</Card.Title>
-                    <div className="text-muted small">{stats.totalPets} total</div>
-                  </Card.Body>
-                </Card>
-              </Col>
-              <Col md={4}>
-                <Card className="shadow-sm h-100 pc-card" role="button" onClick={() => navigate('/tasks')}>
-                  <Card.Body>
-                    <Card.Title className="text-brown">📝 Manage Care Tasks</Card.Title>
-                    <div className="text-muted small">{stats.totalTasks} total</div>
-                  </Card.Body>
-                </Card>
-              </Col>
-              <Col md={4}>
-                <Card className="shadow-sm h-100 pc-card" role="button" onClick={() => navigate('/visits')}>
-                  <Card.Body>
-                    <Card.Title className="text-brown">🩺 Manage Visits</Card.Title>
-                    <div className="text-muted small">{stats.totalVisits} total</div>
-                  </Card.Body>
-                </Card>
-              </Col>
-            </Row>
-          </Col>
-          <Col lg={6} className="welcome-image text-center">
-            <img src="/img/pets.png" alt="Happy pets" className="home-hero-img" />
-          </Col>
-        </Row>
-
         {/* Quick Actions */}
         <Row className="g-3">
           <Col lg={12}>

@@ -12,26 +12,17 @@
 
 /* Decorative canvas */
 .pets-canvas { position: relative; margin-top: 0.75rem; }
-.corner { position: absolute; width: 48px; height: 48px; background-size: cover; opacity: 0.85; }
-.corner-tl { top: -8px; left: -8px; background-image: url('/img/corner-tl.png'); }
-.corner-tr { top: -8px; right: -8px; background-image: url('/img/corner-tr.png'); }
-.corner-bl { bottom: -8px; left: -8px; background-image: url('/img/corner-bl.png'); }
-.corner-br { bottom: -8px; right: -8px; background-image: url('/img/corner-br.png'); }
+.corner { position: absolute; width: 64px; height: 64px; opacity: 0.9; z-index: 0; }
+.corner-tl { top: -8px; left: -8px; }
+.corner-tr { top: -8px; right: -8px; }
+.corner-bl { bottom: -8px; left: -8px; }
+.corner-br { bottom: -8px; right: -8px; }
 
 /* Centered content */
-.pets-center { background: rgba(255,255,255,0.85); backdrop-filter: blur(2px); border: 1px solid #ead9c7; border-radius: 16px; padding: 1rem 1.25rem; max-width: 1200px; margin: 0 auto; box-shadow: 0 10px 24px rgba(0,0,0,0.08); }
+.pets-center { position: relative; z-index: 1; background: rgba(255,255,255,0.88); backdrop-filter: blur(2px); border: 1px solid #ead9c7; border-radius: 16px; padding: 1rem 1.25rem; max-width: 1200px; margin: 0 auto; box-shadow: 0 10px 24px rgba(0,0,0,0.08); }
 
 /* Table */
 .pets-table thead th { background: #fff2e6; color: #5c4033; }
-
-/* Side image (left) */
-.pets-side-img {
-  max-width: 260px;
-  width: 100%;
-  height: auto;
-  border-radius: 12px;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.12);
-}
 
 /* Inputs */
 .form-label { color: #5c4033; }

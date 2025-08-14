@@ -26,10 +26,10 @@ const PetsPage = () => {
 
         {/* Canvas with decorative corners */}
         <div className="pets-canvas">
-          <span className="corner corner-tl" />
-          <span className="corner corner-tr" />
-          <span className="corner corner-bl" />
-          <span className="corner corner-br" />
+          <img src="/img/c1.png" alt="" className="corner corner-tl" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
+          <img src="/img/c2.png" alt="" className="corner corner-tr" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
+          <img src="/img/c3.png" alt="" className="corner corner-bl" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
+          <img src="/img/c4.png" alt="" className="corner corner-br" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
 
           <div className="pets-center">
             {/* Add New Pet - full width */}

@@ -193,13 +193,23 @@
 }
 .link-forgot:hover { color: #0b5ed7 !important; }
 
-/* Submit button: orange, invert to white while submitting */
+/* Ensure Sign In button is orange at all times */
 .custom-btn {
-  background-color: #ff8c00;
-  color: #fff;
-  border: none;
+  background-color: #ff8c00 !important;
+  color: #ffffff !important;
+  border: 2px solid #ff8c00 !important;
 }
-.custom-btn:hover { background-color: #e67600; }
+.custom-btn:hover {
+  background-color: #e67600 !important;
+}
+.custom-btn:disabled,
+.custom-btn.disabled {
+  background-color: #ff8c00 !important;
+  color: #ffffff !important;
+  border-color: #ff8c00 !important;
+  opacity: 0.65;
+}
+/* Invert on submitting */
 .btn-invert {
   background-color: #ffffff !important;
   color: #5c4033 !important;

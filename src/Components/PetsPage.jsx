@@ -20,16 +20,17 @@ const PetsPage = () => {
 
   return (
     <div className="pets-page">
-      <Container fluid className="py-3">
+      <Container fluid className="py-3 px-0">
         <span className="back-arrow" onClick={() => navigate('/')}>←</span>
-        <h2 className="m-0 text-center pets-header-title pets-header-large">Pets</h2>
+        <h1 className="text-center pets-header-title pets-header-large" style={{ marginTop: '0.5rem' }}>Pets</h1>
 
         {/* Canvas with decorative corners */}
         <div className="pets-canvas">
-          <img src="/img/c11.png" alt="" className="corner corner-tl" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
+          {/* <img src="/img/c11.png" alt="" className="corner corner-tl" onError={(e) => { e.currentTarget.style.display = 'none'; }} /> */}
           <img src="/img/c22.png" alt="" className="corner corner-tr" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
           <img src="/img/c33.png" alt="" className="corner corner-bl" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
-          <img src="/img/c44.png" alt="" className="corner corner-br" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
+          {/* <img src="/img/c44.png" alt="" className="corner corner-br" onError={(e) => { e.currentTarget.style.display = 'none'; }} /> */}
+
           <div className="pets-center">
             {/* Add New Pet - full width */}
             <div className="pets-section-title mb-2">Add new pet</div>
@@ -57,7 +58,14 @@ const PetsPage = () => {
                 />
               </Col>
               <Col xs={12} md="auto">
-                <Button onClick={handleAdd} disabled={!form.name || !form.breed || !form.birthDate}>+ Add Pet</Button>
+                      <Button
+                 className="btn-orange"
+                 onClick={handleAdd}
+                 disabled={!form.name || !form.breed || !form.birthDate}
+>
+                 + Add Pet
+                </Button>
+
               </Col>
             </Row>
 

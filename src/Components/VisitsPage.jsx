@@ -3,6 +3,7 @@ import { Button, Container, Row, Col, Form, Table } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useData } from './DataContext';
 import './pet.css';
+import './inlineForms.css';
 
 const generateNextId = (items) => (items.length ? Math.max(...items.map(i => i.id)) + 1 : 1);
 
@@ -46,8 +47,8 @@ const VisitsPage = () => {
           <div className="pets-center">
             {/* Add Visit - full width */}
             <div className="pets-section-title mb-2">Add new visit</div>
-            <Row className="g-3 align-items-end mb-3">
-              <Col xs={12} md={5}>
+            <Row className="g-3 align-items-end mb-3 inline-form-row">
+              <Col xs={12} md={4}>
                 <Form.Label className="fw-semibold">Reason</Form.Label>
                 <Form.Control value={form.reason} onChange={(e) => setForm(f => ({ ...f, reason: e.target.value }))} />
               </Col>
@@ -65,13 +66,7 @@ const VisitsPage = () => {
                 </Form.Select>
               </Col>
               <Col xs={12} md="auto">
-                       <Button
-                                className="btn-orange"
-                                onClick={handleAdd}
-                                disabled={!form.name || !form.breed || !form.birthDate}
-               >
-                                + Add Visit
-                               </Button>
+                <Button size="sm" className="btn-orange" onClick={handleAdd} disabled={!form.reason || !form.visitDate || !form.petId}>+ Add Visit</Button>
               </Col>
             </Row>
 
@@ -112,6 +107,8 @@ const VisitsPage = () => {
 };
 
 export default VisitsPage;
+
+
 
 
 

@@ -3,6 +3,7 @@ import { Button, Container, Row, Col, Form, Table } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useData } from './DataContext';
 import './pet.css';
+import './inlineForms.css';
 
 const generateNextId = (items) => (items.length ? Math.max(...items.map(i => i.id)) + 1 : 1);
 
@@ -52,8 +53,8 @@ const CareTasksPage = () => {
           <div className="pets-center">
             {/* Add Care Task - full width */}
             <div className="pets-section-title mb-2">Add new care task</div>
-            <Row className="g-3 align-items-end mb-3">
-              <Col xs={12} md={5}>
+            <Row className="g-3 align-items-end mb-3 inline-form-row">
+              <Col xs={12} md={4}>
                 <Form.Label className="fw-semibold">Description</Form.Label>
                 <Form.Control value={form.description} onChange={(e) => setForm(f => ({ ...f, description: e.target.value }))} />
               </Col>
@@ -71,13 +72,7 @@ const CareTasksPage = () => {
                 </Form.Select>
               </Col>
               <Col xs={12} md="auto">
-                        <Button
-                                 className="btn-orange"
-                                 onClick={handleAdd}
-                                 disabled={!form.name || !form.breed || !form.birthDate}
-                >
-                                 + Add Task
-                                </Button>
+                <Button size="sm" className="btn-orange" onClick={handleAdd} disabled={!form.description || !form.dueDate || !form.petId}>+ Add Task</Button>
               </Col>
             </Row>
 
@@ -123,6 +118,7 @@ const CareTasksPage = () => {
 };
 
 export default CareTasksPage;
+
 
 
 

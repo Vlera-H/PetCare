@@ -27,7 +27,7 @@ const CareGuide = () => {
                 <Card className="h-100 shadow-sm">
                   <Card.Img
                     variant="top"
-                    src="/img/bath5.png"
+                    src="/img/chatbath.png"
                     alt="Bathing your pet"
                     style={{ objectFit: 'cover', maxHeight: 180 }}
                   />
@@ -50,7 +50,7 @@ const CareGuide = () => {
                 <Card className="h-100 shadow-sm">
                     <Card.Img
                     variant="top"
-                    src="/img/walk4.png"
+                    src="/img/chatwalk.png"
                     alt="Walking your pet"
                     style={{ objectFit: 'cover', maxHeight: 180 }}
                   />
@@ -73,8 +73,8 @@ const CareGuide = () => {
                 <Card className="h-100 shadow-sm">
                     <Card.Img
                     variant="top"
-                    src="/img/cat4.png"
-                    alt="Bathing your pet"
+                    src="/img/chatfood.png"
+                    alt="Feeding your pet"
                     style={{ objectFit: 'cover', maxHeight: 180 }}
                   />
                   <Card.Body>

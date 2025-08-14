@@ -63,8 +63,9 @@ const Dashboard = () => {
                     <div>
                       <div className="insight-label">Total Pets</div>
                       <div className="insight-value">{stats.totalPets}</div>
-                      <div className={`trend ${petsDelta == null ? '' : petsDelta >= 0 ? 'up' : 'down'}`}>
-                        {petsDelta == null ? '—' : `${petsDelta >= 0 ? '▲' : '▼'} ${Math.abs(petsDelta)}`}
+                      <div className="insight-meta">Compared to last visit</div>
+                      <div className={`delta-badge ${petsDelta == null ? '' : petsDelta >= 0 ? 'up' : 'down'}`}>
+                        {petsDelta == null ? '—' : <>{petsDelta >= 0 ? '▲' : '▼'} {Math.abs(petsDelta)}</>}
                       </div>
                     </div>
                     <div className="insight-icon">🐾</div>
@@ -77,8 +78,9 @@ const Dashboard = () => {
                     <div>
                       <div className="insight-label">Tasks Completed</div>
                       <div className="insight-sub">{stats.completedTasks}/{stats.totalTasks}</div>
-                      <div className={`trend ${completionDelta == null ? '' : completionDelta >= 0 ? 'up' : 'down'}`}>
-                        {completionDelta == null ? '—' : `${completionDelta >= 0 ? '▲' : '▼'} ${Math.abs(completionDelta)}%`}
+                      <div className="insight-meta">Completion rate change</div>
+                      <div className={`delta-badge ${completionDelta == null ? '' : completionDelta >= 0 ? 'up' : 'down'}`}>
+                        {completionDelta == null ? '—' : <>{completionDelta >= 0 ? '▲' : '▼'} {Math.abs(completionDelta)}%</>}
                       </div>
                     </div>
                     <div className="ring" style={{ ['--pct']: stats.completionRate }}>
@@ -93,8 +95,9 @@ const Dashboard = () => {
                     <div>
                       <div className="insight-label">Total Visits</div>
                       <div className="insight-value">{stats.totalVisits}</div>
-                      <div className={`trend ${visitsDelta == null ? '' : visitsDelta >= 0 ? 'up' : 'down'}`}>
-                        {visitsDelta == null ? '—' : `${visitsDelta >= 0 ? '▲' : '▼'} ${Math.abs(visitsDelta)}`}
+                      <div className="insight-meta">Compared to last visit</div>
+                      <div className={`delta-badge ${visitsDelta == null ? '' : visitsDelta >= 0 ? 'up' : 'down'}`}>
+                        {visitsDelta == null ? '—' : <>{visitsDelta >= 0 ? '▲' : '▼'} {Math.abs(visitsDelta)}</>}
                       </div>
                     </div>
                     <div className="insight-icon">🩺</div>

@@ -39,17 +39,26 @@
 
 /* Insights cards (for Dashboard) */
 .insight-card { border: 1px solid #ead9c7; border-radius: 14px; }
-.insight-label { color: #5c4033; font-weight: 800; font-size: 0.95rem; }
-.insight-value { font-size: 2rem; font-weight: 900; color: #ff8c00; }
-.insight-sub { font-weight: 700; color: #5c4033; font-size: 1.05rem; }
-.trend { font-size: 0.9rem; margin-top: 0.3rem; }
+.insight-card .card-body { padding: 1.1rem 1.2rem; }
+.insight-label { color: #5c4033; font-weight: 800; font-size: 1rem; }
+.insight-value { font-size: 2.4rem; font-weight: 900; color: #ff8c00; line-height: 1.1; }
+.insight-sub { font-weight: 700; color: #5c4033; font-size: 1.1rem; }
+.trend { font-size: 0.9rem; margin-top: 0.35rem; }
 .trend.up { color: #2e7d32; }
 .trend.down { color: #c62828; }
-.insight-icon { font-size: 2.2rem; }
+.insight-icon { font-size: 2.4rem; }
+
+/* Delta badge for arrows */
+.delta-badge { display: inline-flex; align-items: center; gap: 0.25rem; border-radius: 999px; padding: 0.15rem 0.5rem; font-weight: 700; font-size: 0.8rem; }
+.delta-badge.up { background: #e6f4ea; color: #2e7d32; }
+.delta-badge.down { background: #fdecea; color: #c62828; }
+.insight-meta { margin-top: 0.35rem; color: #7a6a60; font-size: 0.8rem; }
 
 /* Ring progress */
-.ring { --size: 90px; --track: #ffe4c4; --bar: #ff8c00; width: var(--size); height: var(--size); border-radius: 50%; background: conic-gradient(var(--bar) calc(var(--pct) * 1%), var(--track) 0); display: grid; place-items: center; }
-.ring .ring-inner { width: calc(var(--size) - 20px); height: calc(var(--size) - 20px); border-radius: 50%; background: #fff; display: grid; place-items: center; font-weight: 800; color: #5c4033; font-size: 1rem; }
-.ring-sm { --size: 60px; }
+.ring { --size: 104px; --track: #ffe4c4; --bar: #ff8c00; width: var(--size); height: var(--size); border-radius: 50%; background: conic-gradient(var(--bar) calc(var(--pct) * 1%), var(--track) 0); display: grid; place-items: center; }
+.ring .ring-inner { width: calc(var(--size) - 22px); height: calc(var(--size) - 22px); border-radius: 50%; background: #fff; display: grid; place-items: center; font-weight: 800; color: #5c4033; font-size: 1.1rem; }
+.ring-sm { --size: 64px; }
 
-.insights-pets { margin-top: 0.75rem; }
+.insights-pets { margin-top: 1rem; }
+/* Slightly stronger pet card titles without changing layout */
+.insight-card .card-title { color: #5c4033; font-weight: 800; }

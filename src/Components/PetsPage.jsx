@@ -24,44 +24,45 @@ const PetsPage = () => {
         <span className="back-arrow" onClick={() => navigate('/')}>←</span>
         <h2 className="m-0 text-center pets-header-title pets-header-large">Pets</h2>
 
-        {/* Add New Pet - full width */}
-        <div className="pets-section-title mt-2 mb-2">Add new pet</div>
-        <Row className="g-3 align-items-end mb-3">
-          <Col xs={12} md={4} lg={3}>
-            <Form.Label className="fw-semibold">Name</Form.Label>
-            <Form.Control
-              value={form.name}
-              onChange={(e) => setForm(f => ({ ...f, name: e.target.value }))}
-            />
-          </Col>
-          <Col xs={12} md={4} lg={3}>
-            <Form.Label className="fw-semibold">Breed</Form.Label>
-            <Form.Control
-              value={form.breed}
-              onChange={(e) => setForm(f => ({ ...f, breed: e.target.value }))}
-            />
-          </Col>
-          <Col xs={12} md={4} lg={3}>
-            <Form.Label className="fw-semibold">Birth Date</Form.Label>
-            <Form.Control
-              type="date"
-              value={form.birthDate}
-              onChange={(e) => setForm(f => ({ ...f, birthDate: e.target.value }))}
-            />
-          </Col>
-          <Col xs={12} md="auto">
-            <Button onClick={handleAdd} disabled={!form.name || !form.breed || !form.birthDate}>
-              + Add Pet
-            </Button>
-          </Col>
-        </Row>
+        {/* Canvas with decorative corners */}
+        <div className="pets-canvas">
+          <span className="corner corner-tl" />
+          <span className="corner corner-tr" />
+          <span className="corner corner-bl" />
+          <span className="corner corner-br" />
 
-        {/* Image left and Pets list centered */}
-        <Row className="g-4 align-items-start">
-          <Col xs={12} md={3} className="text-start d-none d-md-block">
-            <img src="/img/hero.png" alt="" className="pets-side-img" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
-          </Col>
-          <Col xs={12} md={6}>
+          <div className="pets-center">
+            {/* Add New Pet - full width */}
+            <div className="pets-section-title mb-2">Add new pet</div>
+            <Row className="g-3 align-items-end mb-3">
+              <Col xs={12} md={4} lg={3}>
+                <Form.Label className="fw-semibold">Name</Form.Label>
+                <Form.Control
+                  value={form.name}
+                  onChange={(e) => setForm(f => ({ ...f, name: e.target.value }))}
+                />
+              </Col>
+              <Col xs={12} md={4} lg={3}>
+                <Form.Label className="fw-semibold">Breed</Form.Label>
+                <Form.Control
+                  value={form.breed}
+                  onChange={(e) => setForm(f => ({ ...f, breed: e.target.value }))}
+                />
+              </Col>
+              <Col xs={12} md={4} lg={3}>
+                <Form.Label className="fw-semibold">Birth Date</Form.Label>
+                <Form.Control
+                  type="date"
+                  value={form.birthDate}
+                  onChange={(e) => setForm(f => ({ ...f, birthDate: e.target.value }))}
+                />
+              </Col>
+              <Col xs={12} md="auto">
+                <Button onClick={handleAdd} disabled={!form.name || !form.breed || !form.birthDate}>+ Add Pet</Button>
+              </Col>
+            </Row>
+
+            {/* Pets list - full width */}
             <div className="d-flex align-items-center justify-content-between mb-2">
               <h5 className="m-0 pets-section-title">Your pets list</h5>
             </div>
@@ -83,9 +84,8 @@ const PetsPage = () => {
                 ))}
               </tbody>
             </Table>
-          </Col>
-          <Col xs={12} md={3} />
-        </Row>
+          </div>
+        </div>
       </Container>
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect, useState } from 'react';
 import { Container, Row, Col, Card, ProgressBar, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useData } from './DataContext';
@@ -32,9 +32,20 @@ const Dashboard = () => {
     });
   }, [pets, careTasks, visits]);
 
-  const completionTrendUp = stats.completionRate >= 50; // simple visual cue
-  const petsTrendUp = stats.totalPets > 0;
-  const visitsTrendUp = stats.totalVisits > 0;
+  const [prevStats, setPrevStats] = useState(null);
+  useEffect(() => {
+    const prev = JSON.parse(localStorage.getItem('insightsSnapshot') || 'null');
+    setPrevStats(prev);
+    localStorage.setItem('insightsSnapshot', JSON.stringify({
+      totalPets: stats.totalPets,
+      completionRate: stats.completionRate,
+      totalVisits: stats.totalVisits,
+    }));
+  }, [stats.totalPets, stats.completionRate, stats.totalVisits]);
+
+  const petsDelta = prevStats && typeof prevStats.totalPets === 'number' ? stats.totalPets - prevStats.totalPets : null;
+  const visitsDelta = prevStats && typeof prevStats.totalVisits === 'number' ? stats.totalVisits - prevStats.totalVisits : null;
+  const completionDelta = prevStats && typeof prevStats.completionRate === 'number' ? stats.completionRate - prevStats.completionRate : null;
 
   return (
     <div className="pets-page dashboard-page">
@@ -52,8 +63,8 @@ const Dashboard = () => {
                     <div>
                       <div className="insight-label">Total Pets</div>
                       <div className="insight-value">{stats.totalPets}</div>
-                      <div className={`trend ${petsTrendUp ? 'up' : 'down'}`}>
-                        {petsTrendUp ? '▲' : '▼'} {petsTrendUp ? 'Up' : 'Down'}
+                      <div className={`trend ${petsDelta == null ? '' : petsDelta >= 0 ? 'up' : 'down'}`}>
+                        {petsDelta == null ? '—' : `${petsDelta >= 0 ? '▲' : '▼'} ${Math.abs(petsDelta)}`}
                       </div>
                     </div>
                     <div className="insight-icon">🐾</div>
@@ -66,8 +77,8 @@ const Dashboard = () => {
                     <div>
                       <div className="insight-label">Tasks Completed</div>
                       <div className="insight-sub">{stats.completedTasks}/{stats.totalTasks}</div>
-                      <div className={`trend ${completionTrendUp ? 'up' : 'down'}`}>
-                        {completionTrendUp ? '▲' : '▼'} {stats.completionRate}%
+                      <div className={`trend ${completionDelta == null ? '' : completionDelta >= 0 ? 'up' : 'down'}`}>
+                        {completionDelta == null ? '—' : `${completionDelta >= 0 ? '▲' : '▼'} ${Math.abs(completionDelta)}%`}
                       </div>
                     </div>
                     <div className="ring" style={{ ['--pct']: stats.completionRate }}>
@@ -82,8 +93,8 @@ const Dashboard = () => {
                     <div>
                       <div className="insight-label">Total Visits</div>
                       <div className="insight-value">{stats.totalVisits}</div>
-                      <div className={`trend ${visitsTrendUp ? 'up' : 'down'}`}>
-                        {visitsTrendUp ? '▲' : '▼'} {visitsTrendUp ? 'Up' : 'Down'}
+                      <div className={`trend ${visitsDelta == null ? '' : visitsDelta >= 0 ? 'up' : 'down'}`}>
+                        {visitsDelta == null ? '—' : `${visitsDelta >= 0 ? '▲' : '▼'} ${Math.abs(visitsDelta)}`}
                       </div>
                     </div>
                     <div className="insight-icon">🩺</div>
@@ -93,7 +104,7 @@ const Dashboard = () => {
             </Row>
 
             {/* Per-pet progress */}
-            <Row className="g-3 mt-1">
+            <Row className="g-3 insights-pets">
               {perPet.map(({ pet, totalTasks, completedTasks, completionPct, visits }) => (
                 <Col key={pet.id} lg={4} md={6}>
                   <Card className="shadow-sm h-100 insight-card">

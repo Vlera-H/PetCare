@@ -32,3 +32,9 @@
   border: 1px solid #f3caa1 !important;
   font-weight: 600;
 }
+
+/* CareGuide uses solid brown bg and hides corner images */
+.careguide-page {
+  background: #d2b48c !important;
+}
+.careguide-page .corner { display: none !important; }

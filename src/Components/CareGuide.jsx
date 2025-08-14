@@ -7,15 +7,12 @@ import './careguide.css';
 const CareGuide = () => {
   const navigate = useNavigate();
   return (
-    <div className="pets-page">
+    <div className="pets-page careguide-page">
       <Container fluid className="py-3 px-0">
         <span className="back-arrow" onClick={() => navigate('/')}>←</span>
         <h1 className="text-center pets-header-title pets-header-large" style={{ marginTop: '0.5rem' }}>Pet Care Guide</h1>
 
         <div className="pets-canvas">
-          <img src="/img/c22.png" alt="" className="corner corner-tr" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
-          <img src="/img/c33.png" alt="" className="corner corner-bl" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
-
           <div className="pets-center">
             <Alert className="mb-3 guide-intro">
               A friendly, practical guide to everyday pet care. Browse the sections below for quick, useful tips.

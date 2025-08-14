@@ -2,6 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { Button, Container, Row, Col, Form, Table } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useData } from './DataContext';
+import './pet.css';
 
 const generateNextId = (items) => (items.length ? Math.max(...items.map(i => i.id)) + 1 : 1);
 
@@ -33,37 +34,46 @@ const VisitsPage = () => {
   };
 
   return (
-    <div>
-      <Container fluid className="py-3">
+    <div className="pets-page">
+      <Container fluid className="py-3 px-0">
         <span className="back-arrow" onClick={() => navigate('/')}>←</span>
-        <h3 className="m-0 mb-3" style={{ color: '#5c4033', paddingLeft: '2rem' }}>Visits</h3>
+        <h1 className="text-center pets-header-title pets-header-large" style={{ marginTop: '0.5rem' }}>Visits</h1>
 
-        <Row className="g-3 align-items-end">
-          <Col xs={12} md={4}>
-            <Form.Label className="fw-semibold">Reason</Form.Label>
-            <Form.Control value={form.reason} onChange={(e) => setForm(f => ({ ...f, reason: e.target.value }))} />
-          </Col>
-          <Col xs={12} md={3}>
-            <Form.Label className="fw-semibold">Visit Date</Form.Label>
-            <Form.Control type="date" value={form.visitDate} onChange={(e) => setForm(f => ({ ...f, visitDate: e.target.value }))} />
-          </Col>
-          <Col xs={12} md={3}>
-            <Form.Label className="fw-semibold">Pet</Form.Label>
-            <Form.Select value={form.petId} onChange={(e) => setForm(f => ({ ...f, petId: e.target.value }))}>
-              <option value="">Select pet</option>
-              {pets.map(p => (
-                <option key={p.id} value={p.id}>{p.name} — {p.breed}</option>
-              ))}
-            </Form.Select>
-          </Col>
-          <Col xs={12} md="auto">
-            <Button onClick={handleAdd} disabled={!form.reason || !form.visitDate || !form.petId}>+ Add Visit</Button>
-          </Col>
-        </Row>
+        <div className="pets-canvas">
+          <img src="/img/c22.png" alt="" className="corner corner-tr" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
+          <img src="/img/c33.png" alt="" className="corner corner-bl" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
 
-        <Row className="g-3 mt-3">
-          <Col>
-            <Table striped hover responsive>
+          <div className="pets-center">
+            {/* Add Visit - full width */}
+            <div className="pets-section-title mb-2">Add new visit</div>
+            <Row className="g-3 align-items-end mb-3">
+              <Col xs={12} md={5}>
+                <Form.Label className="fw-semibold">Reason</Form.Label>
+                <Form.Control value={form.reason} onChange={(e) => setForm(f => ({ ...f, reason: e.target.value }))} />
+              </Col>
+              <Col xs={12} md={3}>
+                <Form.Label className="fw-semibold">Visit Date</Form.Label>
+                <Form.Control type="date" value={form.visitDate} onChange={(e) => setForm(f => ({ ...f, visitDate: e.target.value }))} />
+              </Col>
+              <Col xs={12} md={3}>
+                <Form.Label className="fw-semibold">Pet</Form.Label>
+                <Form.Select value={form.petId} onChange={(e) => setForm(f => ({ ...f, petId: e.target.value }))}>
+                  <option value="">Select pet</option>
+                  {pets.map(p => (
+                    <option key={p.id} value={p.id}>{p.name} — {p.breed}</option>
+                  ))}
+                </Form.Select>
+              </Col>
+              <Col xs={12} md="auto">
+                <Button onClick={handleAdd} disabled={!form.reason || !form.visitDate || !form.petId}>+ Add Visit</Button>
+              </Col>
+            </Row>
+
+            {/* Visits list - full width */}
+            <div className="d-flex align-items-center justify-content-between mb-2">
+              <h5 className="m-0 pets-section-title">Your visits list</h5>
+            </div>
+            <Table striped hover responsive className="pets-table">
               <thead>
                 <tr>
                   <th>Visit Date</th>
@@ -88,8 +98,8 @@ const VisitsPage = () => {
                 })}
               </tbody>
             </Table>
-          </Col>
-        </Row>
+          </div>
+        </div>
       </Container>
     </div>
   );

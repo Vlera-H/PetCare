@@ -36,3 +36,18 @@
 /* Solid brown pages without corner images */
 .dashboard-page { background: #d2b48c !important; }
 .dashboard-page .corner { display: none !important; }
+
+/* Insights cards (for Dashboard) */
+.insight-card { border: 1px solid #ead9c7; border-radius: 14px; }
+.insight-label { color: #5c4033; font-weight: 800; }
+.insight-value { font-size: 1.75rem; font-weight: 900; color: #ff8c00; }
+.insight-sub { font-weight: 700; color: #5c4033; }
+.trend { font-size: 0.85rem; margin-top: 0.25rem; }
+.trend.up { color: #2e7d32; }
+.trend.down { color: #c62828; }
+.insight-icon { font-size: 2rem; }
+
+/* Ring progress */
+.ring { --size: 80px; --track: #ffe4c4; --bar: #ff8c00; width: var(--size); height: var(--size); border-radius: 50%; background: conic-gradient(var(--bar) calc(var(--pct) * 1%), var(--track) 0); display: grid; place-items: center; }
+.ring .ring-inner { width: calc(var(--size) - 18px); height: calc(var(--size) - 18px); border-radius: 50%; background: #fff; display: grid; place-items: center; font-weight: 800; color: #5c4033; font-size: 0.95rem; }
+.ring-sm { --size: 56px; }

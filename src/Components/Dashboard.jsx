@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useData } from './DataContext';
 import './Home.css';
 import './pet.css';
+import './careguide.css';
 
 const Dashboard = () => {
   const navigate = useNavigate();

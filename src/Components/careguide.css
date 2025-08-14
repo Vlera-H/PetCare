@@ -62,3 +62,10 @@
 .insights-pets { margin-top: 1rem; }
 /* Slightly stronger pet card titles without changing layout */
 .insight-card .card-title { color: #5c4033; font-weight: 800; }
+
+/* Period toggle for Dashboard */
+.period-toggle { display: flex; gap: 0.5rem; justify-content: flex-end; }
+.period-btn { background: #fff2e6; color: #5c4033; border: 1px solid #f3caa1; border-radius: 999px; padding: 0.25rem 0.75rem; font-weight: 700; }
+.period-btn:hover { background: #ffedd9; }
+.period-btn.active { background: #ff8c00; color: #fff; border-color: #ff8c00; }
+

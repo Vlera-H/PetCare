@@ -33,10 +33,6 @@
   font-weight: 600;
 }
 
-/* CareGuide uses solid brown bg and hides corner images */
-.careguide-page {
-  background: linear-gradient(to bottom right, #ffe9c6, #d2b48c) !important;
-}
-
-.careguide-page .corner { display: none !important; }
-
+/* Solid brown pages without corner images */
+.dashboard-page { background: #d2b48c !important; }
+.dashboard-page .corner { display: none !important; }

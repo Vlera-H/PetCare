@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useData } from './DataContext';
 import './Home.css';
 import './pet.css';
+import './careguide.css';
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -36,7 +37,7 @@ const Dashboard = () => {
   const visitsTrendUp = stats.totalVisits > 0;
 
   return (
-    <div className="pets-page">
+    <div className="pets-page dashboard-page">
       <Container fluid className="py-3 px-0">
         <span className="back-arrow" onClick={() => navigate('/')}>←</span>
         <h1 className="text-center pets-header-title pets-header-large" style={{ marginTop: '0.5rem' }}>Insights</h1>

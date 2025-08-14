@@ -32,3 +32,7 @@
   border: 1px solid #f3caa1 !important;
   font-weight: 600;
 }
+
+/* Solid brown pages without corner images */
+.dashboard-page { background: #d2b48c !important; }
+.dashboard-page .corner { display: none !important; }

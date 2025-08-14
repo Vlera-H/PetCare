@@ -32,20 +32,52 @@ const Dashboard = () => {
     });
   }, [pets, careTasks, visits]);
 
-  const [prevStats, setPrevStats] = useState(null);
+  // Snapshot history for professional period-based deltas
+  const [period, setPeriod] = useState('7d'); // '7d' | '30d' | 'all'
+  const [baseline, setBaseline] = useState(null);
+
   useEffect(() => {
-    const prev = JSON.parse(localStorage.getItem('insightsSnapshot') || 'null');
-    setPrevStats(prev);
-    localStorage.setItem('insightsSnapshot', JSON.stringify({
+    const key = 'insightsHistory';
+    const now = Date.now();
+    const history = JSON.parse(localStorage.getItem(key) || '[]');
+    const newEntry = {
+      ts: now,
       totalPets: stats.totalPets,
       completionRate: stats.completionRate,
       totalVisits: stats.totalVisits,
-    }));
+    };
+    // Append if last snapshot differs to avoid spamming
+    const last = history[history.length - 1];
+    if (!last || last.totalPets !== newEntry.totalPets || last.completionRate !== newEntry.completionRate || last.totalVisits !== newEntry.totalVisits) {
+      const capped = [...history, newEntry].slice(-200);
+      localStorage.setItem(key, JSON.stringify(capped));
+    }
   }, [stats.totalPets, stats.completionRate, stats.totalVisits]);
 
-  const petsDelta = prevStats && typeof prevStats.totalPets === 'number' ? stats.totalPets - prevStats.totalPets : null;
-  const visitsDelta = prevStats && typeof prevStats.totalVisits === 'number' ? stats.totalVisits - prevStats.totalVisits : null;
-  const completionDelta = prevStats && typeof prevStats.completionRate === 'number' ? stats.completionRate - prevStats.completionRate : null;
+  useEffect(() => {
+    const key = 'insightsHistory';
+    const history = JSON.parse(localStorage.getItem(key) || '[]');
+    if (!history.length) {
+      setBaseline(null);
+      return;
+    }
+    if (period === 'all') {
+      setBaseline(history[0]);
+      return;
+    }
+    const days = period === '7d' ? 7 : 30;
+    const cutoff = Date.now() - days * 24 * 60 * 60 * 1000;
+    // Choose the snapshot at/just before cutoff; if none, use oldest available
+    const beforeCutoff = history.filter(h => h.ts <= cutoff);
+    if (beforeCutoff.length) setBaseline(beforeCutoff[beforeCutoff.length - 1]);
+    else setBaseline(history[0]);
+  }, [period, stats.totalPets, stats.completionRate, stats.totalVisits]);
+
+  const petsDelta = baseline ? stats.totalPets - baseline.totalPets : null;
+  const visitsDelta = baseline ? stats.totalVisits - baseline.totalVisits : null;
+  const completionDelta = baseline ? stats.completionRate - baseline.completionRate : null;
+
+  const periodLabel = period === '7d' ? '7 days' : period === '30d' ? '30 days' : 'all time';
 
   return (
     <div className="pets-page dashboard-page">
@@ -55,6 +87,13 @@ const Dashboard = () => {
 
         <div className="pets-canvas">
           <div className="pets-center">
+            {/* Period selector */}
+            <div className="period-toggle mb-2">
+              <button className={`period-btn ${period === '7d' ? 'active' : ''}`} onClick={() => setPeriod('7d')}>7d</button>
+              <button className={`period-btn ${period === '30d' ? 'active' : ''}`} onClick={() => setPeriod('30d')}>30d</button>
+              <button className={`period-btn ${period === 'all' ? 'active' : ''}`} onClick={() => setPeriod('all')}>All</button>
+            </div>
+
             {/* KPI cards with ring and trends */}
             <Row className="g-3 mb-2 insight-grid">
               <Col md={4}>
@@ -63,7 +102,7 @@ const Dashboard = () => {
                     <div>
                       <div className="insight-label">Total Pets</div>
                       <div className="insight-value">{stats.totalPets}</div>
-                      <div className="insight-meta">Compared to last visit</div>
+                      <div className="insight-meta">vs {periodLabel}</div>
                       <div className={`delta-badge ${petsDelta == null ? '' : petsDelta >= 0 ? 'up' : 'down'}`}>
                         {petsDelta == null ? '—' : <>{petsDelta >= 0 ? '▲' : '▼'} {Math.abs(petsDelta)}</>}
                       </div>
@@ -78,7 +117,7 @@ const Dashboard = () => {
                     <div>
                       <div className="insight-label">Tasks Completed</div>
                       <div className="insight-sub">{stats.completedTasks}/{stats.totalTasks}</div>
-                      <div className="insight-meta">Completion rate change</div>
+                      <div className="insight-meta">rate vs {periodLabel}</div>
                       <div className={`delta-badge ${completionDelta == null ? '' : completionDelta >= 0 ? 'up' : 'down'}`}>
                         {completionDelta == null ? '—' : <>{completionDelta >= 0 ? '▲' : '▼'} {Math.abs(completionDelta)}%</>}
                       </div>
@@ -95,7 +134,7 @@ const Dashboard = () => {
                     <div>
                       <div className="insight-label">Total Visits</div>
                       <div className="insight-value">{stats.totalVisits}</div>
-                      <div className="insight-meta">Compared to last visit</div>
+                      <div className="insight-meta">vs {periodLabel}</div>
                       <div className={`delta-badge ${visitsDelta == null ? '' : visitsDelta >= 0 ? 'up' : 'down'}`}>
                         {visitsDelta == null ? '—' : <>{visitsDelta >= 0 ? '▲' : '▼'} {Math.abs(visitsDelta)}</>}
                       </div>

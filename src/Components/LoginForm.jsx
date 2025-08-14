@@ -10,6 +10,7 @@ const LoginForm = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({ email: '', password: '' });
+  const [rememberMe, setRememberMe] = useState(false);
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const [submitting, setSubmitting] = useState(false);
@@ -39,6 +40,13 @@ const LoginForm = () => {
       localStorage.setItem('refreshToken', res.data.refreshToken);
       if (res.data.user?.firstName) {
         localStorage.setItem('firstName', res.data.user.firstName);
+      }
+      if (rememberMe) {
+        localStorage.setItem('rememberMe', 'true');
+        localStorage.setItem('rememberedEmail', formData.email);
+      } else {
+        localStorage.removeItem('rememberMe');
+        localStorage.removeItem('rememberedEmail');
       }
 
       setMessage('Login successful! Welcome ' + (res.data.user?.firstName || ''));
@@ -97,7 +105,7 @@ const LoginForm = () => {
             />
           </Form.Group>
 
-          <Form.Group className="mb-4" controlId="formPassword">
+          <Form.Group className="mb-3" controlId="formPassword">
             <Form.Label className="form-label-custom">PASSWORD</Form.Label>
             <Form.Control
               type="password"
@@ -110,9 +118,20 @@ const LoginForm = () => {
             />
           </Form.Group>
 
+          <div className="row-between mb-3">
+            <Button variant="link" className="link-forgot" onClick={() => navigate('/forgot-password')}>Forgot Password?</Button>
+            <Form.Check
+              type="checkbox"
+              id="rememberMe"
+              label="Remember me"
+              checked={rememberMe}
+              onChange={(e) => setRememberMe(e.target.checked)}
+            />
+          </div>
+
           <Button
             type="submit"
-            className="custom-btn"
+            className={`custom-btn ${submitting ? 'btn-invert' : ''}`}
             disabled={submitting || !formData.email || !formData.password}
           >
             {submitting ? 'Signing in...' : 'SIGN IN'}

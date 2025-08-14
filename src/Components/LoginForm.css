@@ -177,3 +177,26 @@
   font-size: 0.8rem;
   margin-top: 0.4rem;
 }
+
+.row-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.link-forgot {
+  color: #5c4033 !important;
+  padding: 0;
+  font-size: 0.85rem;
+  text-decoration: underline;
+}
+.link-forgot:hover { color: #e67600 !important; }
+
+/* Orange sign-in button (already .custom-btn) + invert on submitting */
+.btn-invert {
+  background-color: #ffffff !important;
+  color: #5c4033 !important;
+  border: 2px solid #ff8c00 !important;
+}
+/* Ensure orange base */
+.custom-btn { background-color: #ff8c00; color: #fff; border: none; }
+.custom-btn:hover { background-color: #e67600; }

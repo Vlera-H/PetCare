@@ -421,6 +421,21 @@
   color: var(--pc-brown);
 }
 
+/* Insights cards */
+.insight-card { border: 1px solid var(--pc-border); border-radius: 14px; }
+.insight-label { color: var(--pc-brown); font-weight: 800; }
+.insight-value { font-size: 1.75rem; font-weight: 900; color: var(--pc-orange); }
+.insight-sub { font-weight: 700; color: var(--pc-brown); }
+.trend { font-size: 0.85rem; margin-top: 0.25rem; }
+.trend.up { color: #2e7d32; }
+.trend.down { color: #c62828; }
+.insight-icon { font-size: 2rem; }
+
+/* Ring progress */
+.ring { --size: 80px; --track: #ffe4c4; --bar: var(--pc-orange); width: var(--size); height: var(--size); border-radius: 50%; background: conic-gradient(var(--bar) calc(var(--pct) * 1%), var(--track) 0); display: grid; place-items: center; }
+.ring .ring-inner { width: calc(var(--size) - 18px); height: calc(var(--size) - 18px); border-radius: 50%; background: #fff; display: grid; place-items: center; font-weight: 800; color: var(--pc-brown); font-size: 0.95rem; }
+.ring-sm { --size: 56px; }
+
 @media (max-width: 992px) {
   .pc-layout {
     grid-template-columns: 1fr;

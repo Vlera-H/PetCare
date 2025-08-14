@@ -20,7 +20,7 @@ const PetsPage = () => {
 
   return (
     <div className="pets-page">
-      <Container fluid className="py-3">
+      <Container fluid className="py-3 px-0">
         <span className="back-arrow" onClick={() => navigate('/')}>←</span>
         <h2 className="m-0 text-center pets-header-title pets-header-large">Pets</h2>
 

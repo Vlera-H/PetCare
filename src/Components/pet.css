@@ -2,52 +2,25 @@
 
 .pets-page {
   min-height: 100vh;
-  background: #f7efe5;
-}
-
-/* Full-bleed background image area */
-.pets-bg-wrap {
-  position: relative;
-  min-height: calc(100vh - 64px); /* full screen minus header approx */
-  margin-top: 0.5rem;
-  border-radius: 16px;
-  overflow: hidden;
-  background: #f7efe5;
-}
-.pets-bg-img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: contain; /* show all corners */
-  object-position: center; /* center the composition */
-  background-color: #f7efe5; /* bars color if aspect ratios differ */
-}
-
-/* Translucent content panel */
-.pets-glass {
-  position: relative;
-  z-index: 1;
-  background: rgba(255, 255, 255, 0.72);
-  backdrop-filter: blur(3px);
-  -webkit-backdrop-filter: blur(3px);
-  height: 100%;
-  display: flex;
-}
-
-/* Center overlay content and bound width */
-.pets-glass-inner {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 1rem 1.25rem;
+  background: linear-gradient(to bottom right, #f3e3cf, #d2b48c);
 }
 
 .pets-header-title { color: #5c4033; }
+.pets-header-large { font-size: 2rem; font-weight: 900; }
+
 .pets-section-title { color: #5c4033; font-weight: 800; }
 
 /* Table */
 .pets-table thead th { background: #fff2e6; color: #5c4033; }
+
+/* Side image (left) */
+.pets-side-img {
+  max-width: 260px;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.12);
+}
 
 /* Inputs */
 .pets-glass .form-label { color: #5c4033; }

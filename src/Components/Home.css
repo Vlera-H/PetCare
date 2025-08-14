@@ -392,6 +392,34 @@
 .pet-card img { object-fit: cover; max-height: 140px; }
 .pets-hero-card { border: 1px solid var(--pc-border); border-radius: 12px; }
 
+/* Navbar theming */
+.pc-navbar {
+  background: linear-gradient(to right, #fff2e6, #ffe1be);
+  border-bottom: 1px solid var(--pc-border);
+}
+.pc-navbar .navbar-brand.brand-big {
+  color: var(--pc-brown) !important;
+  font-weight: 900;
+}
+.pc-nav-links .nav-link {
+  color: var(--pc-brown) !important;
+  font-weight: 700;
+}
+.pc-nav-links .nav-link.active,
+.pc-nav-links .nav-link:hover {
+  color: var(--pc-orange) !important;
+}
+.pc-nav-right .dropdown-toggle {
+  color: var(--pc-brown) !important;
+}
+.pc-nav-right .dropdown-menu {
+  border: 1px solid var(--pc-border);
+}
+.pc-nav-right .dropdown-item:hover {
+  background: #fff2e6;
+  color: var(--pc-brown);
+}
+
 @media (max-width: 992px) {
   .pc-layout {
     grid-template-columns: 1fr;

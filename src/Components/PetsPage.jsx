@@ -24,28 +24,63 @@ const PetsPage = () => {
         <span className="back-arrow" onClick={() => navigate('/')}>←</span>
         <h3 className="m-0 text-center pets-header-title">Pets</h3>
 
-        {/* Top info banner: small photo left + short message right */}
-        <Card className="pets-info-card shadow-sm mt-2">
-          <Card.Body>
-            <Row className="align-items-center g-3">
-              <Col sm={3} className="text-center text-sm-start">
+        {/* FIRST: Add new pet (primary focus) + Tip card with photo */}
+        <Row className="g-3 align-items-stretch mt-2">
+          <Col md={7} lg={8}>
+            <Card className="pets-add-card shadow-sm h-100">
+              <Card.Body>
+                <div className="pets-section-title mb-2">Add new pet</div>
+                <Row className="g-3 align-items-end">
+                  <Col xs={12} md={6} lg={5}>
+                    <Form.Label className="fw-semibold">Name</Form.Label>
+                    <Form.Control
+                      value={form.name}
+                      onChange={(e) => setForm(f => ({ ...f, name: e.target.value }))}
+                    />
+                  </Col>
+                  <Col xs={12} md={6} lg={5}>
+                    <Form.Label className="fw-semibold">Breed</Form.Label>
+                    <Form.Control
+                      value={form.breed}
+                      onChange={(e) => setForm(f => ({ ...f, breed: e.target.value }))}
+                    />
+                  </Col>
+                  <Col xs={12} md={6} lg={5}>
+                    <Form.Label className="fw-semibold">Birth Date</Form.Label>
+                    <Form.Control
+                      type="date"
+                      value={form.birthDate}
+                      onChange={(e) => setForm(f => ({ ...f, birthDate: e.target.value }))}
+                    />
+                  </Col>
+                  <Col xs={12} md={6} lg="auto">
+                    <Button onClick={handleAdd} disabled={!form.name || !form.breed || !form.birthDate}>
+                      + Add Pet
+                    </Button>
+                  </Col>
+                </Row>
+              </Card.Body>
+            </Card>
+          </Col>
+
+          <Col md={5} lg={4}>
+            <Card className="pets-tip-card shadow-sm h-100 d-flex align-items-center justify-content-center">
+              <Card.Body className="d-flex align-items-center gap-3">
                 <img
                   src="/img/pets-hero.png"
                   alt="Pets"
-                  className="pets-info-img"
+                  className="pets-tip-img"
                   onError={(e) => { e.currentTarget.style.display = 'none'; }}
                 />
-              </Col>
-              <Col sm={9}>
-                <div className="pets-info-text">
-                  Keep your pets’ profiles up to date and track their care routines — small habits make a big difference every day.
+                <div className="pets-tip-text">
+                  Keep profiles up to date and track routines — small habits make a big difference every day.
                 </div>
-              </Col>
-            </Row>
-          </Card.Body>
-        </Card>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
 
-        {/* Pets list */}
+        {/* THEN: Pets list */}
         <Row className="g-2 mt-3">
           <Col>
             <h5 className="m-0 pets-section-title">Your pets list</h5>
@@ -73,41 +108,6 @@ const PetsPage = () => {
             </Table>
           </Col>
         </Row>
-
-        {/* Bottom: add new pet (horizontal) inside a card */}
-        <Card className="pets-add-card shadow-sm mt-3">
-          <Card.Body>
-            <Row className="g-3 align-items-end">
-              <Col xs={12} md={4}>
-                <Form.Label className="fw-semibold">Name</Form.Label>
-                <Form.Control
-                  value={form.name}
-                  onChange={(e) => setForm(f => ({ ...f, name: e.target.value }))}
-                />
-              </Col>
-              <Col xs={12} md={4}>
-                <Form.Label className="fw-semibold">Breed</Form.Label>
-                <Form.Control
-                  value={form.breed}
-                  onChange={(e) => setForm(f => ({ ...f, breed: e.target.value }))}
-                />
-              </Col>
-              <Col xs={12} md={3}>
-                <Form.Label className="fw-semibold">Birth Date</Form.Label>
-                <Form.Control
-                  type="date"
-                  value={form.birthDate}
-                  onChange={(e) => setForm(f => ({ ...f, birthDate: e.target.value }))}
-                />
-              </Col>
-              <Col xs={12} md="auto">
-                <Button onClick={handleAdd} disabled={!form.name || !form.breed || !form.birthDate}>
-                  + Add Pet
-                </Button>
-              </Col>
-            </Row>
-          </Card.Body>
-        </Card>
       </Container>
     </div>
   );

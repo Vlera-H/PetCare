@@ -29,14 +29,22 @@
 
 .pets-section-title {
   color: #5c4033;
+  font-weight: 800;
 }
 
-.pets-table thead th {
-  background: #fff2e6;
-  color: #5c4033;
-}
-
+/* Add card */
 .pets-add-card {
   border: 1px solid #ead9c7;
   border-radius: 12px;
+}
+
+/* Tip card */
+.pets-tip-card { border: 1px solid #ead9c7; border-radius: 12px; background: #fff9f0; }
+.pets-tip-img { max-width: 110px; width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0,0,0,0.08); }
+.pets-tip-text { color: #5c4033; font-size: 0.95rem; }
+
+/* Table */
+.pets-table thead th {
+  background: #fff2e6;
+  color: #5c4033;
 }

@@ -33,46 +33,44 @@ const PetsPage = () => {
             onError={(e) => { e.currentTarget.style.display = 'none'; }}
           />
           <div className="pets-glass">
-            <Row className="g-3 align-items-start">
-              {/* Add New Pet (left) */}
-              <Col xs={12} lg={4}>
-                <div className="pets-section-title mb-2">Add new pet</div>
-                <Row className="g-3 align-items-end">
-                  <Col xs={12}>
-                    <Form.Label className="fw-semibold">Name</Form.Label>
-                    <Form.Control
-                      value={form.name}
-                      onChange={(e) => setForm(f => ({ ...f, name: e.target.value }))}
-                    />
-                  </Col>
-                  <Col xs={12}>
-                    <Form.Label className="fw-semibold">Breed</Form.Label>
-                    <Form.Control
-                      value={form.breed}
-                      onChange={(e) => setForm(f => ({ ...f, breed: e.target.value }))}
-                    />
-                  </Col>
-                  <Col xs={12} md={8}>
-                    <Form.Label className="fw-semibold">Birth Date</Form.Label>
-                    <Form.Control
-                      type="date"
-                      value={form.birthDate}
-                      onChange={(e) => setForm(f => ({ ...f, birthDate: e.target.value }))}
-                    />
-                  </Col>
-                  <Col xs={12} md="auto">
-                    <Button onClick={handleAdd} disabled={!form.name || !form.breed || !form.birthDate}>
-                      + Add Pet
-                    </Button>
-                  </Col>
-                </Row>
+            {/* Add New Pet - full width */}
+            <div className="pets-section-title mb-2">Add new pet</div>
+            <Row className="g-3 align-items-end mb-3">
+              <Col xs={12} md={4} lg={3}>
+                <Form.Label className="fw-semibold">Name</Form.Label>
+                <Form.Control
+                  value={form.name}
+                  onChange={(e) => setForm(f => ({ ...f, name: e.target.value }))}
+                />
               </Col>
+              <Col xs={12} md={4} lg={3}>
+                <Form.Label className="fw-semibold">Breed</Form.Label>
+                <Form.Control
+                  value={form.breed}
+                  onChange={(e) => setForm(f => ({ ...f, breed: e.target.value }))}
+                />
+              </Col>
+              <Col xs={12} md={4} lg={3}>
+                <Form.Label className="fw-semibold">Birth Date</Form.Label>
+                <Form.Control
+                  type="date"
+                  value={form.birthDate}
+                  onChange={(e) => setForm(f => ({ ...f, birthDate: e.target.value }))}
+                />
+              </Col>
+              <Col xs={12} md="auto">
+                <Button onClick={handleAdd} disabled={!form.name || !form.breed || !form.birthDate}>
+                  + Add Pet
+                </Button>
+              </Col>
+            </Row>
 
-              {/* Pets List (right) */}
-              <Col xs={12} lg={8}>
-                <div className="d-flex align-items-center justify-content-between mb-2">
-                  <h5 className="m-0 pets-section-title">Your pets list</h5>
-                </div>
+            {/* Pets list - full width */}
+            <div className="d-flex align-items-center justify-content-between mb-2">
+              <h5 className="m-0 pets-section-title">Your pets list</h5>
+            </div>
+            <Row className="g-3">
+              <Col xs={12}>
                 <Table striped hover responsive className="pets-table">
                   <thead>
                     <tr>

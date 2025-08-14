@@ -2,7 +2,27 @@
 
 .pets-page {
   min-height: 100vh;
-  background: linear-gradient(to bottom right, #ffe9c6, #d2b48c);
+  background: #f7efe5;
+}
+
+/* Full-bleed background image area */
+.pets-bg-wrap {
+  position: relative;
+  min-height: calc(100vh - 120px);
+  margin-top: 0.75rem;
+  border-radius: 16px;
+  overflow: hidden;
+  background: url('/img/pets-hero.png') center/cover no-repeat;
+}
+
+/* Translucent content panel */
+.pets-glass {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  padding: 1rem;
 }
 
 .pets-header-title {
@@ -48,3 +68,6 @@
   background: #fff2e6;
   color: #5c4033;
 }
+
+/* Add card inputs inside glass */
+.pets-glass .form-label { color: #5c4033; }

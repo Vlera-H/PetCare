@@ -35,7 +35,8 @@
 
 /* CareGuide uses solid brown bg and hides corner images */
 .careguide-page {
-  background: #d2b48c !important;
+  background: linear-gradient(to bottom right, #ffe9c6, #d2b48c) !important;
 }
+
 .careguide-page .corner { display: none !important; }
 

@@ -119,7 +119,6 @@ const LoginForm = () => {
           </Form.Group>
 
           <div className="row-between mb-3">
-            <Button variant="link" className="link-forgot" onClick={() => navigate('/forgot-password')}>Forgot Password?</Button>
             <Form.Check
               type="checkbox"
               id="rememberMe"
@@ -127,6 +126,7 @@ const LoginForm = () => {
               checked={rememberMe}
               onChange={(e) => setRememberMe(e.target.checked)}
             />
+            <Button variant="link" className="link-forgot" onClick={() => navigate('/forgot-password')}>Forgot Password?</Button>
           </div>
 
           <Button

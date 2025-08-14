@@ -10,16 +10,53 @@
 
 .pets-section-title { color: #5c4033; font-weight: 800; }
 
-/* Decorative canvas */
-.pets-canvas { position: relative; margin-top: 0.75rem; }
-.corner { position: absolute; width: 64px; height: 64px; opacity: 0.9; z-index: 0; }
-.corner-tl { top: -8px; left: -8px; }
-.corner-tr { top: -8px; right: -8px; }
-.corner-bl { bottom: -8px; left: -8px; }
-.corner-br { bottom: -8px; right: -8px; }
+/* Decorative canvas fills almost full screen */
+.pets-canvas {
+  position: relative;
+  margin-top: 0.75rem;
+  min-height: calc(100vh - 96px); /* fill to bottom under header */
+}
 
-/* Centered content */
-.pets-center { position: relative; z-index: 1; background: rgba(255,255,255,0.88); backdrop-filter: blur(2px); border: 1px solid #ead9c7; border-radius: 16px; padding: 1rem 1.25rem; max-width: 1200px; margin: 0 auto; box-shadow: 0 10px 24px rgba(0,0,0,0.08); }
+/* Responsive big corner images */
+.corner {
+  position: absolute;
+  width: clamp(72px, 15vw, 220px);
+  height: clamp(72px, 15vw, 220px);
+  opacity: 0.9;
+  z-index: 0;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 14px rgba(0,0,0,0.1));
+  pointer-events: none;
+}
+.corner-tl { top: 0; left: 0; }
+.corner-tr { top: 0; right: 0; }
+/* Bottom corners larger and pinned to bottom */
+.corner-bl {
+  bottom: 0;
+  left: 0;
+  width: clamp(88px, 18vw, 260px);
+  height: clamp(88px, 18vw, 260px);
+}
+.corner-br {
+  bottom: 0;
+  right: 0;
+  width: clamp(88px, 18vw, 260px);
+  height: clamp(88px, 18vw, 260px);
+}
+
+/* Centered content panel (unchanged size) */
+.pets-center {
+  position: relative;
+  z-index: 1;
+  background: rgba(255,255,255,0.88);
+  backdrop-filter: blur(2px);
+  border: 1px solid #ead9c7;
+  border-radius: 16px;
+  padding: 1rem 1.25rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+}
 
 /* Table */
 .pets-table thead th { background: #fff2e6; color: #5c4033; }

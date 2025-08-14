@@ -17,7 +17,7 @@
   min-height: 100vh;
 }
 
-/* Responsive big corner images */
+/* Responsive corner images pinned to corners */
 .corner {
   position: absolute;
   width: clamp(72px, 15vw, 220px);
@@ -28,21 +28,10 @@
   filter: drop-shadow(0 8px 14px rgba(0,0,0,0.1));
   pointer-events: none;
 }
-.corner-tl { top: -8px; left: -8px; }
-.corner-tr { top: -8px; right: -8px; }
-/* Bottom corners larger and slightly overhanging the bottom */
-.corner-bl {
-  bottom: -12px;
-  left: -8px;
-  width: clamp(100px, 22vw, 320px);
-  height: clamp(100px, 22vw, 320px);
-}
-.corner-br {
-  bottom: -12px;
-  right: -8px;
-  width: clamp(100px, 22vw, 320px);
-  height: clamp(100px, 22vw, 320px);
-}
+.corner-tl { top: 0; left: 0; }
+.corner-tr { top: 0; right: 0; }
+.corner-bl { bottom: 0; left: 0; width: clamp(100px, 22vw, 320px); height: clamp(100px, 22vw, 320px); }
+.corner-br { bottom: 0; right: 0; width: clamp(100px, 22vw, 320px); height: clamp(100px, 22vw, 320px); }
 
 /* Centered content panel (unchanged size) */
 .pets-center {

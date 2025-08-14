@@ -49,7 +49,7 @@
 .insight-icon { font-size: 2.4rem; }
 
 /* Delta badge for arrows */
-.delta-badge { display: inline-flex; align-items: center; gap: 0.25rem; border-radius: 999px; padding: 0.15rem 0.5rem; font-weight: 700; font-size: 0.8rem; }
+.delta-badge { display: inline-flex; align-items: center; gap: 0.25rem; border-radius: 999px; padding: 0.1rem 0.45rem; font-weight: 700; font-size: 0.7rem; line-height: 1; }
 .delta-badge.up { background: #e6f4ea; color: #2e7d32; }
 .delta-badge.down { background: #fdecea; color: #c62828; }
 .insight-meta { margin-top: 0.35rem; color: #7a6a60; font-size: 0.8rem; }
@@ -68,4 +68,12 @@
 .period-btn { background: #fff2e6; color: #5c4033; border: 1px solid #f3caa1; border-radius: 999px; padding: 0.25rem 0.75rem; font-weight: 700; }
 .period-btn:hover { background: #ffedd9; }
 .period-btn.active { background: #ff8c00; color: #fff; border-color: #ff8c00; }
+
+/* KPI left block alignment */
+.insight-info { display: flex; flex-direction: column; justify-content: space-between; min-height: 120px; }
+.insight-info .insight-label { margin-bottom: 0.15rem; }
+.insight-info .insight-value, .insight-info .insight-sub { margin-bottom: 0.25rem; }
+.insight-info .delta-badge { margin-top: auto; }
+
+
 

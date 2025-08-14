@@ -53,7 +53,7 @@ const CareTasksPage = () => {
             {/* Add Care Task - full width */}
             <div className="pets-section-title mb-2">Add new care task</div>
             <Row className="g-3 align-items-end mb-3">
-              <Col xs={12} md={5}>
+              <Col xs={12} md={4}>
                 <Form.Label className="fw-semibold">Description</Form.Label>
                 <Form.Control value={form.description} onChange={(e) => setForm(f => ({ ...f, description: e.target.value }))} />
               </Col>
@@ -70,7 +70,7 @@ const CareTasksPage = () => {
                   ))}
                 </Form.Select>
               </Col>
-              <Col xs={12} md="auto">
+              <Col xs={12} md={2}>
                 <Button className="btn-orange custom-btn" onClick={handleAdd} disabled={!form.description || !form.dueDate || !form.petId}>+ Add Task</Button>
               </Col>
             </Row>

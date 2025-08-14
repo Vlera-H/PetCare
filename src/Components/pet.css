@@ -1,10 +1,10 @@
 /* Pets Page Styles */
 
-/* Background faqes */
+/* Background faqes Pets */
 .pets-page {
   width: 100%;
   min-height: 100vh;
-  background: #d2b48c;
+  background: linear-gradient(to bottom right, #ffe9c6, #d2b48c);
   position: relative;
 }
 
@@ -40,14 +40,13 @@
 .pets-center {
   position: relative;
   z-index: 1;
-  background: rgba(255,255,255,0.88);
+  background: rgba(255, 255, 255, 0.3);
   backdrop-filter: blur(2px);
-  border: 1px solid #ead9c7;
   border-radius: 16px;
   padding: 1rem 1.25rem;
   max-width: 1200px;
   margin: 0 auto;
-  box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
 }
 
 /* Table */
@@ -75,6 +74,15 @@
 
 /* Inputs */
 .form-label { color: #5c4033; }
+.form-control, .form-select {
+  border-radius: 8px;
+  border: 2px solid #ff8c00;
+}
+
+.form-control:focus, .form-select:focus {
+  border-color: #e67600;
+  box-shadow: 0 0 0 0.2rem rgba(255, 140, 0, 0.25);
+}
 
 /* Responsive: on small screens, prefer cover for better fill */
 @media (max-width: 992px) {

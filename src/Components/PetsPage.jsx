@@ -26,6 +26,12 @@ const PetsPage = () => {
 
         {/* Full background area with content overlay */}
         <div className="pets-bg-wrap">
+          <img
+            src="/img/hero.png"
+            alt=""
+            className="pets-bg-img"
+            onError={(e) => { e.currentTarget.style.display = 'none'; }}
+          />
           <div className="pets-glass">
             <Row className="g-3 align-items-start">
               {/* Add New Pet (left) */}

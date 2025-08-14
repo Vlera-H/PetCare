@@ -65,7 +65,7 @@ const VisitsPage = () => {
                 </Form.Select>
               </Col>
               <Col xs={12} md="auto">
-                <Button onClick={handleAdd} disabled={!form.reason || !form.visitDate || !form.petId}>+ Add Visit</Button>
+                <Button className="btn-orange custom-btn" onClick={handleAdd} disabled={!form.reason || !form.visitDate || !form.petId}>+ Add Visit</Button>
               </Col>
             </Row>
 

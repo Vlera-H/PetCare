@@ -1,8 +1,11 @@
 /* Pets Page Styles */
 
+/* Background faqes */
 .pets-page {
+  width: 100%;
   min-height: 100vh;
-  background: linear-gradient(to bottom right, #f3e3cf, #d2b48c);
+  background: #d2b48c;
+  position: relative;
 }
 
 .pets-header-title { color: #5c4033; }
@@ -48,7 +51,27 @@
 }
 
 /* Table */
-.pets-table thead th { background: #fff2e6; color: #5c4033; }
+.pets-table thead th {
+  background: #fff2e6;
+  color: #5c4033;
+}
+
+/* Orange action buttons */
+.custom-btn {
+  font-weight: 600;
+  border-radius: 10px;
+  font-size: 1.05rem;
+  transition: all 0.3s ease-in-out;
+}
+.btn-orange {
+  background-color: #ff8c00;
+  color: #ffffff;
+  border: none;
+}
+.btn-orange:hover {
+  background-color: #e67600;
+  transform: scale(1.03);
+}
 
 /* Inputs */
 .form-label { color: #5c4033; }
@@ -56,4 +79,5 @@
 /* Responsive: on small screens, prefer cover for better fill */
 @media (max-width: 992px) {
   .pets-bg-img { object-fit: cover; object-position: center top; }
+  .corner { width: 100px; }
 }

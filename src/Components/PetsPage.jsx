@@ -58,7 +58,7 @@ const PetsPage = () => {
                 />
               </Col>
               <Col xs={12} md="auto">
-                <Button onClick={handleAdd} disabled={!form.name || !form.breed || !form.birthDate}>+ Add Pet</Button>
+                <Button className="btn-orange custom-btn" onClick={handleAdd} disabled={!form.name || !form.breed || !form.birthDate}>+ Add Pet</Button>
               </Col>
             </Row>
 

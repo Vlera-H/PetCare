@@ -278,11 +278,10 @@
 
 /* Minimal hero */
 .home-hero {
-  background: linear-gradient(to right, #fff7ec, #ffe9c6);
-  border: 1px solid var(--pc-border);
-  border-radius: 16px;
-  padding: 1rem 1.25rem;
+  background: transparent;
+  border: none;
   margin-top: 0.5rem;
+  padding: 0.5rem 0.25rem;
 }
 .home-hero-title { font-size: 2rem; font-weight: 900; color: var(--pc-brown); margin-bottom: 0.25rem; }
 .home-hero-subtitle { color: #7a6a60; max-width: 720px; }
@@ -304,22 +303,13 @@
   padding: 1rem;
 }
 
-/* Flatten hero band since page has gradient */
-.home-hero {
-  background: transparent;
-  border: none;
-  margin-top: 0.5rem;
-  padding: 0.5rem 0.25rem;
-}
-
 /* Small manage links */
 .home-inline-links { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 0.5rem; }
 .mini-link { font-size: 0.9rem; font-weight: 700; color: #5c4033; text-decoration: none; border-bottom: 2px solid transparent; }
 .mini-link:hover { border-bottom-color: #5c4033; }
 
 /* Small insights link */
-.home-inline-cta { font-size: 0.9rem; font-weight: 600; color: #5c4033; text-decoration: underline; }
-.home-inline-cta:hover { color: #3f2d25; }
+.home-inline-cta { font-size: 0.9rem; font-weight: 700; color: #5c4033; text-decoration: underline; }
 
 /* Ensure Home fills background */
 .home-background, body, html {
@@ -393,6 +383,35 @@
 .pet-card img { object-fit: cover; max-height: 140px; }
 .pets-hero-card { border: 1px solid var(--pc-border); border-radius: 12px; }
 
+/* Navbar theming */
+.pc-navbar {
+  background: linear-gradient(to right, #fff2e6, #ffe1be);
+  border-bottom: 1px solid var(--pc-border);
+}
+.pc-navbar .navbar-brand.brand-big {
+  color: var(--pc-brown) !important;
+  font-weight: 900;
+}
+.pc-nav-links .nav-link {
+  color: var(--pc-brown) !important;
+  font-weight: 700;
+  transition: color 0.2s ease-in-out;
+}
+.pc-nav-links .nav-link.active,
+.pc-nav-links .nav-link:hover {
+  color: var(--pc-orange) !important;
+}
+.pc-nav-right .dropdown-toggle {
+  color: var(--pc-brown) !important;
+}
+.pc-nav-right .dropdown-menu {
+  border: 1px solid var(--pc-border);
+}
+.pc-nav-right .dropdown-item:hover {
+  background: #fff2e6;
+  color: var(--pc-brown);
+}
+
 @media (max-width: 992px) {
   .pc-layout {
     grid-template-columns: 1fr;
@@ -406,6 +425,7 @@
   }
   .home-kpis { grid-template-columns: 1fr; }
 }
+
 
 
 

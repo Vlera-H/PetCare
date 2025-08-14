@@ -35,21 +35,21 @@ const PetsPage = () => {
             {/* Add New Pet - full width */}
             <div className="pets-section-title mb-2">Add new pet</div>
             <Row className="g-3 align-items-end mb-3">
-              <Col xs={12} md={4} lg={3}>
+              <Col xs={12} md={3}>
                 <Form.Label className="fw-semibold">Name</Form.Label>
                 <Form.Control
                   value={form.name}
                   onChange={(e) => setForm(f => ({ ...f, name: e.target.value }))}
                 />
               </Col>
-              <Col xs={12} md={4} lg={3}>
+              <Col xs={12} md={3}>
                 <Form.Label className="fw-semibold">Breed</Form.Label>
                 <Form.Control
                   value={form.breed}
                   onChange={(e) => setForm(f => ({ ...f, breed: e.target.value }))}
                 />
               </Col>
-              <Col xs={12} md={4} lg={3}>
+              <Col xs={12} md={3}>
                 <Form.Label className="fw-semibold">Birth Date</Form.Label>
                 <Form.Control
                   type="date"
@@ -57,8 +57,14 @@ const PetsPage = () => {
                   onChange={(e) => setForm(f => ({ ...f, birthDate: e.target.value }))}
                 />
               </Col>
-              <Col xs={12} md="auto">
-                <Button className="btn-orange custom-btn" onClick={handleAdd} disabled={!form.name || !form.breed || !form.birthDate}>+ Add Pet</Button>
+              <Col xs={12} md={3}>
+                <Button
+                  className="btn-orange w-100"
+                  onClick={handleAdd}
+                  disabled={!form.name || !form.breed || !form.birthDate}
+                >
+                  + Add Pet
+                </Button>
               </Col>
             </Row>
 

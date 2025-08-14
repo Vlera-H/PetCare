@@ -47,7 +47,7 @@ const VisitsPage = () => {
             {/* Add Visit - full width */}
             <div className="pets-section-title mb-2">Add new visit</div>
             <Row className="g-3 align-items-end mb-3">
-              <Col xs={12} md={4}>
+              <Col xs={12} md={3}>
                 <Form.Label className="fw-semibold">Reason</Form.Label>
                 <Form.Control value={form.reason} onChange={(e) => setForm(f => ({ ...f, reason: e.target.value }))} />
               </Col>
@@ -64,8 +64,8 @@ const VisitsPage = () => {
                   ))}
                 </Form.Select>
               </Col>
-              <Col xs={12} md={2}>
-                <Button className="btn-orange custom-btn" onClick={handleAdd} disabled={!form.reason || !form.visitDate || !form.petId}>+ Add Visit</Button>
+              <Col xs={12} md={3}>
+                <Button className="btn-orange w-100" onClick={handleAdd} disabled={!form.reason || !form.visitDate || !form.petId}>+ Add Visit</Button>
               </Col>
             </Row>
 

@@ -75,7 +75,7 @@ const Home = () => {
           </Col>
           <Col lg={5} className="home-hero-image text-center">
             <img
-              src="/img/pets.png"
+              src="/img/76.png"
               alt="Happy dog"
               className="home-hero-img"
               onError={(e) => { e.currentTarget.style.display = 'none'; }}

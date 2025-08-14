@@ -20,21 +20,21 @@ function App() {
     <Router>
       <DataProvider>
         <Routes>
-          <Route path="/welcome" element={<WelcomePage />} />
-          <Route path="/login" element={<LoginForm />} />
-          <Route path="/register" element={<RegisterForm />} />
+  <Route path="/welcome" element={<WelcomePage />} />
+  <Route path="/login" element={<LoginForm />} />
+  <Route path="/register" element={<RegisterForm />} />
 
-          <Route path="/" element={<Home />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+  <Route path="/" element={<Navigate to="/welcome" replace />} />
+  <Route path="/home" element={<Home />} />
+  <Route path="/dashboard" element={<Dashboard />} />
 
-          <Route path="/pets" element={<PetsPage />} />
-          <Route path="/tasks" element={<CareTasksPage />} />
-          <Route path="/visits" element={<VisitsPage />} />
-           <Route path="/care-guide" element={<CareGuide />} />
+  <Route path="/pets" element={<PetsPage />} />
+  <Route path="/tasks" element={<CareTasksPage />} />
+  <Route path="/visits" element={<VisitsPage />} />
+  <Route path="/care-guide" element={<CareGuide />} />
 
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
+  <Route path="*" element={<Navigate to="/welcome" replace />} />
+</Routes>
       </DataProvider>
     </Router>
   );

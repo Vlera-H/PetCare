@@ -404,6 +404,7 @@
 .pc-nav-links .nav-link {
   color: var(--pc-brown) !important;
   font-weight: 700;
+  transition: color 0.2s ease-in-out;
 }
 .pc-nav-links .nav-link.active,
 .pc-nav-links .nav-link:hover {

@@ -1,162 +1,104 @@
-/* Pets Page Styles */
+/* Hiq hapësirat default të faqes */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
 
+/* Pets Page Styles */
 .pets-page {
   min-height: 100vh;
   background: linear-gradient(to bottom right, #f3e3cf, #d2b48c);
 }
 
-/* Decorative canvas corners */
-.pets-canvas { position: relative; margin-top: 0.75rem; }
-.corner { position: absolute; width: 64px; height: 64px; opacity: 0.9; z-index: 0; }
-.corner-tl { top: -8px; left: -8px; }
-.corner-tr { top: -8px; right: -8px; }
-.corner-bl { bottom: -8px; left: -8px; }
-.corner-br { bottom: -8px; right: -8px; }
-
-/* Centered content */
-.pets-center { 
-  position: relative; 
-  z-index: 1; 
-  background: rgba(255,255,255,0.88); 
-  backdrop-filter: blur(2px); 
-  border: 1px solid #ead9c7; 
-  border-radius: 16px; 
-  padding: 1rem 1.25rem; 
-  max-width: 1200px; 
-  margin: 0 auto; 
-  box-shadow: 0 10px 24px rgba(0,0,0,0.08); 
-}
-
-/* Titles */
-.pets-header-title { color: #5c4033; }
-.pets-header-large { font-size: 2rem; font-weight: 900; }
-.pets-section-title { color: #5c4033; font-weight: 800; }
-
-/* Table */
-.pets-table thead th { background: #fff2e6; color: #5c4033; }
-
-/* Side image (left) */
-.pets-side-img {
-  max-width: 260px;
-  width: 100%;
-  height: auto;
-  border-radius: 12px;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.12);
-}
-
-/* Inputs */
-.form-label { color: #5c4033; }
-
-/* Cards and Images */
-.pets-info-card, 
-.pets-add-card, 
-.pets-tip-card {
-  border: 1px solid #ead9c7;
-  border-radius: 12px;
-}
-
-.pets-info-img, 
-.pets-tip-img {
-  max-width: 140px;
-  width: 100%;
-  height: auto;
-  border-radius: 10px;
-  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-}
-
-.pets-tip-card {
-  background: #fff9f0;
-}
-
-.pets-tip-img {
-  max-width: 110px;
-  box-shadow: 0 6px 12px rgba(0,0,0,0.08);
-}
-
-.pets-info-text, 
-.pets-tip-text {
+.pets-header-title {
   color: #5c4033;
-  font-size: 0.95rem;
 }
 
-/* Responsive: on small screens, prefer cover for better fill */
-@media (max-width: 992px) {
-  .pets-bg-img { 
-    object-fit: cover; 
-    object-position: center top; 
-  }
+.pets-header-large {
+  font-size: 2rem;
+  font-weight: 900;
 }
 
-/* Pets Page Styles */
-
-.pets-page {
-  min-height: 100vh;
-  background: linear-gradient(to bottom right, #f3e3cf, #d2b48c);
+.pets-section-title {
+  color: #5c4033;
+  font-weight: 800;
 }
 
-.pets-header-title { color: #5c4033; }
-.pets-header-large { font-size: 2rem; font-weight: 900; }
-
-.pets-section-title { color: #5c4033; font-weight: 800; }
-
-/* Decorative canvas fills almost full screen */
+/* Canvas mbush gjithë ekranin */
 .pets-canvas {
   position: relative;
-  margin-top: 0.75rem;
-  min-height: calc(100vh - 96px); /* fill to bottom under header */
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
 }
 
-/* Responsive big corner images */
+/* Corner images gjithmonë në qoshet e ekranit */
 .corner {
-  position: absolute;
-  width: clamp(72px, 15vw, 220px);
-  height: clamp(72px, 15vw, 220px);
+  position: fixed; /* për t'u ngjitur në qoshe edhe kur scrollon */
+  width: clamp(80px, 15vw, 220px);
+  height: auto;
+  max-height: 30vh; /* kufizon madhësinë vertikale */
   opacity: 0.9;
   z-index: 0;
   object-fit: contain;
-  filter: drop-shadow(0 8px 14px rgba(0,0,0,0.1));
   pointer-events: none;
-}
-.corner-tl { top: 0; left: 0; }
-.corner-tr { top: 0; right: 0; }
-/* Bottom corners larger and pinned to bottom */
-.corner-bl {
-  bottom: 0;
-  left: 0;
-  width: clamp(88px, 18vw, 260px);
-  height: clamp(88px, 18vw, 260px);
-}
-.corner-br {
-  bottom: 0;
-  right: 0;
-  width: clamp(88px, 18vw, 260px);
-  height: clamp(88px, 18vw, 260px);
+  filter: drop-shadow(0 8px 14px rgba(0,0,0,0.1));
 }
 
-/* Centered content panel (unchanged size) */
+.corner-tl { top: 0; left: 0; }
+.corner-tr { top: 0; right: 0; }
+.corner-bl { bottom: 0; left: 0; }
+.corner-br { bottom: 0; right: 0; }
+
+/* Centered content panel mbi fotot */
 .pets-center {
   position: relative;
   z-index: 1;
-  background: rgba(255,255,255,0.88);
+  background: rgba(255, 255, 255, 0.88);
   backdrop-filter: blur(2px);
   border: 1px solid #ead9c7;
   border-radius: 16px;
   padding: 1rem 1.25rem;
   max-width: 1200px;
   margin: 0 auto;
-  box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
 }
 
 /* Table */
-.pets-table thead th { background: #fff2e6; color: #5c4033; }
+.pets-table thead th {
+  background: #fff2e6;
+  color: #5c4033;
+}
 
 /* Inputs */
-.form-label { color: #5c4033; }
-
-/* Responsive: on small screens, prefer cover for better fill */
-@media (max-width: 992px) {
-  .pets-bg-img { object-fit: cover; object-position: center top; }
+.form-label {
+  color: #5c4033;
 }
+
+/* Responsive: mobile screens */
+@media (max-width: 992px) {
+  .pets-bg-img {
+    object-fit: cover;
+    object-position: center top;
+  }
+  .corner {
+    width: clamp(50px, 20vw, 150px);
+    height: auto;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

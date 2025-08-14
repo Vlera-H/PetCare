@@ -26,11 +26,10 @@ const PetsPage = () => {
 
         {/* Canvas with decorative corners */}
         <div className="pets-canvas">
-          <img src="/img/c1.png" alt="" className="corner corner-tl" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
-          <img src="/img/c2.png" alt="" className="corner corner-tr" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
-          <img src="/img/c3.png" alt="" className="corner corner-bl" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
-          <img src="/img/c4.png" alt="" className="corner corner-br" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
-
+          <img src="/img/c11.png" alt="" className="corner corner-tl" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
+          <img src="/img/c22.png" alt="" className="corner corner-tr" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
+          <img src="/img/c33.png" alt="" className="corner corner-bl" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
+          <img src="/img/c44.png" alt="" className="corner corner-br" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
           <div className="pets-center">
             {/* Add New Pet - full width */}
             <div className="pets-section-title mb-2">Add new pet</div>
@@ -92,6 +91,7 @@ const PetsPage = () => {
 };
 
 export default PetsPage;
+
 
 
 

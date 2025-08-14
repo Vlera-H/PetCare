@@ -2,6 +2,7 @@ import React from 'react';
 import { Container, Row, Col, Card, ListGroup, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import './pet.css';
+import './careguide.css';
 
 const CareGuide = () => {
   const navigate = useNavigate();

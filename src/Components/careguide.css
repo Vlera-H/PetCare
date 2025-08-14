@@ -68,3 +68,8 @@
 .period-btn { background: #fff2e6; color: #5c4033; border: 1px solid #f3caa1; border-radius: 999px; padding: 0.25rem 0.75rem; font-weight: 700; }
 .period-btn:hover { background: #ffedd9; }
 .period-btn.active { background: #ff8c00; color: #fff; border-color: #ff8c00; }
+
+/* KPI left block alignment */
+.insight-info { display: flex; flex-direction: column; justify-content: flex-start; min-height: 88px; }
+.insight-info .insight-label { margin-bottom: 0.15rem; }
+.insight-info .insight-value, .insight-info .insight-sub { margin-bottom: 0.25rem; }

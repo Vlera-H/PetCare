@@ -99,10 +99,9 @@ const Dashboard = () => {
               <Col md={4}>
                 <Card className="shadow-sm insight-card h-100">
                   <Card.Body className="d-flex align-items-center justify-content-between">
-                    <div>
+                    <div className="insight-info">
                       <div className="insight-label">Total Pets</div>
                       <div className="insight-value">{stats.totalPets}</div>
-                      <div className="insight-meta">vs {periodLabel}</div>
                       <div className={`delta-badge ${petsDelta == null ? '' : petsDelta >= 0 ? 'up' : 'down'}`}>
                         {petsDelta == null ? '—' : <>{petsDelta >= 0 ? '▲' : '▼'} {Math.abs(petsDelta)}</>}
                       </div>
@@ -114,10 +113,9 @@ const Dashboard = () => {
               <Col md={4}>
                 <Card className="shadow-sm insight-card h-100">
                   <Card.Body className="d-flex align-items-center justify-content-between">
-                    <div>
+                    <div className="insight-info">
                       <div className="insight-label">Tasks Completed</div>
                       <div className="insight-sub">{stats.completedTasks}/{stats.totalTasks}</div>
-                      <div className="insight-meta">rate vs {periodLabel}</div>
                       <div className={`delta-badge ${completionDelta == null ? '' : completionDelta >= 0 ? 'up' : 'down'}`}>
                         {completionDelta == null ? '—' : <>{completionDelta >= 0 ? '▲' : '▼'} {Math.abs(completionDelta)}%</>}
                       </div>
@@ -131,10 +129,9 @@ const Dashboard = () => {
               <Col md={4}>
                 <Card className="shadow-sm insight-card h-100">
                   <Card.Body className="d-flex align-items-center justify-content-between">
-                    <div>
+                    <div className="insight-info">
                       <div className="insight-label">Total Visits</div>
                       <div className="insight-value">{stats.totalVisits}</div>
-                      <div className="insight-meta">vs {periodLabel}</div>
                       <div className={`delta-badge ${visitsDelta == null ? '' : visitsDelta >= 0 ? 'up' : 'down'}`}>
                         {visitsDelta == null ? '—' : <>{visitsDelta >= 0 ? '▲' : '▼'} {Math.abs(visitsDelta)}</>}
                       </div>

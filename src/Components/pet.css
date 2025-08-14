@@ -84,6 +84,33 @@
   box-shadow: 0 0 0 0.2rem rgba(255, 140, 0, 0.25);
 }
 
+/* Care Guide specific accents */
+.guide-card {
+  border: 1px solid #f3caa1;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.guide-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.12);
+}
+.guide-header {
+  background: #ffedd9;
+  color: #5c4033;
+  font-weight: 800;
+  border-bottom: 1px solid #f3caa1;
+}
+.guide-title {
+  color: #ff8c00;
+  font-weight: 800;
+}
+.guide-list .list-group-item {
+  background: transparent;
+  border: 0;
+  border-left: 3px solid #ff8c00;
+  padding-left: 0.75rem;
+  color: #5c4033;
+}
+
 /* Responsive: on small screens, prefer cover for better fill */
 @media (max-width: 992px) {
   .pets-bg-img { object-fit: cover; object-position: center top; }

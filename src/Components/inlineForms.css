@@ -1,0 +1,21 @@
+/* Inline forms shared styles (Tasks & Visits) */
+.inline-form-row {
+  align-items: end;
+  gap: 0.75rem;
+}
+
+/* Make inputs/selects and the add button align visually */
+.inline-form-row .form-control,
+.inline-form-row .form-select {
+  height: 42px;
+}
+.inline-form-row .btn-inline {
+  height: 42px;
+}
+
+/* Keep good spacing on small screens */
+@media (max-width: 768px) {
+  .inline-form-row {
+    gap: 0.5rem;
+  }
+}

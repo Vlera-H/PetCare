@@ -17,7 +17,7 @@ const CareGuide = () => {
           <img src="/img/c33.png" alt="" className="corner corner-bl" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
 
           <div className="pets-center">
-            <Alert variant="info" className="mb-3">
+            <Alert className="mb-3 guide-intro">
               A friendly, practical guide to everyday pet care. Browse the sections below for quick, useful tips.
             </Alert>
 

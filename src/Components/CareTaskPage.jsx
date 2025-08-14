@@ -71,7 +71,13 @@ const CareTasksPage = () => {
                 </Form.Select>
               </Col>
               <Col xs={12} md="auto">
-                <Button onClick={handleAdd} disabled={!form.description || !form.dueDate || !form.petId}>+ Add Task</Button>
+                        <Button
+                                 className="btn-orange"
+                                 onClick={handleAdd}
+                                 disabled={!form.name || !form.breed || !form.birthDate}
+                >
+                                 + Add Task
+                                </Button>
               </Col>
             </Row>
 

@@ -10,11 +10,11 @@
 
 .pets-section-title { color: #5c4033; font-weight: 800; }
 
-/* Decorative canvas fills almost full screen */
+/* Decorative canvas fills full screen */
 .pets-canvas {
   position: relative;
-  margin-top: 0.75rem;
-  min-height: calc(100vh - 96px); /* fill to bottom under header */
+  margin-top: 0.5rem;
+  min-height: 100vh;
 }
 
 /* Responsive big corner images */
@@ -28,20 +28,20 @@
   filter: drop-shadow(0 8px 14px rgba(0,0,0,0.1));
   pointer-events: none;
 }
-.corner-tl { top: 0; left: 0; }
-.corner-tr { top: 0; right: 0; }
-/* Bottom corners larger and pinned to bottom */
+.corner-tl { top: -8px; left: -8px; }
+.corner-tr { top: -8px; right: -8px; }
+/* Bottom corners larger and slightly overhanging the bottom */
 .corner-bl {
-  bottom: 0;
-  left: 0;
-  width: clamp(88px, 18vw, 260px);
-  height: clamp(88px, 18vw, 260px);
+  bottom: -12px;
+  left: -8px;
+  width: clamp(100px, 22vw, 320px);
+  height: clamp(100px, 22vw, 320px);
 }
 .corner-br {
-  bottom: 0;
-  right: 0;
-  width: clamp(88px, 18vw, 260px);
-  height: clamp(88px, 18vw, 260px);
+  bottom: -12px;
+  right: -8px;
+  width: clamp(100px, 22vw, 320px);
+  height: clamp(100px, 22vw, 320px);
 }
 
 /* Centered content panel (unchanged size) */

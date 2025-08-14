@@ -2,340 +2,162 @@
 
 .pets-page {
   min-height: 100vh;
-  background: linear-gradient(to bottom right, #ffe9c6, #d2b48c);
+  background: linear-gradient(to bottom right, #f3e3cf, #d2b48c);
 }
 
-.pets-header-title {
-  color: #5c4033;
+/* Decorative canvas corners */
+.pets-canvas { position: relative; margin-top: 0.75rem; }
+.corner { position: absolute; width: 64px; height: 64px; opacity: 0.9; z-index: 0; }
+.corner-tl { top: -8px; left: -8px; }
+.corner-tr { top: -8px; right: -8px; }
+.corner-bl { bottom: -8px; left: -8px; }
+.corner-br { bottom: -8px; right: -8px; }
+
+/* Centered content */
+.pets-center { 
+  position: relative; 
+  z-index: 1; 
+  background: rgba(255,255,255,0.88); 
+  backdrop-filter: blur(2px); 
+  border: 1px solid #ead9c7; 
+  border-radius: 16px; 
+  padding: 1rem 1.25rem; 
+  max-width: 1200px; 
+  margin: 0 auto; 
+  box-shadow: 0 10px 24px rgba(0,0,0,0.08); 
 }
 
-.pets-info-card {
-  border: 1px solid #ead9c7;
-  border-radius: 12px;
-}
-
-.pets-info-img {
-  max-width: 140px;
-  width: 100%;
-  height: auto;
-  border-radius: 10px;
-  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-}
-
-.pets-info-text {
-  color: #5c4033;
-  font-size: 0.95rem;
-}
-
-.pets-section-title {
-  color: #5c4033;
-}
-
-.pets-table thead th {
-  background: #fff2e6;
-  color: #5c4033;
-}
-
-.pets-add-card {
-  border: 1px solid #ead9c7;
-  border-radius: 12px;
-}
-/* Pets Page Styles */
-
-.pets-page {
-  min-height: 100vh;
-  background: linear-gradient(to bottom right, #ffe9c6, #d2b48c);
-}
-
-.pets-header-title {
-  color: #5c4033;
-}
-
-.pets-info-card {
-  border: 1px solid #ead9c7;
-  border-radius: 12px;
-}
-
-.pets-info-img {
-  max-width: 140px;
-  width: 100%;
-  height: auto;
-  border-radius: 10px;
-  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-}
-
-.pets-info-text {
-  color: #5c4033;
-  font-size: 0.95rem;
-}
-
-.pets-section-title {
-  color: #5c4033;
-  font-weight: 800;
-}
-
-/* Add card */
-.pets-add-card {
-  border: 1px solid #ead9c7;
-  border-radius: 12px;
-}
-
-/* Tip card */
-.pets-tip-card { border: 1px solid #ead9c7; border-radius: 12px; background: #fff9f0; }
-.pets-tip-img { max-width: 110px; width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0,0,0,0.08); }
-.pets-tip-text { color: #5c4033; font-size: 0.95rem; }
+/* Titles */
+.pets-header-title { color: #5c4033; }
+.pets-header-large { font-size: 2rem; font-weight: 900; }
+.pets-section-title { color: #5c4033; font-weight: 800; }
 
 /* Table */
-.pets-table thead th {
-  background: #fff2e6;
-  color: #5c4033;
-}
-/* Pets Page Styles */
+.pets-table thead th { background: #fff2e6; color: #5c4033; }
 
-.pets-page {
-  min-height: 100vh;
-  background: #f7efe5;
-}
-
-/* Full-bleed background image area */
-.pets-bg-wrap {
-  position: relative;
-  min-height: calc(100vh - 120px);
-  margin-top: 0.75rem;
-  border-radius: 16px;
-  overflow: hidden;
-  background: url('/public/img/te.png') center/cover no-repeat;
-}
-
-/* Translucent content panel */
-.pets-glass {
-  position: absolute;
-  inset: 0;
-  background: rgba(255, 255, 255, 0.65);
-  backdrop-filter: blur(3px);
-  -webkit-backdrop-filter: blur(3px);
-  padding: 1rem;
-}
-
-.pets-header-title {
-  color: #5c4033;
-}
-
-.pets-info-card {
-  border: 1px solid #ead9c7;
-  border-radius: 12px;
-}
-
-.pets-info-img {
-  max-width: 140px;
+/* Side image (left) */
+.pets-side-img {
+  max-width: 260px;
   width: 100%;
   height: auto;
-  border-radius: 10px;
-  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-}
-
-.pets-info-text {
-  color: #5c4033;
-  font-size: 0.95rem;
-}
-
-.pets-section-title {
-  color: #5c4033;
-  font-weight: 800;
-}
-
-/* Add card */
-.pets-add-card {
-  border: 1px solid #ead9c7;
   border-radius: 12px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.12);
 }
 
-/* Tip card */
-.pets-tip-card { border: 1px solid #ead9c7; border-radius: 12px; background: #fff9f0; }
-.pets-tip-img { max-width: 110px; width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0,0,0,0.08); }
-.pets-tip-text { color: #5c4033; font-size: 0.95rem; }
+/* Inputs */
+.form-label { color: #5c4033; }
 
-/* Table */
-.pets-table thead th {
-  background: #fff2e6;
-  color: #5c4033;
-}
-
-/* Add card inputs inside glass */
-.pets-glass .form-label { color: #5c4033; }
-
-.pets-page {
-min-height: 100vh;
-background: #f7efe5;
-}
-
-/* Full-bleed background image area */
-.pets-bg-wrap {
-position: relative;
-min-height: calc(100vh - 120px);
-margin-top: 0.75rem;
-border-radius: 16px;
-overflow: hidden;
-}
-.pets-bg-img {
-position: absolute;
-inset: 0;
-width: 100%;
-height: 100%;
-object-fit: cover;
-}
-
-/* Translucent content panel */
-.pets-glass {
-position: relative;
-z-index: 1;
-background: rgba(255, 255, 255, 0.65);
-backdrop-filter: blur(3px);
--webkit-backdrop-filter: blur(3px);
-padding: 1rem;
-height: 100%;
-}
-
-.pets-header-title {
-color: #5c4033;
-}
-
-.pets-info-card {
-border: 1px solid #ead9c7;
-border-radius: 12px;
-}
-
-.pets-info-img {
-max-width: 140px;
-width: 100%;
-height: auto;
-border-radius: 10px;
-box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-}
-
-.pets-info-text {
-color: #5c4033;
-font-size: 0.95rem;
-}
-
-.pets-section-title {
-color: #5c4033;
-font-weight: 800;
-}
-
-/* Add card */
-.pets-add-card {
-border: 1px solid #ead9c7;
-border-radius: 12px;
-}
-
-/* Tip card */
-.pets-tip-card { border: 1px solid #ead9c7; border-radius: 12px; background: #fff9f0; }
-.pets-tip-img { max-width: 110px; width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0,0,0,0.08); }
-.pets-tip-text { color: #5c4033; font-size: 0.95rem; }
-
-/* Table */
-.pets-table thead th {
-background: #fff2e6;
-color: #5c4033;
-}
-
-/* Add card inputs inside glass */
-.pets-glass .form-label { color: #5c4033; }
-
-/* Pets Page Styles */
-
-.pets-page {
-  min-height: 100vh;
-  background: #f7efe5;
-}
-
-/* Full-bleed background image area */
-.pets-bg-wrap {
-  position: relative;
-  min-height: 60vh; /* reduce height so corners are visible */
-  margin-top: 0.75rem;
-  border-radius: 16px;
-  overflow: hidden;
-}
-.pets-bg-img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center top; /* show top corners */
-}
-
-/* Translucent content panel */
-.pets-glass {
-  position: relative;
-  z-index: 1;
-  background: rgba(255, 255, 255, 0.68);
-  backdrop-filter: blur(3px);
-  -webkit-backdrop-filter: blur(3px);
-  padding: 1rem 1.25rem;
-  height: 100%;
-}
-
-.pets-header-title {
-  color: #5c4033;
-}
-
-.pets-info-card {
-  border: 1px solid #ead9c7;
-  border-radius: 12px;
-}
-
-.pets-info-img {
-  max-width: 140px;
-  width: 100%;
-  height: auto;
-  border-radius: 10px;
-  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-}
-
-.pets-info-text {
-  color: #5c4033;
-  font-size: 0.95rem;
-}
-
-.pets-section-title {
-  color: #5c4033;
-  font-weight: 800;
-}
-
-/* Add card */
-.pets-add-card {
-  border: 1px solid #ead9c7;
-  border-radius: 12px;
-}
-
-/* Tip card */
+/* Cards and Images */
+.pets-info-card, 
+.pets-add-card, 
 .pets-tip-card {
   border: 1px solid #ead9c7;
   border-radius: 12px;
-  background: #fff9f0;
 }
+
+.pets-info-img, 
 .pets-tip-img {
-  max-width: 110px;
+  max-width: 140px;
   width: 100%;
   height: auto;
   border-radius: 10px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
+
+.pets-tip-card {
+  background: #fff9f0;
+}
+
+.pets-tip-img {
+  max-width: 110px;
   box-shadow: 0 6px 12px rgba(0,0,0,0.08);
 }
+
+.pets-info-text, 
 .pets-tip-text {
   color: #5c4033;
   font-size: 0.95rem;
 }
 
-/* Table */
-.pets-table thead th {
-  background: #fff2e6;
-  color: #5c4033;
+/* Responsive: on small screens, prefer cover for better fill */
+@media (max-width: 992px) {
+  .pets-bg-img { 
+    object-fit: cover; 
+    object-position: center top; 
+  }
 }
 
-/* Add card inputs inside glass */
-.pets-glass .form-label {
-  color: #5c4033;
+/* Pets Page Styles */
+
+.pets-page {
+  min-height: 100vh;
+  background: linear-gradient(to bottom right, #f3e3cf, #d2b48c);
 }
+
+.pets-header-title { color: #5c4033; }
+.pets-header-large { font-size: 2rem; font-weight: 900; }
+
+.pets-section-title { color: #5c4033; font-weight: 800; }
+
+/* Decorative canvas fills almost full screen */
+.pets-canvas {
+  position: relative;
+  margin-top: 0.75rem;
+  min-height: calc(100vh - 96px); /* fill to bottom under header */
+}
+
+/* Responsive big corner images */
+.corner {
+  position: absolute;
+  width: clamp(72px, 15vw, 220px);
+  height: clamp(72px, 15vw, 220px);
+  opacity: 0.9;
+  z-index: 0;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 14px rgba(0,0,0,0.1));
+  pointer-events: none;
+}
+.corner-tl { top: 0; left: 0; }
+.corner-tr { top: 0; right: 0; }
+/* Bottom corners larger and pinned to bottom */
+.corner-bl {
+  bottom: 0;
+  left: 0;
+  width: clamp(88px, 18vw, 260px);
+  height: clamp(88px, 18vw, 260px);
+}
+.corner-br {
+  bottom: 0;
+  right: 0;
+  width: clamp(88px, 18vw, 260px);
+  height: clamp(88px, 18vw, 260px);
+}
+
+/* Centered content panel (unchanged size) */
+.pets-center {
+  position: relative;
+  z-index: 1;
+  background: rgba(255,255,255,0.88);
+  backdrop-filter: blur(2px);
+  border: 1px solid #ead9c7;
+  border-radius: 16px;
+  padding: 1rem 1.25rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+}
+
+/* Table */
+.pets-table thead th { background: #fff2e6; color: #5c4033; }
+
+/* Inputs */
+.form-label { color: #5c4033; }
+
+/* Responsive: on small screens, prefer cover for better fill */
+@media (max-width: 992px) {
+  .pets-bg-img { object-fit: cover; object-position: center top; }
+}
+
+
+
+

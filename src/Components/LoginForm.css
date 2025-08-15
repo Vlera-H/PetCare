@@ -12,7 +12,6 @@
   overflow-y: auto;
 }
 
-
 .login-box {
   background: linear-gradient(to bottom right, #fff8f0, #fdf6ed);
   padding: 1.6rem 1.4rem; 
@@ -23,8 +22,6 @@
   position: relative;
   margin-top: 60px;
 }
-
-
 
 .login-icon-circle {
   background-color: #5c4033;
@@ -59,17 +56,18 @@
   margin-bottom: 0.3rem;
 }
 
+/* Inputs white without orange border */
 .form-control-custom {
   border-radius: 8px;
-  border: 2px solid #ff8c00;
-  padding: 0.5rem 0.75rem; 
-  font-size: 0.9rem; /* më i vogël */
-  transition: border-color 0.3s ease-in-out;
+  border: 1px solid #ddd;
+  background: #ffffff;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.9rem;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
-
 .form-control-custom:focus {
-  border-color: #e67600;
-  box-shadow: 0 0 0 0.2rem rgba(255, 140, 0, 0.25);
+  border-color: #80bdff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
 
 .mb-3 {
@@ -93,7 +91,7 @@
 }
 
 .custom-btn:hover {
-  background-color: #e67600;
+  background-color: #ff8c00 ;
   transform: scale(1.03);
 }
 
@@ -114,7 +112,7 @@
 }
 
 .signup-btn:hover {
-  color: #e67600;
+  color: #ff8c00 ;
   text-decoration: underline;
 }
 
@@ -128,6 +126,7 @@
   font-weight: bold;
   transition: transform 0.2s ease;
 }
+
 
 .back-arrow:hover {
   transform: translateX(-5px);
@@ -148,6 +147,7 @@
     font-size: 0.9rem;
   }
 }
+
 .register-box {
   margin: 0 auto;            /* qendro në mes horizontalisht */
   max-width: 340px;          /* pak më e ngushtë */
@@ -176,4 +176,41 @@
 .register-box .signup-btn {
   font-size: 0.8rem;
   margin-top: 0.4rem;
+}
+
+.row-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+/* Forgot password link blue */
+.link-forgot {
+  color: #0d6efd !important;
+  padding: 0;
+  font-size: 0.85rem;
+  text-decoration: underline;
+}
+.link-forgot:hover { color: #0b5ed7 !important; }
+
+/* Ensure Sign In button is orange at all times */
+.custom-btn {
+  background-color: #ff8c00 !important;
+  color: #ffffff !important;
+  border: 2px solid #ff8c00 !important;
+}
+.custom-btn:hover {
+  background-color: #e67600 !important;
+}
+.custom-btn:disabled,
+.custom-btn.disabled {
+  background-color: #ff8c00 !important;
+  color: #ffffff !important;
+  border-color: #ff8c00 !important;
+  opacity: 0.65;
+}
+/* Invert on submitting */
+.btn-invert {
+  background-color: #ffffff !important;
+  color: #5c4033 !important;
+  border: 2px solid #ff8c00 !important;
 }

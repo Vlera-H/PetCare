@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { Button, Container, Row, Col, Form, Table } from 'react-bootstrap';
+import { Button, Container, Row, Col, Form, Table, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useData } from './DataContext';
 import './pet.css';
@@ -11,7 +11,7 @@ const CareTasksPage = () => {
   const navigate = useNavigate();
   const { pets, careTasks, setCareTasks } = useData();
 
-  const [form, setForm] = useState({ description: '', dueDate: '', petId: pets[0]?.id || '' });
+  const [form, setForm] = useState({ description: '', dueDate: '', petId: pets[0]?.id ? String(pets[0].id) : '' });
 
   const tasksForSelectedPet = useMemo(
     () => (form.petId ? careTasks.filter(t => t.petId === Number(form.petId)) : careTasks),
@@ -51,6 +51,13 @@ const CareTasksPage = () => {
           <img src="/img/c33.png" alt="" className="corner corner-bl" loading="lazy" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
 
           <div className="pets-center">
+            {/* Empty state if no pets */}
+            {!pets.length && (
+              <Alert variant="warning" className="mb-3">
+                You need at least one pet to add a care task. <Button variant="link" className="p-0" onClick={() => navigate('/pets')}>Add a pet</Button>
+              </Alert>
+            )}
+
             {/* Add Care Task - full width */}
             <div className="pets-section-title mb-2">Add new care task</div>
             <Row className="g-3 align-items-end mb-3 inline-form-row">
@@ -67,7 +74,7 @@ const CareTasksPage = () => {
                 <Form.Select value={form.petId} onChange={(e) => setForm(f => ({ ...f, petId: e.target.value }))}>
                   <option value="">Select pet</option>
                   {pets.map(p => (
-                    <option key={p.id} value={p.id}>{p.name} — {p.breed}</option>
+                    <option key={p.id} value={String(p.id)}>{p.name} — {p.breed}</option>
                   ))}
                 </Form.Select>
               </Col>

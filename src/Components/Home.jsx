@@ -107,9 +107,9 @@ const Home = () => {
                 ) : (
                   <div className="home-muted">No upcoming visits.</div>
                 )}
-                <div className="mt-3 d-flex justify-content-end">
-                  <Button variant="outline-brown" className="custom-cream" onClick={() => navigate('/visits')}>View all</Button>
-                </div>
+               <div className="mt-3">
+               <Button className="custom-btn btn-cream btn-wide" onClick={() => navigate('/visits')}>View all</Button>
+               </div>
               </Card.Body>
             </Card>
           </Col>
@@ -132,8 +132,8 @@ const Home = () => {
                 ) : (
                   <div className="home-muted">No upcoming tasks.</div>
                 )}
-                <div className="mt-3 d-flex justify-content-end">
-                  <Button variant="orange" className="btn-orange" onClick={() => navigate('/tasks')}>View all</Button>
+                <div className="mt-3">
+                <Button className="custom-btn btn-orange btn-wide" onClick={() => navigate('/tasks')}>View all</Button>
                 </div>
               </Card.Body>
             </Card>

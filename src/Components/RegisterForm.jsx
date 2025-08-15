@@ -154,9 +154,8 @@ const RegisterForm = () => {
           <Button type="submit" className="custom-btn mb-3">
             CREATE ACCOUNT
           </Button>
-
-          <Button variant="link" className="signup-btn" onClick={() => navigate('/login')}>
-            Already have an account? <strong>Sign in</strong>
+          <Button className="custom-btn" onClick={() => navigate('/login')}>
+            SIGN IN
           </Button>
         </Form>
 

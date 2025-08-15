@@ -41,8 +41,8 @@ const VisitsPage = () => {
         <h1 className="text-center pets-header-title pets-header-large" style={{ marginTop: '0.5rem' }}>Visits</h1>
 
         <div className="pets-canvas">
-          <img src="/img/c22.png" alt="" className="corner corner-tr" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
-          <img src="/img/c33.png" alt="" className="corner corner-bl" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
+          <img src="/img/c22.png" alt="" className="corner corner-tr" loading="lazy" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
+          <img src="/img/c33.png" alt="" className="corner corner-bl" loading="lazy" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
 
           <div className="pets-center">
             {/* Add Visit - full width */}

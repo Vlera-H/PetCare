@@ -47,8 +47,8 @@ const CareTasksPage = () => {
 
         <div className="pets-canvas">
           {/* Use only two corners, like PetsPage example */}
-          <img src="/img/c22.png" alt="" className="corner corner-tr" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
-          <img src="/img/c33.png" alt="" className="corner corner-bl" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
+          <img src="/img/c22.png" alt="" className="corner corner-tr" loading="lazy" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
+          <img src="/img/c33.png" alt="" className="corner corner-bl" loading="lazy" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
 
           <div className="pets-center">
             {/* Add Care Task - full width */}

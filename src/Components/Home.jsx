@@ -3,6 +3,7 @@ import { Button, Container, Row, Col, Card } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import AppNavbar from './AppNavbar';
 import './Home.css';
+import './Buttons.css';
 import { useData } from './DataContext';
 
 const Home = () => {
@@ -82,6 +83,7 @@ const Home = () => {
               src="/img/home-dog.png"
               alt="Happy dog"
               className="home-hero-img"
+              loading="lazy"
               onError={(e) => { e.currentTarget.style.display = 'none'; }}
             />
             <div className="mt-2 d-flex justify-content-end">
@@ -139,7 +141,7 @@ const Home = () => {
                   <div className="home-muted">No upcoming tasks.</div>
                 )}
                 <div className="mt-3 d-flex justify-content-end">
-                  <Button variant="orange" className="custom-btn btn-orange" onClick={() => navigate('/tasks')}>View all</Button>
+                  <Button className="custom-btn btn-orange" onClick={() => navigate('/tasks')}>View all</Button>
                 </div>
               </Card.Body>
             </Card>

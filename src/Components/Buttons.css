@@ -1,0 +1,29 @@
+/* Twin button styles: cream and orange */
+.btn-cream {
+  background: #ffffff;
+  color: #5c4033;
+  border: 2px solid #5c4033;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease, transform 0.15s ease;
+}
+.btn-cream:hover { background: #fff6ea; }
+/* Transition to orange on interaction */
+.btn-cream:active,
+.btn-cream:focus-visible,
+.btn-cream.is-active {
+  background: #ff8c00;
+  color: #ffffff;
+  border-color: #ff8c00;
+}
+
+.btn-orange {
+  background: #ff8c00;
+  color: #ffffff;
+  border: 2px solid #ff8c00;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: background-color 0.25s ease, transform 0.15s ease;
+}
+.btn-orange:hover { background: #e67600; }
+.btn-orange:active, .btn-orange:focus-visible { background: #e06f00; }

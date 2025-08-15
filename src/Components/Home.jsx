@@ -116,7 +116,7 @@ const Home = () => {
                   <div className="home-muted">No upcoming visits.</div>
                 )}
                 <div className="mt-3 d-flex justify-content-end">
-                  <Button className="custom-btn btn-orange" onClick={() => navigate('/visits')}>View all</Button>
+                  <Button className="custom-btn btn-cream" onClick={() => navigate('/visits')}>View all</Button>
                 </div>
               </Card.Body>
             </Card>

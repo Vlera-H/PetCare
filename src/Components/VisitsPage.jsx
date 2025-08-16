@@ -44,37 +44,34 @@ const VisitsPage = () => {
           <img src="/img/c22.png" alt="" className="corner corner-tr" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
           <img src="/img/c33.png" alt="" className="corner corner-bl" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
 
-          <div className="pets-center">
-            {/* Add Visit - full width */}
-            <div className="pets-section-title mb-2">Add new visit</div>
-            <Row className="g-3 align-items-end mb-3 inline-form-row">
-              <Col xs={12} md={4}>
-                <Form.Label className="fw-semibold">Reason</Form.Label>
-                <Form.Control value={form.reason} onChange={(e) => setForm(f => ({ ...f, reason: e.target.value }))} />
-              </Col>
-              <Col xs={12} md={3}>
-                <Form.Label className="fw-semibold">Visit Date</Form.Label>
-                <Form.Control type="date" value={form.visitDate} onChange={(e) => setForm(f => ({ ...f, visitDate: e.target.value }))} />
-              </Col>
-              <Col xs={12} md={3}>
-                <Form.Label className="fw-semibold">Pet</Form.Label>
-                <Form.Select value={form.petId} onChange={(e) => setForm(f => ({ ...f, petId: e.target.value }))}>
-                  <option value="">Select pet</option>
-                  {pets.map(p => (
-                    <option key={p.id} value={p.id}>{p.name} — {p.breed}</option>
-                  ))}
-                </Form.Select>
-              </Col>
-              <Col xs={12} md="auto">
-                         <Button
-                                 className="btn-orange"
-                                 onClick={handleAdd}
-                                 disabled={!form.name || !form.breed || !form.birthDate}
-                >
-                                 + Add Visit
-                                </Button>
-              </Col>
-            </Row>
+<div className="pets-center">
+  <div className="pets-section-title mb-2">Add new visit</div>
+  <Form onSubmit={(e) => { e.preventDefault(); handleAdd(); }} autoComplete="off">
+    <Row className="g-3 align-items-end mb-3 inline-form-row">
+      <Col xs={12} md={4}>
+        <Form.Label className="fw-semibold">Reason</Form.Label>
+        <Form.Control value={form.reason} onChange={(e) => setForm(f => ({ ...f, reason: e.target.value }))} />
+      </Col>
+      <Col xs={12} md={3}>
+        <Form.Label className="fw-semibold">Visit Date</Form.Label>
+        <Form.Control type="date" value={form.visitDate} onChange={(e) => setForm(f => ({ ...f, visitDate: e.target.value }))} />
+      </Col>
+      <Col xs={12} md={3}>
+        <Form.Label className="fw-semibold">Pet</Form.Label>
+        <Form.Select value={form.petId} onChange={(e) => setForm(f => ({ ...f, petId: e.target.value }))}>
+          <option value="">Select pet</option>
+          {pets.map(p => (
+            <option key={p.id} value={String(p.id)}>{p.name} — {p.breed}</option>
+          ))}
+        </Form.Select>
+      </Col>
+      <Col xs={12} md="auto">
+        <Button size="sm" className="btn-orange" type="submit" disabled={!form.reason || !form.visitDate || !form.petId}>
+          + Add Visit
+        </Button>
+      </Col>
+    </Row>
+  </Form>
 
             {/* Visits list - full width */}
             <div className="d-flex align-items-center justify-content-between mb-2">
@@ -113,7 +110,6 @@ const VisitsPage = () => {
 };
 
 export default VisitsPage;
-
 
 
 

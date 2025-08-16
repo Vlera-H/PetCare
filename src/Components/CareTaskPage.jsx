@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { Button, Container, Row, Col, Form, Table } from 'react-bootstrap';
+import { Button, Container, Row, Col, Form, Table, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useData } from './DataContext';
 import './pet.css';
@@ -11,7 +11,11 @@ const CareTasksPage = () => {
   const navigate = useNavigate();
   const { pets, careTasks, setCareTasks } = useData();
 
-  const [form, setForm] = useState({ description: '', dueDate: '', petId: pets[0]?.id || '' });
+  const [form, setForm] = useState({
+    description: '',
+    dueDate: '',
+    petId: pets[0]?.id ? String(pets[0].id) : ''
+  });
 
   const tasksForSelectedPet = useMemo(
     () => (form.petId ? careTasks.filter(t => t.petId === Number(form.petId)) : careTasks),
@@ -46,43 +50,60 @@ const CareTasksPage = () => {
         <h1 className="text-center pets-header-title pets-header-large" style={{ marginTop: '0.5rem' }}>Care Tasks</h1>
 
         <div className="pets-canvas">
-          {/* Use only two corners, like PetsPage example */}
-          <img src="/img/c22.png" alt="" className="corner corner-tr" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
-          <img src="/img/c33.png" alt="" className="corner corner-bl" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
+          <img src="/img/c22.png" alt="" className="corner corner-tr" loading="lazy" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
+          <img src="/img/c33.png" alt="" className="corner corner-bl" loading="lazy" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
 
           <div className="pets-center">
-            {/* Add Care Task - full width */}
-            <div className="pets-section-title mb-2">Add new care task</div>
-            <Row className="g-3 align-items-end mb-3 inline-form-row">
-              <Col xs={12} md={4}>
-                <Form.Label className="fw-semibold">Description</Form.Label>
-                <Form.Control value={form.description} onChange={(e) => setForm(f => ({ ...f, description: e.target.value }))} />
-              </Col>
-              <Col xs={12} md={3}>
-                <Form.Label className="fw-semibold">Due Date</Form.Label>
-                <Form.Control type="date" value={form.dueDate} onChange={(e) => setForm(f => ({ ...f, dueDate: e.target.value }))} />
-              </Col>
-              <Col xs={12} md={3}>
-                <Form.Label className="fw-semibold">Pet</Form.Label>
-                <Form.Select value={form.petId} onChange={(e) => setForm(f => ({ ...f, petId: e.target.value }))}>
-                  <option value="">Select pet</option>
-                  {pets.map(p => (
-                    <option key={p.id} value={p.id}>{p.name} — {p.breed}</option>
-                  ))}
-                </Form.Select>
-              </Col>
-              <Col xs={12} md="auto">
-                     <Button
-                             className="btn-orange"
-                             onClick={handleAdd}
-                             disabled={!form.name || !form.breed || !form.birthDate}
-            >
-                             + Add Task
-                            </Button>
-              </Col>
-            </Row>
+            {!pets.length && (
+              <Alert variant="warning" className="mb-3">
+                You need at least one pet to add a care task.{' '}
+                <Button variant="link" className="p-0" onClick={() => navigate('/pets')}>Add a pet</Button>
+              </Alert>
+            )}
 
-            {/* Care Tasks list - full width */}
+            <div className="pets-section-title mb-2">Add new care task</div>
+            <Form onSubmit={(e) => { e.preventDefault(); handleAdd(); }} autoComplete="off">
+              <Row className="g-3 align-items-end mb-3 inline-form-row">
+                <Col xs={12} md={4}>
+                  <Form.Label className="fw-semibold">Description</Form.Label>
+                  <Form.Control
+                    value={form.description}
+                    onChange={(e) => setForm(f => ({ ...f, description: e.target.value }))}
+                  />
+                </Col>
+                <Col xs={12} md={3}>
+                  <Form.Label className="fw-semibold">Due Date</Form.Label>
+                  <Form.Control
+                    type="date"
+                    value={form.dueDate}
+                    onChange={(e) => setForm(f => ({ ...f, dueDate: e.target.value }))}
+                  />
+                </Col>
+                <Col xs={12} md={3}>
+                  <Form.Label className="fw-semibold">Pet</Form.Label>
+                  <Form.Select
+                    value={form.petId}
+                    onChange={(e) => setForm(f => ({ ...f, petId: e.target.value }))}
+                  >
+                    <option value="">Select pet</option>
+                    {pets.map(p => (
+                      <option key={p.id} value={String(p.id)}>{p.name} — {p.breed}</option>
+                    ))}
+                  </Form.Select>
+                </Col>
+                <Col xs={12} md="auto">
+                  <Button
+                    size="sm"
+                    className="btn-orange"
+                    type="submit"
+                    disabled={!form.description || !form.dueDate || !form.petId}
+                  >
+                    + Add Task
+                  </Button>
+                </Col>
+              </Row>
+            </Form>
+
             <div className="d-flex align-items-center justify-content-between mb-2">
               <h5 className="m-0 pets-section-title">Your care tasks list</h5>
             </div>
@@ -124,7 +145,3 @@ const CareTasksPage = () => {
 };
 
 export default CareTasksPage;
-
-
-
-

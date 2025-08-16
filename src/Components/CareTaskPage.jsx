@@ -2,10 +2,9 @@ import React, { useMemo, useState } from 'react';
 import { Button, Container, Row, Col, Form, Table, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useData } from './DataContext';
+import { createCareTask, updateCareTask, deleteCareTask as apiDeleteTask } from '../api/petCare';
 import './pet.css';
 import './inlineForms.css';
-
-const generateNextId = (items) => (items.length ? Math.max(...items.map(i => i.id)) + 1 : 1);
 
 const CareTasksPage = () => {
   const navigate = useNavigate();
@@ -22,24 +21,31 @@ const CareTasksPage = () => {
     [careTasks, form.petId]
   );
 
-  const handleAdd = () => {
+  const handleAdd = async () => {
     if (!form.description || !form.dueDate || !form.petId) return;
-    const newTask = {
-      id: generateNextId(careTasks),
+    const created = await createCareTask({
       description: form.description,
-      dueDate: form.dueDate,
-      isCompleted: false,
-      petId: Number(form.petId),
-    };
-    setCareTasks(prev => [...prev, newTask]);
+      dueDate: form.dueDate, // yyyy-MM-dd nga input
+      petId: form.petId
+    });
+    setCareTasks(prev => [...prev, created]);
     setForm(f => ({ ...f, description: '', dueDate: '' }));
   };
 
-  const toggleTask = (taskId) => {
+  const toggleTask = async (taskId) => {
+    const current = careTasks.find(t => t.id === taskId);
+    if (!current) return;
+    await updateCareTask(taskId, {
+      description: current.description,
+      dueDate: current.dueDate, // konvertohet te api në dd-MM-yyyy
+      isCompleted: !current.isCompleted,
+      petId: current.petId
+    });
     setCareTasks(prev => prev.map(t => t.id === taskId ? { ...t, isCompleted: !t.isCompleted } : t));
   };
 
-  const deleteTask = (taskId) => {
+  const deleteTask = async (taskId) => {
+    await apiDeleteTask(taskId);
     setCareTasks(prev => prev.filter(t => t.id !== taskId));
   };
 
@@ -56,8 +62,7 @@ const CareTasksPage = () => {
           <div className="pets-center">
             {!pets.length && (
               <Alert variant="warning" className="mb-3">
-                You need at least one pet to add a care task.{' '}
-                <Button variant="link" className="p-0" onClick={() => navigate('/pets')}>Add a pet</Button>
+                You need at least one pet to add a care task. <Button variant="link" className="p-0" onClick={() => navigate('/pets')}>Add a pet</Button>
               </Alert>
             )}
 

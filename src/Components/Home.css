@@ -474,6 +474,22 @@
   border-color: #ff8c00!important;
 }
 
+/* Pamja bazë e btn-cream */
+.btn-cream {
+  background: #d2b48c;     /* ngjyrë krem */
+  color: #5c3a1a;          /* tekst kafe */
+  border-color: #d2b48c;   /* bordurë e lehtë */
+}
+/* View all (cream) → turn orange on hover/focus/active */
+.btn-cream:hover,
+.btn-cream:focus,
+.btn-cream:active {
+  background: #d2b48c !important;
+  color: #ffffff !important;
+  border-color: #ff8c00 !important;
+}
+
+
 
 
 

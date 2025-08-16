@@ -28,11 +28,14 @@ const PetsPage = () => {
         <h1 className="text-center pets-header-title pets-header-large" style={{ marginTop: '0.5rem' }}>Pets</h1>
 
         <div className="pets-canvas">
-          {/* corner images ... */}
+          {/* dy corner images si te Visits */}
+          <img src="/img/c22.png" alt="" className="corner corner-tr" loading="lazy" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
+          <img src="/img/c33.png" alt="" className="corner corner-bl" loading="lazy" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
+
           <div className="pets-center">
             <div className="pets-section-title mb-2">Add new pet</div>
             <Form onSubmit={(e) => { e.preventDefault(); handleAdd(); }} autoComplete="off">
-              <Row className="g-3 align-items-end mb-3">
+              <Row className="g-3 align-items-end mb-3 inline-form-row">
                 <Col xs={12} md={3}>
                   <Form.Label className="fw-semibold">Name</Form.Label>
                   <Form.Control value={form.name} onChange={(e) => setForm(f => ({ ...f, name: e.target.value }))} />
@@ -45,13 +48,36 @@ const PetsPage = () => {
                   <Form.Label className="fw-semibold">Birth Date</Form.Label>
                   <Form.Control type="date" value={form.birthDate} onChange={(e) => setForm(f => ({ ...f, birthDate: e.target.value }))} />
                 </Col>
-                <Col xs={12} md={3}>
-                  <Button className="btn-orange w-100" type="submit">+ Add Pet</Button>
+                <Col xs={12} md="auto">
+                  <Button size="sm" className="btn-orange" type="submit" disabled={!form.name || !form.breed || !form.birthDate}>
+                    + Add Pet
+                  </Button>
                 </Col>
               </Row>
             </Form>
 
-            {/* table ... */}
+            {/* tabela e Pets si te Visits */}
+            <div className="d-flex align-items-center justify-content-between mb-2">
+              <h5 className="m-0 pets-section-title">Your pets list</h5>
+            </div>
+            <Table striped hover responsive className="pets-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Breed</th>
+                  <th>Birth Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                {pets.map(pet => (
+                  <tr key={pet.id}>
+                    <td>{pet.name}</td>
+                    <td>{pet.breed}</td>
+                    <td>{new Date(pet.birthDate).toLocaleDateString()}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
           </div>
         </div>
       </Container>
@@ -60,6 +86,7 @@ const PetsPage = () => {
 };
 
 export default PetsPage;
+
 
 
 

@@ -37,13 +37,13 @@ const LoginForm = () => {
       });
 
       localStorage.setItem('accessToken', res.data.accessToken);
-       localStorage.setItem('refreshToken', res.data.refreshToken);
+      localStorage.setItem('refreshToken', res.data.refreshToken);
       if (res.data.user?.firstName) {
-      localStorage.setItem('firstName', res.data.user.firstName);
-     }
-     if (res.data.user?.id) {
-     localStorage.setItem('userId', res.data.user.id);
-    }
+        localStorage.setItem('firstName', res.data.user.firstName);
+      }
+      if (res.data.user?.id) {
+        localStorage.setItem('userId', res.data.user.id);
+      }
       if (rememberMe) {
         localStorage.setItem('rememberMe', 'true');
         localStorage.setItem('rememberedEmail', formData.email);
@@ -53,7 +53,9 @@ const LoginForm = () => {
       }
 
       setMessage('Login successful! Welcome ' + (res.data.user?.firstName || ''));
-      navigate('/');
+      const role = res.data.user?.role || 'User';
+      localStorage.setItem('role', role);
+      navigate(role === 'Admin' ? '/admin' : '/');
     } catch (err) {
       console.error('Axios error:', {
         message: err.message,
@@ -131,7 +133,6 @@ const LoginForm = () => {
               onChange={(e) => setRememberMe(e.target.checked)}
             />
           </div>
-           
 
           <Button
             type="submit"
@@ -151,4 +152,5 @@ const LoginForm = () => {
 };
 
 export default LoginForm;
+
 

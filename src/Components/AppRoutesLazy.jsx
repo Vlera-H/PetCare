@@ -1,5 +1,6 @@
 import React, { Suspense, lazy } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
+import AdminRoute from './AdminRoute';
 
 const WelcomePage = lazy(() => import('./WelcomePage'));
 const LoginForm = lazy(() => import('./LoginForm'));
@@ -10,6 +11,7 @@ const PetsPage = lazy(() => import('./PetsPage'));
 const CareTasksPage = lazy(() => import('./CareTaskPage'));
 const VisitsPage = lazy(() => import('./VisitsPage'));
 const CareGuide = lazy(() => import('./CareGuide'));
+const AdminPage = lazy(() => import('./AdminPage'));
 
 const AppRoutesLazy = () => {
   return (
@@ -27,6 +29,7 @@ const AppRoutesLazy = () => {
         <Route path="/tasks" element={<CareTasksPage />} />
         <Route path="/visits" element={<VisitsPage />} />
         <Route path="/care-guide" element={<CareGuide />} />
+        <Route path="/admin" element={<AdminRoute><AdminPage /></AdminRoute>} />
 
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>

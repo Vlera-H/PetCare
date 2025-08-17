@@ -19,13 +19,12 @@ const toDDMMYYYY = (d) => {
 // Pets (api/Pet)
 export const fetchPets = () => client.get('/api/Pet').then(r => r.data);
 export const createPet = (pet) => {
-  const currentUserId = localStorage.getItem('userId');
-  const resolvedUserId = pet.userId != null && pet.userId !== '' ? Number(pet.userId) : (currentUserId ? Number(currentUserId) : 0);
+  const userId = localStorage.getItem('userId');
   const payload = {
     name: pet.name,
     breed: pet.breed,
     birthDate: toYYYYMMDD(pet.birthDate),
-    userId: resolvedUserId
+    userId: userId ? Number(userId) : 0
   };
   return client.post('/api/Pet', payload).then(r => r.data);
 };

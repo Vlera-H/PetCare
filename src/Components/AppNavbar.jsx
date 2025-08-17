@@ -9,6 +9,7 @@ const AppNavbar = () => {
   const confirmLogout = () => {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
+    localStorage.removeItem('role');
     setShowLogout(false);
     navigate('/welcome');
   };
@@ -29,6 +30,9 @@ const AppNavbar = () => {
               <Nav.Link as={NavLink} to="/tasks">Care Tasks</Nav.Link>
               <Nav.Link as={NavLink} to="/visits">Visits</Nav.Link>
               <Nav.Link as={NavLink} to="/care-guide">Care Guide</Nav.Link>
+              {typeof window !== 'undefined' && localStorage.getItem('role') === 'Admin' && (
+                <Nav.Link as={NavLink} to="/admin">Admin</Nav.Link>
+              )}
             </Nav>
 
             {/* Far right settings */}

@@ -53,7 +53,9 @@ const LoginForm = () => {
       }
 
       setMessage('Login successful! Welcome ' + (res.data.user?.firstName || ''));
-      navigate('/');
+      const role = res.data.user?.role || 'User';
+      localStorage.setItem('role', role);
+      navigate(role === 'Admin' ? '/admin' : '/');
     } catch (err) {
       console.error('Axios error:', {
         message: err.message,

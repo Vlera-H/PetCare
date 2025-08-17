@@ -50,7 +50,7 @@ const Home = () => {
         {/* Welcome band with image */}
         <Row className="g-3 align-items-stretch home-hero">
           <Col lg={7} className="home-hero-content d-flex flex-column">
-            <h1 className="home-hero-title">Welcome{firstName ? `, ${firstName}` : ''}</h1>
+            <h1 className="home-hero-title">Welcome{((localStorage.getItem('role') || '').toLowerCase() === 'admin') ? '' : (firstName ? `, ${firstName}` : '')}</h1>
             <p className="home-hero-subtitle">Keep your pets happy and healthy. Track their upcoming visits and care tasks in one place.</p>
             <div className="mini-circles">
               <div className="mini-circle-item">
@@ -144,7 +144,8 @@ const Home = () => {
   );
 };
 
-export default Home
+export default Home;
+
 
 
 

@@ -1,44 +1,71 @@
-import React, { Suspense, lazy } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
-import AdminRoute from './AdminRoute';
+import React, { useState } from 'react';
+import { Navbar, Nav, Container, NavDropdown, Modal, Button } from 'react-bootstrap';
+import { NavLink, useNavigate } from 'react-router-dom';
 
-const WelcomePage = lazy(() => import('./WelcomePage'));
-const LoginForm = lazy(() => import('./LoginForm'));
-const RegisterForm = lazy(() => import('./RegisterForm'));
-const Home = lazy(() => import('./Home'));
-const Dashboard = lazy(() => import('./Dashboard'));
-const PetsPage = lazy(() => import('./PetsPage'));
-const CareTasksPage = lazy(() => import('./CareTaskPage'));
-const VisitsPage = lazy(() => import('./VisitsPage'));
-const CareGuide = lazy(() => import('./CareGuide'));
-const AdminPage = lazy(() => import('./AdminPage'));
+const AppNavbar = () => {
+  const navigate = useNavigate();
+  const [showLogout, setShowLogout] = useState(false);
 
-const AppRoutesLazy = () => {
+  const confirmLogout = () => {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    localStorage.removeItem('role');
+    setShowLogout(false);
+    navigate('/welcome');
+  };
+
   return (
-    <Suspense fallback={<div style={{ padding: '2rem', color: '#5c4033', textAlign: 'center' }}>Loading…</div>}>
-      <Routes>
-        <Route path="/welcome" element={<WelcomePage />} />
-        <Route path="/login" element={<LoginForm />} />
-        <Route path="/register" element={<RegisterForm />} />
+    <Navbar expand="lg" className="shadow-sm header-tall w-100 pc-navbar">
+      <Container fluid className="align-items-center">
+        {/* Far left brand */}
+        <Navbar.Brand as={NavLink} to="/" className="brand-big">🐾 Pet Care</Navbar.Brand>
 
-        <Route path="/" element={<Home />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Navbar.Toggle aria-controls="main-nav" />
+        <Navbar.Collapse id="main-nav" className="w-100">
+          <div className="d-flex w-100 align-items-center">
+            {/* Center links */}
+            <Nav className="mx-auto pc-nav-links">
+              <Nav.Link as={NavLink} to="/" end>Home</Nav.Link>
+              <Nav.Link as={NavLink} to="/pets">Pets</Nav.Link>
+              <Nav.Link as={NavLink} to="/tasks">Care Tasks</Nav.Link>
+              <Nav.Link as={NavLink} to="/visits">Visits</Nav.Link>
+              <Nav.Link as={NavLink} to="/care-guide">Care Guide</Nav.Link>
+            </Nav>
 
-        <Route path="/pets" element={<PetsPage />} />
-        <Route path="/tasks" element={<CareTasksPage />} />
-        <Route path="/visits" element={<VisitsPage />} />
-        <Route path="/care-guide" element={<CareGuide />} />
-        <Route path="/admin" element={<AdminRoute><AdminPage /></AdminRoute>} />
+            {/* Far right settings */}
+            <Nav className="ms-auto pc-nav-right">
+              <NavDropdown align="end" title="⋮" id="settings-menu">
+                <NavDropdown.Item onClick={() => navigate('/profile')}>Edit Profile</NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item onClick={() => setShowLogout(true)}>Log out</NavDropdown.Item>
+              </NavDropdown>
+            </Nav>
+          </div>
+        </Navbar.Collapse>
+      </Container>
 
-        <Route path="*" element={<Navigate to="/" />} />
-      </Routes>
-    </Suspense>
+      {/* Styled logout confirmation modal */}
+      <Modal show={showLogout} onHide={() => setShowLogout(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Log out</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Are you sure you want to log out?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="outline-secondary" onClick={() => setShowLogout(false)}>
+            Cancel
+          </Button>
+          <Button variant="dark" onClick={confirmLogout}>
+            Log out
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </Navbar>
   );
 };
 
-export default AppRoutesLazy;
-
+export default AppNavbar;
 
 
 

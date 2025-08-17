@@ -18,6 +18,7 @@ const toDDMMYYYY = (d) => {
 
 // Pets (api/Pet)
 export const fetchPets = () => client.get('/api/Pet').then(r => r.data);
+
 export const createPet = (pet) => {
   const currentUserId = localStorage.getItem('userId');
   const resolvedUserId = pet.userId != null && pet.userId !== '' ? Number(pet.userId) : (currentUserId ? Number(currentUserId) : 0);
@@ -29,19 +30,22 @@ export const createPet = (pet) => {
   };
   return client.post('/api/Pet', payload).then(r => r.data);
 };
-export const deletePet = (id) => client.delete(`/api/Pet/${id}`);
+
 export const updatePet = (id, pet) => {
   const payload = {
     name: pet.name,
     breed: pet.breed,
-    birthDate: toYYYYMMDD(pet.birthDate),
+    birthDate: toDDMMYYYY(pet.birthDate),
     userId: pet.userId != null ? Number(pet.userId) : undefined
   };
   return client.put(`/api/Pet/${id}`, payload).then(r => r.data);
 };
 
+export const deletePet = (id) => client.delete(`/api/Pet/${id}`);
+
 // CareTasks (api/CareTask)
 export const fetchCareTasks = () => client.get('/api/CareTask').then(r => r.data);
+
 export const createCareTask = (task) => {
   const payload = {
     description: task.description,
@@ -50,19 +54,22 @@ export const createCareTask = (task) => {
   };
   return client.post('/api/CareTask', payload).then(r => r.data);
 };
+
 export const updateCareTask = (id, task) => {
   const payload = {
     description: task.description,
-    dueDate: toDDMMYYYY(task.dueDate), // PUT pret "dd-MM-yyyy"
+    dueDate: toDDMMYYYY(task.dueDate),
     isCompleted: task.isCompleted,
     petId: Number(task.petId)
   };
   return client.put(`/api/CareTask/${id}`, payload).then(r => r.data);
 };
+
 export const deleteCareTask = (id) => client.delete(`/api/CareTask/${id}`);
 
 // Visits (api/Visit)
 export const fetchVisits = () => client.get('/api/Visit').then(r => r.data);
+
 export const createVisit = (visit) => {
   const payload = {
     reason: visit.reason,
@@ -71,12 +78,14 @@ export const createVisit = (visit) => {
   };
   return client.post('/api/Visit', payload).then(r => r.data);
 };
+
 export const updateVisit = (id, visit) => {
   const payload = {
     reason: visit.reason,
-    visitDate: toYYYYMMDD(visit.visitDate),
+    visitDate: toDDMMYYYY(visit.visitDate),
     petId: Number(visit.petId)
   };
   return client.put(`/api/Visit/${id}`, payload).then(r => r.data);
 };
+
 export const deleteVisit = (id) => client.delete(`/api/Visit/${id}`);

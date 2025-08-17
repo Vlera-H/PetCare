@@ -38,5 +38,3 @@ const AppRoutesLazy = () => {
 export default AppRoutesLazy;
 
 
-
-

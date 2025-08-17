@@ -6,14 +6,13 @@ const AppNavbar = () => {
   const navigate = useNavigate();
   const [showLogout, setShowLogout] = useState(false);
 
-const confirmLogout = () => {
+  const confirmLogout = () => {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
-    localStorage.removeItem('role'); 
+    localStorage.removeItem('role');
     setShowLogout(false);
     navigate('/welcome');
-};
-
+  };
 
   return (
     <Navbar expand="lg" className="shadow-sm header-tall w-100 pc-navbar">
@@ -67,6 +66,7 @@ const confirmLogout = () => {
 };
 
 export default AppNavbar;
+
 
 
 

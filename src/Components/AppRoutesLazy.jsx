@@ -20,7 +20,7 @@ const AppRoutesLazy = () => {
 			<Route path="/login" element={<LoginForm />} />
 			<Route path="/register" element={<RegisterForm />} />
 
-			<Route path="/" element={(typeof window !== 'undefined' && ((localStorage.getItem('role') || '').toLowerCase() === 'admin')) ? <Navigate to="/admin" /> : <Home />} />
+			<Route path="/" element={<Home />} />
 			<Route path="/home" element={<Home />} />
 			<Route path="/dashboard" element={<Dashboard />} />
 

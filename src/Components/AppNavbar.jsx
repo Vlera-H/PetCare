@@ -30,17 +30,13 @@ const AppNavbar = () => {
               <Nav.Link as={NavLink} to="/tasks">Care Tasks</Nav.Link>
               <Nav.Link as={NavLink} to="/visits">Visits</Nav.Link>
               <Nav.Link as={NavLink} to="/care-guide">Care Guide</Nav.Link>
-              {(typeof window !== 'undefined' && ((localStorage.getItem('role') || '').toLowerCase() === 'admin')) && (
-                <Nav.Link as={NavLink} to="/admin">Admin</Nav.Link>
-              )}
             </Nav>
 
             {/* Far right settings */}
             <Nav className="ms-auto pc-nav-right">
               <NavDropdown align="end" title="⋮" id="settings-menu">
-                {!(typeof window !== 'undefined' && ((localStorage.getItem('role') || '').toLowerCase() === 'admin')) && (
-                  <NavDropdown.Item onClick={() => navigate('/profile')}>Edit Profile</NavDropdown.Item>
-                )}
+                <NavDropdown.Item onClick={() => navigate('/profile')}>Edit Profile</NavDropdown.Item>
+                <NavDropdown.Divider />
                 <NavDropdown.Item onClick={() => setShowLogout(true)}>Log out</NavDropdown.Item>
               </NavDropdown>
             </Nav>

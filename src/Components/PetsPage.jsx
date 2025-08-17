@@ -10,16 +10,16 @@ const PetsPage = () => {
   const { pets, setPets } = useData();
   const [form, setForm] = useState({ name: '', breed: '', birthDate: '' });
 
-  const handleAdd = async () => {
-    if (!form.name || !form.breed || !form.birthDate) return;
-    const created = await createPet({
-      name: form.name,
-      breed: form.breed,
-      birthDate: form.birthDate
-    });
-    setPets(prev => [...prev, created]);
-    setForm({ name: '', breed: '', birthDate: '' });
-  };
+const handleAdd = async () => {
+  if (!form.name || !form.breed || !form.birthDate) return;
+  const created = await createPet({
+    name: form.name,
+    breed: form.breed,
+    birthDate: form.birthDate
+  });
+  setPets(prev => [...prev, created]);
+  setForm({ name: '', breed: '', birthDate: '' });
+};
 
   return (
     <div className="pets-page">

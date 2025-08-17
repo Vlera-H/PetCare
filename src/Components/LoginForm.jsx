@@ -53,9 +53,21 @@ const LoginForm = () => {
       }
 
       setMessage('Login successful! Welcome ' + (res.data.user?.firstName || ''));
-      const role = res.data.user?.role || 'User';
-      localStorage.setItem('role', role);
-      navigate(role === 'Admin' ? '/admin' : '/');
+      const token = res.data.accessToken;
+      const decodeRoleFromToken = (t) => {
+        try {
+          const base64 = t.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
+          const json = JSON.parse(atob(base64));
+          const claim = json.role || json.roles || json['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+          if (Array.isArray(claim)) return claim[0];
+          return claim || null;
+        } catch {
+          return null;
+        }
+      };
+      const roleRaw = res.data.user?.role || decodeRoleFromToken(token) || 'User';
+      localStorage.setItem('role', roleRaw);
+      navigate((roleRaw || '').toLowerCase() === 'admin' ? '/admin' : '/');
     } catch (err) {
       console.error('Axios error:', {
         message: err.message,

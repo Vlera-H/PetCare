@@ -34,7 +34,7 @@ export const updatePet = (id, pet) => {
   const payload = {
     name: pet.name,
     breed: pet.breed,
-    birthDate: toYYYYMMDD(pet.birthDate),
+    birthDate: toDDMMYYYY(pet.birthDate),
     userId: pet.userId != null ? Number(pet.userId) : undefined
   };
   return client.put(`/api/Pet/${id}`, payload).then(r => r.data);
@@ -74,7 +74,7 @@ export const createVisit = (visit) => {
 export const updateVisit = (id, visit) => {
   const payload = {
     reason: visit.reason,
-    visitDate: toYYYYMMDD(visit.visitDate),
+    visitDate: toDDMMYYYY(visit.visitDate),
     petId: Number(visit.petId)
   };
   return client.put(`/api/Visit/${id}`, payload).then(r => r.data);

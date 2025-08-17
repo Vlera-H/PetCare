@@ -153,13 +153,8 @@ const AdminPage = () => {
 	const handleCreateUser = async (e) => {
 		e.preventDefault();
 		try {
-			if (useDemo) {
-				const nextId = (users.reduce((m, x) => Math.max(m, x.id || 0), 0) || 0) + 1;
-				setUsers(prev => [...prev, { id: nextId, ...newUser, isActive: true }]);
-			} else {
-				const created = await createUser(newUser);
-				setUsers(prev => [...prev, created]);
-			}
+			const created = await createUser(newUser);
+			setUsers(prev => [...prev, created]);
 			setNewUser({ firstName: '', lastName: '', email: '', password: '', role: 'User' });
 		} catch (e) {
 			setError('Failed to create user');
@@ -168,9 +163,7 @@ const AdminPage = () => {
 
 	const handleUpdateUser = async (u) => {
 		try {
-			if (!useDemo) {
-				await updateUser(u.id, u);
-			}
+			await updateUser(u.id, u);
 			setUsers(prev => prev.map(x => x.id === u.id ? { ...x, ...u } : x));
 		} catch (e) {
 			setError('Failed to update user');
@@ -179,9 +172,7 @@ const AdminPage = () => {
 
 	const handleDeleteUser = async (id) => {
 		try {
-			if (!useDemo) {
-				await deleteUser(id);
-			}
+			await deleteUser(id);
 			setUsers(prev => prev.filter(u => u.id !== id));
 		} catch (e) {
 			setError('Failed to delete user');

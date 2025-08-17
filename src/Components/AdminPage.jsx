@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Container, Row, Col, Card, Table, Button, Form, Tabs, Tab, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { fetchPets, createPet, deletePet, fetchCareTasks, deleteCareTask, fetchVisits, deleteVisit } from '../api/petCare';
+import { fetchPets, createPet, updatePet, deletePet, fetchCareTasks, createCareTask, updateCareTask, deleteCareTask, fetchVisits, createVisit, updateVisit, deleteVisit } from '../api/petCare';
 import './pet.css';
 import './careguide.css';
 
@@ -15,6 +15,8 @@ const AdminPage = () => {
 
 	// Minimal create form for pet (admin can assign to userId)
 	const [newPet, setNewPet] = useState({ name: '', breed: '', birthDate: '', userId: '' });
+	const [newTask, setNewTask] = useState({ description: '', dueDate: '', petId: '' });
+	const [newVisit, setNewVisit] = useState({ reason: '', visitDate: '', petId: '' });
 
 	useEffect(() => {
 		(async () => {
@@ -56,6 +58,15 @@ const AdminPage = () => {
 		}
 	};
 
+	const handleUpdatePet = async (p) => {
+		try {
+			const updated = await updatePet(p.id, p);
+			setPets(prev => prev.map(x => x.id === p.id ? updated : x));
+		} catch (e) {
+			setError('Failed to update pet');
+		}
+	};
+
 	const handleDeletePet = async (id) => {
 		try {
 			await deletePet(id);
@@ -65,12 +76,52 @@ const AdminPage = () => {
 		}
 	};
 
+	const handleCreateTask = async (e) => {
+		e.preventDefault();
+		try {
+			const created = await createCareTask(newTask);
+			setCareTasks(prev => [...prev, created]);
+			setNewTask({ description: '', dueDate: '', petId: '' });
+		} catch (e) {
+			setError('Failed to create task');
+		}
+	};
+
+	const handleUpdateTask = async (t) => {
+		try {
+			const updated = await updateCareTask(t.id, t);
+			setCareTasks(prev => prev.map(x => x.id === t.id ? updated : x));
+		} catch (e) {
+			setError('Failed to update task');
+		}
+	};
+
 	const handleDeleteTask = async (id) => {
 		try {
 			await deleteCareTask(id);
 			setCareTasks(prev => prev.filter(t => t.id !== id));
 		} catch (e) {
 			setError('Failed to delete task');
+		}
+	};
+
+	const handleCreateVisit = async (e) => {
+		e.preventDefault();
+		try {
+			const created = await createVisit(newVisit);
+			setVisits(prev => [...prev, created]);
+			setNewVisit({ reason: '', visitDate: '', petId: '' });
+		} catch (e) {
+			setError('Failed to create visit');
+		}
+	};
+
+	const handleUpdateVisit = async (v) => {
+		try {
+			const updated = await updateVisit(v.id, v);
+			setVisits(prev => prev.map(x => x.id === v.id ? updated : x));
+		} catch (e) {
+			setError('Failed to update visit');
 		}
 	};
 
@@ -86,7 +137,6 @@ const AdminPage = () => {
 	return (
 		<div className="pets-page">
 			<Container fluid className="py-3 px-0">
-				<span className="back-arrow" onClick={() => navigate('/')}>←</span>
 				<h1 className="text-center pets-header-title pets-header-large" style={{ marginTop: '0.5rem' }}>Admin</h1>
 
 				<div className="pets-canvas">
@@ -170,10 +220,17 @@ const AdminPage = () => {
 										{pets.map(p => (
 											<tr key={p.id}>
 												<td>{p.id}</td>
-												<td>{p.name}</td>
-												<td>{p.breed}</td>
-												<td>{new Date(p.birthDate).toLocaleDateString()}</td>
 												<td>
+													<Form.Control size="sm" value={p.name} onChange={(e) => setPets(prev => prev.map(x => x.id === p.id ? { ...x, name: e.target.value } : x))} />
+												</td>
+												<td>
+													<Form.Control size="sm" value={p.breed} onChange={(e) => setPets(prev => prev.map(x => x.id === p.id ? { ...x, breed: e.target.value } : x))} />
+												</td>
+												<td>
+													<Form.Control type="date" size="sm" value={(p.birthDate || '').slice(0,10)} onChange={(e) => setPets(prev => prev.map(x => x.id === p.id ? { ...x, birthDate: e.target.value } : x))} />
+												</td>
+												<td className="d-flex gap-2">
+													<Button size="sm" variant="success" onClick={() => handleUpdatePet(p)}>Save</Button>
 													<Button size="sm" variant="outline-danger" onClick={() => handleDeletePet(p.id)}>Delete</Button>
 												</td>
 											</tr>
@@ -183,6 +240,25 @@ const AdminPage = () => {
 							</Tab>
 
 							<Tab eventKey="tasks" title="Care Tasks">
+								<Form onSubmit={handleCreateTask} className="mb-2" autoComplete="off">
+									<Row className="g-2 align-items-end">
+										<Col md={4}>
+											<Form.Label className="fw-semibold">Description</Form.Label>
+											<Form.Control value={newTask.description} onChange={(e) => setNewTask(t => ({ ...t, description: e.target.value }))} />
+										</Col>
+										<Col md={3}>
+											<Form.Label className="fw-semibold">Due Date</Form.Label>
+											<Form.Control type="date" value={newTask.dueDate} onChange={(e) => setNewTask(t => ({ ...t, dueDate: e.target.value }))} />
+										</Col>
+										<Col md={3}>
+											<Form.Label className="fw-semibold">Pet ID</Form.Label>
+											<Form.Control value={newTask.petId} onChange={(e) => setNewTask(t => ({ ...t, petId: e.target.value }))} />
+										</Col>
+										<Col md="auto">
+											<Button className="btn-orange" type="submit" disabled={!newTask.description || !newTask.dueDate || !newTask.petId}>+ Create</Button>
+										</Col>
+									</Row>
+								</Form>
 								<Table striped hover responsive className="pets-table">
 									<thead>
 										<tr>
@@ -198,11 +274,20 @@ const AdminPage = () => {
 										{careTasks.map(t => (
 											<tr key={t.id}>
 												<td>{t.id}</td>
-												<td>{t.description}</td>
-												<td>{new Date(t.dueDate).toLocaleDateString()}</td>
-												<td>{t.isCompleted ? 'Yes' : 'No'}</td>
-												<td>{t.petId}</td>
 												<td>
+													<Form.Control size="sm" value={t.description} onChange={(e) => setCareTasks(prev => prev.map(x => x.id === t.id ? { ...x, description: e.target.value } : x))} />
+												</td>
+												<td>
+													<Form.Control type="date" size="sm" value={(t.dueDate || '').slice(0,10)} onChange={(e) => setCareTasks(prev => prev.map(x => x.id === t.id ? { ...x, dueDate: e.target.value } : x))} />
+												</td>
+												<td>
+													<Form.Check type="checkbox" checked={!!t.isCompleted} onChange={(e) => setCareTasks(prev => prev.map(x => x.id === t.id ? { ...x, isCompleted: e.target.checked } : x))} />
+												</td>
+												<td>
+													<Form.Control size="sm" value={t.petId} onChange={(e) => setCareTasks(prev => prev.map(x => x.id === t.id ? { ...x, petId: Number(e.target.value) } : x))} />
+												</td>
+												<td className="d-flex gap-2">
+													<Button size="sm" variant="success" onClick={() => handleUpdateTask(t)}>Save</Button>
 													<Button size="sm" variant="outline-danger" onClick={() => handleDeleteTask(t.id)}>Delete</Button>
 												</td>
 											</tr>
@@ -212,6 +297,25 @@ const AdminPage = () => {
 							</Tab>
 
 							<Tab eventKey="visits" title="Visits">
+								<Form onSubmit={handleCreateVisit} className="mb-2" autoComplete="off">
+									<Row className="g-2 align-items-end">
+										<Col md={4}>
+											<Form.Label className="fw-semibold">Reason</Form.Label>
+											<Form.Control value={newVisit.reason} onChange={(e) => setNewVisit(v => ({ ...v, reason: e.target.value }))} />
+										</Col>
+										<Col md={3}>
+											<Form.Label className="fw-semibold">Visit Date</Form.Label>
+											<Form.Control type="date" value={newVisit.visitDate} onChange={(e) => setNewVisit(v => ({ ...v, visitDate: e.target.value }))} />
+										</Col>
+										<Col md={3}>
+											<Form.Label className="fw-semibold">Pet ID</Form.Label>
+											<Form.Control value={newVisit.petId} onChange={(e) => setNewVisit(v => ({ ...v, petId: e.target.value }))} />
+										</Col>
+										<Col md="auto">
+											<Button className="btn-orange" type="submit" disabled={!newVisit.reason || !newVisit.visitDate || !newVisit.petId}>+ Create</Button>
+										</Col>
+									</Row>
+								</Form>
 								<Table striped hover responsive className="pets-table">
 									<thead>
 										<tr>
@@ -226,10 +330,17 @@ const AdminPage = () => {
 										{visits.map(v => (
 											<tr key={v.id}>
 												<td>{v.id}</td>
-												<td>{new Date(v.visitDate).toLocaleDateString()}</td>
-												<td>{v.reason}</td>
-												<td>{v.petId}</td>
 												<td>
+													<Form.Control type="date" size="sm" value={(v.visitDate || '').slice(0,10)} onChange={(e) => setVisits(prev => prev.map(x => x.id === v.id ? { ...x, visitDate: e.target.value } : x))} />
+												</td>
+												<td>
+													<Form.Control size="sm" value={v.reason} onChange={(e) => setVisits(prev => prev.map(x => x.id === v.id ? { ...x, reason: e.target.value } : x))} />
+												</td>
+												<td>
+													<Form.Control size="sm" value={v.petId} onChange={(e) => setVisits(prev => prev.map(x => x.id === v.id ? { ...x, petId: Number(e.target.value) } : x))} />
+												</td>
+												<td className="d-flex gap-2">
+													<Button size="sm" variant="success" onClick={() => handleUpdateVisit(v)}>Save</Button>
 													<Button size="sm" variant="outline-danger" onClick={() => handleDeleteVisit(v.id)}>Delete</Button>
 												</td>
 											</tr>

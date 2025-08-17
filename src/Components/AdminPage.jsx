@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Container, Row, Col, Card, Table, Button, Form, Tabs, Tab, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { fetchPets, createPet, updatePet, deletePet, fetchCareTasks, createCareTask, updateCareTask, deleteCareTask, fetchVisits, createVisit, updateVisit, deleteVisit } from '../api/petCare';
+import { fetchUsers, createUser, updateUser, deleteUser } from '../api/users';
 import './pet.css';
 import './careguide.css';
 import demoData from '../data/demoData';
@@ -11,28 +12,32 @@ const AdminPage = () => {
 	const [pets, setPets] = useState([]);
 	const [careTasks, setCareTasks] = useState([]);
 	const [visits, setVisits] = useState([]);
+	const [users, setUsers] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState('');
 	const [useDemo, setUseDemo] = useState(false);
 	const [apiStatus, setApiStatus] = useState('loading');
 
-	// Minimal create form for pet (admin can assign to userId)
+	// Minimal create forms
 	const [newPet, setNewPet] = useState({ name: '', breed: '', birthDate: '', userId: '' });
 	const [newTask, setNewTask] = useState({ description: '', dueDate: '', petId: '' });
 	const [newVisit, setNewVisit] = useState({ reason: '', visitDate: '', petId: '' });
+	const [newUser, setNewUser] = useState({ firstName: '', lastName: '', email: '', password: '', role: 'User' });
 
 	const loadData = async () => {
 		setLoading(true);
 		setError('');
 		try {
-			const [p, t, v] = await Promise.all([
+			const [p, t, v, u] = await Promise.all([
 				fetchPets(),
 				fetchCareTasks(),
 				fetchVisits(),
+				fetchUsers(),
 			]);
 			setPets(p);
 			setCareTasks(t);
 			setVisits(v);
+			setUsers(u);
 			setUseDemo(false);
 			setApiStatus('ok');
 		} catch (e) {
@@ -40,6 +45,7 @@ const AdminPage = () => {
 			setPets(demoData.pets);
 			setCareTasks(demoData.careTasks);
 			setVisits(demoData.visits);
+			setUsers([]);
 			setUseDemo(true);
 			setApiStatus('error');
 		} finally {
@@ -47,9 +53,7 @@ const AdminPage = () => {
 		}
 	};
 
-	useEffect(() => {
-		loadData();
-	}, []);
+	useEffect(() => { loadData(); }, []);
 
 	const insights = useMemo(() => {
 		const totalPets = pets.length;
@@ -175,6 +179,45 @@ const AdminPage = () => {
 		}
 	};
 
+	// Users handlers
+	const handleCreateUser = async (e) => {
+		e.preventDefault();
+		try {
+			if (useDemo) {
+				const nextId = (users.reduce((m, x) => Math.max(m, x.id || 0), 0) || 0) + 1;
+				setUsers(prev => [...prev, { id: nextId, ...newUser, isActive: true }]);
+			} else {
+				const created = await createUser(newUser);
+				setUsers(prev => [...prev, created]);
+			}
+			setNewUser({ firstName: '', lastName: '', email: '', password: '', role: 'User' });
+		} catch (e) {
+			setError('Failed to create user');
+		}
+	};
+
+	const handleUpdateUser = async (u) => {
+		try {
+			if (!useDemo) {
+				await updateUser(u.id, u);
+			}
+			setUsers(prev => prev.map(x => x.id === u.id ? { ...x, ...u } : x));
+		} catch (e) {
+			setError('Failed to update user');
+		}
+	};
+
+	const handleDeleteUser = async (id) => {
+		try {
+			if (!useDemo) {
+				await deleteUser(id);
+			}
+			setUsers(prev => prev.filter(u => u.id !== id));
+		} catch (e) {
+			setError('Failed to delete user');
+		}
+	};
+
 	return (
 		<div className="pets-page">
 			<Container fluid className="py-3 px-0">
@@ -193,7 +236,6 @@ const AdminPage = () => {
 					<div className="pets-center">
 						{loading && <div>Loading…</div>}
 						{error && <Alert variant="danger" className="mb-2">{error}</Alert>}
-
 						<Row className="g-3 mb-2">
 							<Col md={3}>
 								<Card className="shadow-sm insight-card h-100">
@@ -399,8 +441,51 @@ const AdminPage = () => {
 								</Table>
 							</Tab>
 
-							<Tab eventKey="users" title="Users (Preview)">
-								<Alert variant="info">Connect to your Users API to manage users and roles here. Persist role as 'Admin' or 'User' in localStorage after login.</Alert>
+							<Tab eventKey="users" title="Users">
+								<Form onSubmit={handleCreateUser} className="mb-2" autoComplete="off">
+									<Row className="g-2 align-items-end">
+										<Col md={2}><Form.Label>First</Form.Label><Form.Control value={newUser.firstName} onChange={(e) => setNewUser(u => ({ ...u, firstName: e.target.value }))} /></Col>
+										<Col md={2}><Form.Label>Last</Form.Label><Form.Control value={newUser.lastName} onChange={(e) => setNewUser(u => ({ ...u, lastName: e.target.value }))} /></Col>
+										<Col md={3}><Form.Label>Email</Form.Label><Form.Control type="email" value={newUser.email} onChange={(e) => setNewUser(u => ({ ...u, email: e.target.value }))} /></Col>
+										<Col md={2}><Form.Label>Password</Form.Label><Form.Control type="password" value={newUser.password} onChange={(e) => setNewUser(u => ({ ...u, password: e.target.value }))} /></Col>
+										<Col md={2}><Form.Label>Role</Form.Label><Form.Select value={newUser.role} onChange={(e) => setNewUser(u => ({ ...u, role: e.target.value }))}><option>User</option><option>Admin</option></Form.Select></Col>
+										<Col md="auto"><Button className="btn-orange" type="submit" disabled={!newUser.firstName || !newUser.lastName || !newUser.email || !newUser.password}>+ Create</Button></Col>
+									</Row>
+								</Form>
+								<Table striped hover responsive className="pets-table">
+									<thead>
+										<tr>
+											<th>ID</th>
+											<th>First</th>
+											<th>Last</th>
+											<th>Email</th>
+											<th>Role</th>
+											<th>Active</th>
+											<th>Actions</th>
+										</tr>
+									</thead>
+									<tbody>
+										{users.map(u => (
+											<tr key={u.id}>
+												<td>{u.id}</td>
+												<td><Form.Control size="sm" value={u.firstName || u.FirstName || ''} onChange={(e) => setUsers(prev => prev.map(x => x.id === u.id ? { ...x, firstName: e.target.value } : x))} /></td>
+												<td><Form.Control size="sm" value={u.lastName || u.LastName || ''} onChange={(e) => setUsers(prev => prev.map(x => x.id === u.id ? { ...x, lastName: e.target.value } : x))} /></td>
+												<td><Form.Control size="sm" value={u.email || u.Email || ''} onChange={(e) => setUsers(prev => prev.map(x => x.id === u.id ? { ...x, email: e.target.value } : x))} /></td>
+												<td>
+													<Form.Select size="sm" value={(u.role || u.Role || 'User')} onChange={(e) => setUsers(prev => prev.map(x => x.id === u.id ? { ...x, role: e.target.value } : x))}>
+														<option>User</option>
+														<option>Admin</option>
+													</Form.Select>
+												</td>
+												<td className="text-center"><Form.Check type="checkbox" checked={!!(u.isActive ?? u.IsActive)} onChange={(e) => setUsers(prev => prev.map(x => x.id === u.id ? { ...x, isActive: e.target.checked } : x))} /></td>
+												<td className="d-flex gap-2">
+													<Button size="sm" variant="success" onClick={() => handleUpdateUser(u)}>Save</Button>
+													<Button size="sm" variant="outline-danger" onClick={() => handleDeleteUser(u.id)}>Delete</Button>
+												</td>
+											</tr>
+										))}
+									</tbody>
+								</Table>
 							</Tab>
 						</Tabs>
 					</div>

@@ -38,8 +38,9 @@ const AppNavbar = () => {
             {/* Far right settings */}
             <Nav className="ms-auto pc-nav-right">
               <NavDropdown align="end" title="⋮" id="settings-menu">
-                <NavDropdown.Item onClick={() => navigate('/profile')}>Edit Profile</NavDropdown.Item>
-                <NavDropdown.Divider />
+                {!(typeof window !== 'undefined' && ((localStorage.getItem('role') || '').toLowerCase() === 'admin')) && (
+                  <NavDropdown.Item onClick={() => navigate('/profile')}>Edit Profile</NavDropdown.Item>
+                )}
                 <NavDropdown.Item onClick={() => setShowLogout(true)}>Log out</NavDropdown.Item>
               </NavDropdown>
             </Nav>
@@ -69,8 +70,4 @@ const AppNavbar = () => {
 };
 
 export default AppNavbar;
-
-
-
-
 

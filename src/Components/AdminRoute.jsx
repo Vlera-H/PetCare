@@ -4,9 +4,10 @@ import { Navigate, useLocation } from 'react-router-dom';
 const AdminRoute = ({ children }) => {
 	const location = useLocation();
 	const token = typeof window !== 'undefined' ? localStorage.getItem('accessToken') : null;
-	const role = typeof window !== 'undefined' ? localStorage.getItem('role') : null;
+	const rawRole = typeof window !== 'undefined' ? localStorage.getItem('role') : null;
+	const role = (rawRole || '').toLowerCase();
 
-	if (!token || role !== 'Admin') {
+	if (!token || role !== 'admin') {
 		return <Navigate to="/" replace state={{ from: location }} />;
 	}
 
@@ -14,5 +15,4 @@ const AdminRoute = ({ children }) => {
 };
 
 export default AdminRoute;
-
 

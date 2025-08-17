@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { fetchPets, createPet, updatePet, deletePet, fetchCareTasks, createCareTask, updateCareTask, deleteCareTask, fetchVisits, createVisit, updateVisit, deleteVisit } from '../api/petCare';
 import './pet.css';
 import './careguide.css';
+import demoData from '../data/demoData';
 
 const AdminPage = () => {
 	const navigate = useNavigate();
@@ -12,29 +13,42 @@ const AdminPage = () => {
 	const [visits, setVisits] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState('');
+	const [useDemo, setUseDemo] = useState(false);
+	const [apiStatus, setApiStatus] = useState('loading');
 
 	// Minimal create form for pet (admin can assign to userId)
 	const [newPet, setNewPet] = useState({ name: '', breed: '', birthDate: '', userId: '' });
 	const [newTask, setNewTask] = useState({ description: '', dueDate: '', petId: '' });
 	const [newVisit, setNewVisit] = useState({ reason: '', visitDate: '', petId: '' });
 
+	const loadData = async () => {
+		setLoading(true);
+		setError('');
+		try {
+			const [p, t, v] = await Promise.all([
+				fetchPets(),
+				fetchCareTasks(),
+				fetchVisits(),
+			]);
+			setPets(p);
+			setCareTasks(t);
+			setVisits(v);
+			setUseDemo(false);
+			setApiStatus('ok');
+		} catch (e) {
+			setError('Failed to load admin data');
+			setPets(demoData.pets);
+			setCareTasks(demoData.careTasks);
+			setVisits(demoData.visits);
+			setUseDemo(true);
+			setApiStatus('error');
+		} finally {
+			setLoading(false);
+		}
+	};
+
 	useEffect(() => {
-		(async () => {
-			try {
-				const [p, t, v] = await Promise.all([
-					fetchPets(),
-					fetchCareTasks(),
-					fetchVisits(),
-				]);
-				setPets(p);
-				setCareTasks(t);
-				setVisits(v);
-			} catch (e) {
-				setError('Failed to load admin data');
-			} finally {
-				setLoading(false);
-			}
-		})();
+		loadData();
 	}, []);
 
 	const insights = useMemo(() => {
@@ -50,8 +64,13 @@ const AdminPage = () => {
 		e.preventDefault();
 		setError('');
 		try {
-			const created = await createPet(newPet);
-			setPets(prev => [...prev, created]);
+			if (useDemo) {
+				const nextId = (pets.reduce((m, x) => Math.max(m, x.id || 0), 0) || 0) + 1;
+				setPets(prev => [...prev, { id: nextId, name: newPet.name, breed: newPet.breed, birthDate: newPet.birthDate, userId: newPet.userId ? Number(newPet.userId) : undefined }]);
+			} else {
+				const created = await createPet(newPet);
+				setPets(prev => [...prev, created]);
+			}
 			setNewPet({ name: '', breed: '', birthDate: '', userId: '' });
 		} catch (e) {
 			setError('Failed to create pet');
@@ -60,8 +79,10 @@ const AdminPage = () => {
 
 	const handleUpdatePet = async (p) => {
 		try {
-			const updated = await updatePet(p.id, p);
-			setPets(prev => prev.map(x => x.id === p.id ? updated : x));
+			if (!useDemo) {
+				await updatePet(p.id, p);
+			}
+			setPets(prev => prev.map(x => x.id === p.id ? { ...x, ...p } : x));
 		} catch (e) {
 			setError('Failed to update pet');
 		}
@@ -69,7 +90,9 @@ const AdminPage = () => {
 
 	const handleDeletePet = async (id) => {
 		try {
-			await deletePet(id);
+			if (!useDemo) {
+				await deletePet(id);
+			}
 			setPets(prev => prev.filter(p => p.id !== id));
 		} catch (e) {
 			setError('Failed to delete pet');
@@ -79,8 +102,13 @@ const AdminPage = () => {
 	const handleCreateTask = async (e) => {
 		e.preventDefault();
 		try {
-			const created = await createCareTask(newTask);
-			setCareTasks(prev => [...prev, created]);
+			if (useDemo) {
+				const nextId = (careTasks.reduce((m, x) => Math.max(m, x.id || 0), 0) || 0) + 1;
+				setCareTasks(prev => [...prev, { id: nextId, description: newTask.description, dueDate: newTask.dueDate, isCompleted: false, petId: Number(newTask.petId) }]);
+			} else {
+				const created = await createCareTask(newTask);
+				setCareTasks(prev => [...prev, created]);
+			}
 			setNewTask({ description: '', dueDate: '', petId: '' });
 		} catch (e) {
 			setError('Failed to create task');
@@ -89,8 +117,10 @@ const AdminPage = () => {
 
 	const handleUpdateTask = async (t) => {
 		try {
-			const updated = await updateCareTask(t.id, t);
-			setCareTasks(prev => prev.map(x => x.id === t.id ? updated : x));
+			if (!useDemo) {
+				await updateCareTask(t.id, t);
+			}
+			setCareTasks(prev => prev.map(x => x.id === t.id ? { ...x, ...t } : x));
 		} catch (e) {
 			setError('Failed to update task');
 		}
@@ -98,7 +128,9 @@ const AdminPage = () => {
 
 	const handleDeleteTask = async (id) => {
 		try {
-			await deleteCareTask(id);
+			if (!useDemo) {
+				await deleteCareTask(id);
+			}
 			setCareTasks(prev => prev.filter(t => t.id !== id));
 		} catch (e) {
 			setError('Failed to delete task');
@@ -108,8 +140,13 @@ const AdminPage = () => {
 	const handleCreateVisit = async (e) => {
 		e.preventDefault();
 		try {
-			const created = await createVisit(newVisit);
-			setVisits(prev => [...prev, created]);
+			if (useDemo) {
+				const nextId = (visits.reduce((m, x) => Math.max(m, x.id || 0), 0) || 0) + 1;
+				setVisits(prev => [...prev, { id: nextId, reason: newVisit.reason, visitDate: newVisit.visitDate, petId: Number(newVisit.petId) }]);
+			} else {
+				const created = await createVisit(newVisit);
+				setVisits(prev => [...prev, created]);
+			}
 			setNewVisit({ reason: '', visitDate: '', petId: '' });
 		} catch (e) {
 			setError('Failed to create visit');
@@ -118,8 +155,10 @@ const AdminPage = () => {
 
 	const handleUpdateVisit = async (v) => {
 		try {
-			const updated = await updateVisit(v.id, v);
-			setVisits(prev => prev.map(x => x.id === v.id ? updated : x));
+			if (!useDemo) {
+				await updateVisit(v.id, v);
+			}
+			setVisits(prev => prev.map(x => x.id === v.id ? { ...x, ...v } : x));
 		} catch (e) {
 			setError('Failed to update visit');
 		}
@@ -127,7 +166,9 @@ const AdminPage = () => {
 
 	const handleDeleteVisit = async (id) => {
 		try {
-			await deleteVisit(id);
+			if (!useDemo) {
+				await deleteVisit(id);
+			}
 			setVisits(prev => prev.filter(v => v.id !== id));
 		} catch (e) {
 			setError('Failed to delete visit');
@@ -138,7 +179,16 @@ const AdminPage = () => {
 		<div className="pets-page">
 			<Container fluid className="py-3 px-0">
 				<h1 className="text-center pets-header-title pets-header-large" style={{ marginTop: '0.5rem' }}>Admin</h1>
-
+				<div className="d-flex justify-content-end mb-2" style={{ padding: '0 0.5rem' }}>
+					{useDemo ? (
+						<Alert variant="warning" className="py-1 px-2 m-0">
+							<span className="me-2">Demo mode: changes are not saved to server.</span>
+							<Button size="sm" className="btn-orange" onClick={loadData}>Retry API</Button>
+						</Alert>
+					) : (
+						<small className="text-muted">API status: {apiStatus === 'ok' ? 'connected' : apiStatus}</small>
+					)}
+				</div>
 				<div className="pets-canvas">
 					<div className="pets-center">
 						{loading && <div>Loading…</div>}

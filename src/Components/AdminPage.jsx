@@ -16,6 +16,7 @@ const AdminPage = () => {
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState('');
 	const [apiStatus, setApiStatus] = useState('loading');
+	const [loadFailures, setLoadFailures] = useState([]);
 
 	// Minimal create forms
 	const [newPet, setNewPet] = useState({ name: '', breed: '', birthDate: '', userId: '' });
@@ -26,25 +27,43 @@ const AdminPage = () => {
 	const loadData = async () => {
 		setLoading(true);
 		setError('');
+		setLoadFailures([]);
 		try {
-			const [p, t, v, u] = await Promise.all([
-				fetchPets(),
-				fetchCareTasks(),
-				fetchVisits(),
-				fetchUsers(),
-			]);
-			setPets(p);
-			setCareTasks(t);
-			setVisits(v);
-			setUsers(u);
-			setApiStatus('ok');
+			const tasks = [
+				{ key: 'pets', fn: fetchPets },
+				{ key: 'tasks', fn: fetchCareTasks },
+				{ key: 'visits', fn: fetchVisits },
+				{ key: 'users', fn: fetchUsers },
+			];
+			const results = await Promise.allSettled(tasks.map(t => t.fn()));
+			const failures = [];
+			results.forEach((res, idx) => {
+				const key = tasks[idx].key;
+				if (res.status === 'fulfilled') {
+					switch (key) {
+						case 'pets': setPets(res.value); break;
+						case 'tasks': setCareTasks(res.value); break;
+						case 'visits': setVisits(res.value); break;
+						case 'users': setUsers(res.value); break;
+						default: break;
+					}
+				} else {
+					failures.push(key);
+				}
+			});
+			if (failures.length === 0) {
+				setApiStatus('ok');
+			} else if (failures.length < tasks.length) {
+				setApiStatus('partial');
+				setError(`Failed to load: ${failures.join(', ')}`);
+				setLoadFailures(failures);
+			} else {
+				setApiStatus('error');
+				setError('Failed to load admin data');
+			}
 		} catch (e) {
-			setError('Failed to load admin data');
-			setPets([]);
-			setCareTasks([]);
-			setVisits([]);
-			setUsers([]);
 			setApiStatus('error');
+			setError('Failed to load admin data');
 		} finally {
 			setLoading(false);
 		}
@@ -58,8 +77,9 @@ const AdminPage = () => {
 		const completedTasks = careTasks.filter(t => t.isCompleted).length;
 		const completionRate = totalTasks ? Math.round((completedTasks / totalTasks) * 100) : 0;
 		const totalVisits = visits.length;
-		return { totalPets, totalTasks, completedTasks, completionRate, totalVisits };
-	}, [pets, careTasks, visits]);
+		const totalUsers = users.length;
+		return { totalPets, totalTasks, completedTasks, completionRate, totalVisits, totalUsers };
+	}, [pets, careTasks, visits, users]);
 
 	const handleCreatePet = async (e) => {
 		e.preventDefault();
@@ -183,8 +203,11 @@ const AdminPage = () => {
 		<div className="pets-page">
 			<Container fluid className="py-3 px-0">
 				<h1 className="text-center pets-header-title pets-header-large" style={{ marginTop: '0.5rem' }}>Admin</h1>
-				<div className="d-flex justify-content-end mb-2" style={{ padding: '0 0.5rem' }}>
-					<small className="text-muted">API status: {apiStatus === 'ok' ? 'connected' : apiStatus}</small>
+				<div className="d-flex justify-content-between align-items-center mb-2" style={{ padding: '0 0.5rem' }}>
+					<small className="text-muted">API status: {apiStatus}</small>
+					{apiStatus !== 'ok' && (
+						<Button size="sm" className="btn-orange" onClick={loadData}>Retry</Button>
+					)}
 				</div>
 				<div className="pets-canvas">
 					<div className="pets-center">
@@ -220,8 +243,7 @@ const AdminPage = () => {
 								<Card className="shadow-sm insight-card h-100">
 									<Card.Body>
 										<div className="insight-label">Users</div>
-										<div className="insight-value">—</div>
-										<div className="small text-muted">Hook up when user API is available</div>
+										<div className="insight-value">{insights.totalUsers}</div>
 									</Card.Body>
 								</Card>
 							</Col>

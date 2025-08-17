@@ -40,11 +40,13 @@ const AdminPage = () => {
 			results.forEach((res, idx) => {
 				const key = tasks[idx].key;
 				if (res.status === 'fulfilled') {
+					const val = res.value;
+					const arr = Array.isArray(val) ? val : [];
 					switch (key) {
-						case 'pets': setPets(res.value); break;
-						case 'tasks': setCareTasks(res.value); break;
-						case 'visits': setVisits(res.value); break;
-						case 'users': setUsers(res.value); break;
+						case 'pets': setPets(arr); break;
+						case 'tasks': setCareTasks(arr); break;
+						case 'visits': setVisits(arr); break;
+						case 'users': setUsers(arr); break;
 						default: break;
 					}
 				} else {
@@ -55,7 +57,6 @@ const AdminPage = () => {
 				setApiStatus('ok');
 			} else if (failures.length < tasks.length) {
 				setApiStatus('partial');
-				setError(`Failed to load: ${failures.join(', ')}`);
 				setLoadFailures(failures);
 			} else {
 				setApiStatus('error');

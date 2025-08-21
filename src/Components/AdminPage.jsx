@@ -383,8 +383,7 @@
 
 
 import React, { useEffect, useMemo, useState } from 'react';
-import { Container, Row, Col, Card, Table, Button, Form, Tabs, Tab, Alert } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { Container, Row, Col, Card, Table, Button, Form, Alert } from 'react-bootstrap';
 import { fetchPets, createPet, updatePet, deletePet, fetchCareTasks, createCareTask, updateCareTask, deleteCareTask, fetchVisits, createVisit, updateVisit, deleteVisit } from '../api/petCare';
 import { fetchUsers, createUser, updateUser, deleteUser } from '../api/users';
 import './pet.css';
@@ -392,14 +391,13 @@ import './careguide.css';
 
 
 const AdminPage = () => {
-	const navigate = useNavigate();
 	const [pets, setPets] = useState([]);
 	const [careTasks, setCareTasks] = useState([]);
 	const [visits, setVisits] = useState([]);
 	const [users, setUsers] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState('');
-	const [apiStatus, setApiStatus] = useState('loading');
+	const [activeSection, setActiveSection] = useState('dashboard');
 
 	// Minimal create forms
 	const [newPet, setNewPet] = useState({ name: '', breed: '', birthDate: '', userId: '' });
@@ -421,14 +419,12 @@ const AdminPage = () => {
 			setCareTasks(t);
 			setVisits(v);
 			setUsers(u);
-			setApiStatus('ok');
 		} catch (e) {
 			setError('Failed to load admin data');
 			setPets([]);
 			setCareTasks([]);
 			setVisits([]);
 			setUsers([]);
-			setApiStatus('error');
 		} finally {
 			setLoading(false);
 		}
@@ -567,265 +563,274 @@ const AdminPage = () => {
 		<div className="pets-page">
 			<Container fluid className="py-3 px-0">
 				<h1 className="text-center pets-header-title pets-header-large" style={{ marginTop: '0.5rem' }}>Admin</h1>
-				<div className="d-flex justify-content-end mb-2" style={{ padding: '0 0.5rem' }}>
-					<small className="text-muted">API status: {apiStatus === 'ok' ? 'connected' : apiStatus}</small>
-				</div>
 				<div className="pets-canvas">
 					<div className="pets-center">
 						{loading && <div>Loading…</div>}
 						{error && <Alert variant="danger" className="mb-2">{error}</Alert>}
-						<Row className="g-3 mb-2">
+						<Row className="g-3">
 							<Col md={3}>
-								<Card className="shadow-sm insight-card h-100">
-									<Card.Body>
-										<div className="insight-label">Total Pets</div>
-										<div className="insight-value">{insights.totalPets}</div>
-									</Card.Body>
-								</Card>
+								<div className="d-flex flex-column gap-2">
+									<Button className={(activeSection === 'dashboard' ? 'btn-orange' : 'btn-cream') + ' btn-wide'} onClick={() => setActiveSection('dashboard')}>Dashboard</Button>
+									<Button className={(activeSection === 'pets' ? 'btn-orange' : 'btn-cream') + ' btn-wide'} onClick={() => setActiveSection('pets')}>Pets</Button>
+									<Button className={(activeSection === 'tasks' ? 'btn-orange' : 'btn-cream') + ' btn-wide'} onClick={() => setActiveSection('tasks')}>Care Tasks</Button>
+									<Button className={(activeSection === 'visits' ? 'btn-orange' : 'btn-cream') + ' btn-wide'} onClick={() => setActiveSection('visits')}>Visits</Button>
+									<Button className={(activeSection === 'users' ? 'btn-orange' : 'btn-cream') + ' btn-wide'} onClick={() => setActiveSection('users')}>Users</Button>
+								</div>
 							</Col>
-							<Col md={3}>
-								<Card className="shadow-sm insight-card h-100">
-									<Card.Body>
-										<div className="insight-label">Tasks</div>
-										<div className="insight-sub">{insights.completedTasks}/{insights.totalTasks} done</div>
-										<div className="insight-value" style={{ fontSize: '1.6rem' }}>{insights.completionRate}%</div>
-									</Card.Body>
-								</Card>
-							</Col>
-							<Col md={3}>
-								<Card className="shadow-sm insight-card h-100">
-									<Card.Body>
-										<div className="insight-label">Visits</div>
-										<div className="insight-value">{insights.totalVisits}</div>
-									</Card.Body>
-								</Card>
-							</Col>
-							<Col md={3}>
-								<Card className="shadow-sm insight-card h-100">
-									<Card.Body>
-										<div className="insight-label">Users</div>
-										<div className="insight-value">—</div>
-										<div className="small text-muted">Hook up when user API is available</div>
-									</Card.Body>
-								</Card>
+							<Col md={9}>
+								{activeSection === 'dashboard' && (
+									<Row className="g-3 mb-2">
+										<Col md={4}>
+											<Card className="shadow-sm insight-card h-100">
+												<Card.Body>
+													<div className="insight-label">Total Pets</div>
+													<div className="insight-value">{insights.totalPets}</div>
+												</Card.Body>
+											</Card>
+										</Col>
+										<Col md={4}>
+											<Card className="shadow-sm insight-card h-100">
+												<Card.Body>
+													<div className="insight-label">Tasks</div>
+													<div className="insight-sub">{insights.completedTasks}/{insights.totalTasks} done</div>
+													<div className="insight-value" style={{ fontSize: '1.6rem' }}>{insights.completionRate}%</div>
+												</Card.Body>
+											</Card>
+										</Col>
+										<Col md={4}>
+											<Card className="shadow-sm insight-card h-100">
+												<Card.Body>
+													<div className="insight-label">Visits</div>
+													<div className="insight-value">{insights.totalVisits}</div>
+												</Card.Body>
+											</Card>
+										</Col>
+									</Row>
+								)}
+
+								{activeSection === 'pets' && (
+									<>
+										<Form onSubmit={handleCreatePet} className="mb-3" autoComplete="off">
+											<Row className="g-2 align-items-end">
+												<Col md={3}>
+													<Form.Label className="fw-semibold">Name</Form.Label>
+													<Form.Control value={newPet.name} onChange={(e) => setNewPet(p => ({ ...p, name: e.target.value }))} />
+												</Col>
+												<Col md={3}>
+													<Form.Label className="fw-semibold">Breed</Form.Label>
+													<Form.Control value={newPet.breed} onChange={(e) => setNewPet(p => ({ ...p, breed: e.target.value }))} />
+												</Col>
+												<Col md={3}>
+													<Form.Label className="fw-semibold">Birth Date</Form.Label>
+													<Form.Control type="date" value={newPet.birthDate} onChange={(e) => setNewPet(p => ({ ...p, birthDate: e.target.value }))} />
+												</Col>
+												<Col md={2}>
+													<Form.Label className="fw-semibold">User ID</Form.Label>
+													<Form.Control value={newPet.userId} onChange={(e) => setNewPet(p => ({ ...p, userId: e.target.value }))} />
+												</Col>
+												<Col md="auto">
+													<Button className="btn-orange" type="submit" disabled={!newPet.name || !newPet.breed || !newPet.birthDate}>+ Create</Button>
+												</Col>
+											</Row>
+										</Form>
+										<Table striped hover responsive className="pets-table">
+											<thead>
+												<tr>
+													<th>ID</th>
+													<th>Name</th>
+													<th>Breed</th>
+													<th>Birth Date</th>
+													<th>Actions</th>
+												</tr>
+											</thead>
+											<tbody>
+												{pets.map(p => (
+													<tr key={p.id}>
+														<td>{p.id}</td>
+														<td>
+															<Form.Control size="sm" value={p.name} onChange={(e) => setPets(prev => prev.map(x => x.id === p.id ? { ...x, name: e.target.value } : x))} />
+														</td>
+														<td>
+															<Form.Control size="sm" value={p.breed} onChange={(e) => setPets(prev => prev.map(x => x.id === p.id ? { ...x, breed: e.target.value } : x))} />
+														</td>
+														<td>
+															<Form.Control type="date" size="sm" value={(p.birthDate || '').slice(0,10)} onChange={(e) => setPets(prev => prev.map(x => x.id === p.id ? { ...x, birthDate: e.target.value } : x))} />
+														</td>
+														<td className="d-flex gap-2">
+															<Button size="sm" variant="success" onClick={() => handleUpdatePet(p)}>Save</Button>
+															<Button size="sm" variant="outline-danger" onClick={() => handleDeletePet(p.id)}>Delete</Button>
+														</td>
+													</tr>
+												))}
+											</tbody>
+										</Table>
+									</>
+								)}
+
+								{activeSection === 'tasks' && (
+									<>
+										<Form onSubmit={handleCreateTask} className="mb-2" autoComplete="off">
+											<Row className="g-2 align-items-end">
+												<Col md={4}>
+													<Form.Label className="fw-semibold">Description</Form.Label>
+													<Form.Control value={newTask.description} onChange={(e) => setNewTask(t => ({ ...t, description: e.target.value }))} />
+												</Col>
+												<Col md={3}>
+													<Form.Label className="fw-semibold">Due Date</Form.Label>
+													<Form.Control type="date" value={newTask.dueDate} onChange={(e) => setNewTask(t => ({ ...t, dueDate: e.target.value }))} />
+												</Col>
+												<Col md={3}>
+													<Form.Label className="fw-semibold">Pet ID</Form.Label>
+													<Form.Control value={newTask.petId} onChange={(e) => setNewTask(t => ({ ...t, petId: e.target.value }))} />
+												</Col>
+												<Col md="auto">
+													<Button className="btn-orange" type="submit" disabled={!newTask.description || !newTask.dueDate || !newTask.petId}>+ Create</Button>
+												</Col>
+											</Row>
+										</Form>
+										<Table striped hover responsive className="pets-table">
+											<thead>
+												<tr>
+													<th>ID</th>
+													<th>Description</th>
+													<th>Due Date</th>
+													<th>Completed</th>
+													<th>Pet</th>
+													<th>Actions</th>
+												</tr>
+											</thead>
+											<tbody>
+												{careTasks.map(t => (
+													<tr key={t.id}>
+														<td>{t.id}</td>
+														<td>
+															<Form.Control size="sm" value={t.description} onChange={(e) => setCareTasks(prev => prev.map(x => x.id === t.id ? { ...x, description: e.target.value } : x))} />
+														</td>
+														<td>
+															<Form.Control type="date" size="sm" value={(t.dueDate || '').slice(0,10)} onChange={(e) => setCareTasks(prev => prev.map(x => x.id === t.id ? { ...x, dueDate: e.target.value } : x))} />
+														</td>
+														<td>
+															<Form.Check type="checkbox" checked={!!t.isCompleted} onChange={(e) => setCareTasks(prev => prev.map(x => x.id === t.id ? { ...x, isCompleted: e.target.checked } : x))} />
+														</td>
+														<td>
+															<Form.Control size="sm" value={t.petId} onChange={(e) => setCareTasks(prev => prev.map(x => x.id === t.id ? { ...x, petId: Number(e.target.value) } : x))} />
+														</td>
+														<td className="d-flex gap-2">
+															<Button size="sm" variant="success" onClick={() => handleUpdateTask(t)}>Save</Button>
+															<Button size="sm" variant="outline-danger" onClick={() => handleDeleteTask(t.id)}>Delete</Button>
+														</td>
+													</tr>
+												))}
+											</tbody>
+										</Table>
+									</>
+								)}
+
+								{activeSection === 'visits' && (
+									<>
+										<Form onSubmit={handleCreateVisit} className="mb-2" autoComplete="off">
+											<Row className="g-2 align-items-end">
+												<Col md={4}>
+													<Form.Label className="fw-semibold">Reason</Form.Label>
+													<Form.Control value={newVisit.reason} onChange={(e) => setNewVisit(v => ({ ...v, reason: e.target.value }))} />
+												</Col>
+												<Col md={3}>
+													<Form.Label className="fw-semibold">Visit Date</Form.Label>
+													<Form.Control type="date" value={newVisit.visitDate} onChange={(e) => setNewVisit(v => ({ ...v, visitDate: e.target.value }))} />
+												</Col>
+												<Col md={3}>
+													<Form.Label className="fw-semibold">Pet ID</Form.Label>
+													<Form.Control value={newVisit.petId} onChange={(e) => setNewVisit(v => ({ ...v, petId: e.target.value }))} />
+												</Col>
+												<Col md="auto">
+													<Button className="btn-orange" type="submit" disabled={!newVisit.reason || !newVisit.visitDate || !newVisit.petId}>+ Create</Button>
+												</Col>
+											</Row>
+										</Form>
+										<Table striped hover responsive className="pets-table">
+											<thead>
+												<tr>
+													<th>ID</th>
+													<th>Date</th>
+													<th>Reason</th>
+													<th>Pet</th>
+													<th>Actions</th>
+												</tr>
+											</thead>
+											<tbody>
+												{visits.map(v => (
+													<tr key={v.id}>
+														<td>{v.id}</td>
+														<td>
+															<Form.Control type="date" size="sm" value={(v.visitDate || '').slice(0,10)} onChange={(e) => setVisits(prev => prev.map(x => x.id === v.id ? { ...x, visitDate: e.target.value } : x))} />
+														</td>
+														<td>
+															<Form.Control size="sm" value={v.reason} onChange={(e) => setVisits(prev => prev.map(x => x.id === v.id ? { ...x, reason: e.target.value } : x))} />
+														</td>
+														<td>
+															<Form.Control size="sm" value={v.petId} onChange={(e) => setVisits(prev => prev.map(x => x.id === v.id ? { ...x, petId: Number(e.target.value) } : x))} />
+														</td>
+														<td className="d-flex gap-2">
+															<Button size="sm" variant="success" onClick={() => handleUpdateVisit(v)}>Save</Button>
+															<Button size="sm" variant="outline-danger" onClick={() => handleDeleteVisit(v.id)}>Delete</Button>
+														</td>
+													</tr>
+												))}
+											</tbody>
+										</Table>
+									</>
+								)}
+
+								{activeSection === 'users' && (
+									<>
+										<Form onSubmit={handleCreateUser} className="mb-2" autoComplete="off">
+											<Row className="g-2 align-items-end">
+												<Col md={2}><Form.Label>First</Form.Label><Form.Control value={newUser.firstName} onChange={(e) => setNewUser(u => ({ ...u, firstName: e.target.value }))} /></Col>
+												<Col md={2}><Form.Label>Last</Form.Label><Form.Control value={newUser.lastName} onChange={(e) => setNewUser(u => ({ ...u, lastName: e.target.value }))} /></Col>
+												<Col md={3}><Form.Label>Email</Form.Label><Form.Control type="email" value={newUser.email} onChange={(e) => setNewUser(u => ({ ...u, email: e.target.value }))} /></Col>
+												<Col md={2}><Form.Label>Password</Form.Label><Form.Control type="password" value={newUser.password} onChange={(e) => setNewUser(u => ({ ...u, password: e.target.value }))} /></Col>
+												<Col md={2}><Form.Label>Role</Form.Label><Form.Select value={newUser.role} onChange={(e) => setNewUser(u => ({ ...u, role: e.target.value }))}><option>User</option><option>Admin</option></Form.Select></Col>
+												<Col md="auto"><Button className="btn-orange" type="submit" disabled={!newUser.firstName || !newUser.lastName || !newUser.email || !newUser.password}>+ Create</Button></Col>
+											</Row>
+										</Form>
+										<Table striped hover responsive className="pets-table">
+											<thead>
+												<tr>
+													<th>ID</th>
+													<th>First</th>
+													<th>Last</th>
+													<th>Email</th>
+													<th>Role</th>
+													<th>Active</th>
+													<th>Actions</th>
+												</tr>
+											</thead>
+											<tbody>
+												{users.map(u => (
+													<tr key={u.id}>
+														<td>{u.id}</td>
+														<td><Form.Control size="sm" value={u.firstName || u.FirstName || ''} onChange={(e) => setUsers(prev => prev.map(x => x.id === u.id ? { ...x, firstName: e.target.value } : x))} /></td>
+														<td><Form.Control size="sm" value={u.lastName || u.LastName || ''} onChange={(e) => setUsers(prev => prev.map(x => x.id === u.id ? { ...x, lastName: e.target.value } : x))} /></td>
+														<td><Form.Control size="sm" value={u.email || u.Email || ''} onChange={(e) => setUsers(prev => prev.map(x => x.id === u.id ? { ...x, email: e.target.value } : x))} /></td>
+														<td>
+															<Form.Select size="sm" value={(u.role || u.Role || 'User')} onChange={(e) => setUsers(prev => prev.map(x => x.id === u.id ? { ...x, role: e.target.value } : x))}>
+																<option>User</option>
+																<option>Admin</option>
+															</Form.Select>
+														</td>
+														<td className="text-center"><Form.Check type="checkbox" checked={!!(u.isActive ?? u.IsActive)} onChange={(e) => setUsers(prev => prev.map(x => x.id === u.id ? { ...x, isActive: e.target.checked } : x))} /></td>
+														<td className="d-flex gap-2">
+															<Button size="sm" variant="success" onClick={() => handleUpdateUser(u)}>Save</Button>
+															<Button size="sm" variant="outline-danger" onClick={() => handleDeleteUser(u.id)}>Delete</Button>
+														</td>
+													</tr>
+												))}
+											</tbody>
+										</Table>
+									</>
+								)}
 							</Col>
 						</Row>
-
-						<Tabs defaultActiveKey="pets" className="mb-3">
-							<Tab eventKey="pets" title="Pets">
-								<Form onSubmit={handleCreatePet} className="mb-3" autoComplete="off">
-									<Row className="g-2 align-items-end">
-										<Col md={3}>
-											<Form.Label className="fw-semibold">Name</Form.Label>
-											<Form.Control value={newPet.name} onChange={(e) => setNewPet(p => ({ ...p, name: e.target.value }))} />
-										</Col>
-										<Col md={3}>
-											<Form.Label className="fw-semibold">Breed</Form.Label>
-											<Form.Control value={newPet.breed} onChange={(e) => setNewPet(p => ({ ...p, breed: e.target.value }))} />
-										</Col>
-										<Col md={3}>
-											<Form.Label className="fw-semibold">Birth Date</Form.Label>
-											<Form.Control type="date" value={newPet.birthDate} onChange={(e) => setNewPet(p => ({ ...p, birthDate: e.target.value }))} />
-										</Col>
-										<Col md={2}>
-											<Form.Label className="fw-semibold">User ID</Form.Label>
-											<Form.Control value={newPet.userId} onChange={(e) => setNewPet(p => ({ ...p, userId: e.target.value }))} />
-										</Col>
-										<Col md="auto">
-											<Button className="btn-orange" type="submit" disabled={!newPet.name || !newPet.breed || !newPet.birthDate}>+ Create</Button>
-										</Col>
-									</Row>
-								</Form>
-								<Table striped hover responsive className="pets-table">
-									<thead>
-										<tr>
-											<th>ID</th>
-											<th>Name</th>
-											<th>Breed</th>
-											<th>Birth Date</th>
-											<th>Actions</th>
-										</tr>
-									</thead>
-									<tbody>
-										{pets.map(p => (
-											<tr key={p.id}>
-												<td>{p.id}</td>
-												<td>
-													<Form.Control size="sm" value={p.name} onChange={(e) => setPets(prev => prev.map(x => x.id === p.id ? { ...x, name: e.target.value } : x))} />
-												</td>
-												<td>
-													<Form.Control size="sm" value={p.breed} onChange={(e) => setPets(prev => prev.map(x => x.id === p.id ? { ...x, breed: e.target.value } : x))} />
-												</td>
-												<td>
-													<Form.Control type="date" size="sm" value={(p.birthDate || '').slice(0,10)} onChange={(e) => setPets(prev => prev.map(x => x.id === p.id ? { ...x, birthDate: e.target.value } : x))} />
-												</td>
-												<td className="d-flex gap-2">
-													<Button size="sm" variant="success" onClick={() => handleUpdatePet(p)}>Save</Button>
-													<Button size="sm" variant="outline-danger" onClick={() => handleDeletePet(p.id)}>Delete</Button>
-												</td>
-											</tr>
-										))}
-									</tbody>
-								</Table>
-							</Tab>
-
-							<Tab eventKey="tasks" title="Care Tasks">
-								<Form onSubmit={handleCreateTask} className="mb-2" autoComplete="off">
-									<Row className="g-2 align-items-end">
-										<Col md={4}>
-											<Form.Label className="fw-semibold">Description</Form.Label>
-											<Form.Control value={newTask.description} onChange={(e) => setNewTask(t => ({ ...t, description: e.target.value }))} />
-										</Col>
-										<Col md={3}>
-											<Form.Label className="fw-semibold">Due Date</Form.Label>
-											<Form.Control type="date" value={newTask.dueDate} onChange={(e) => setNewTask(t => ({ ...t, dueDate: e.target.value }))} />
-										</Col>
-										<Col md={3}>
-											<Form.Label className="fw-semibold">Pet ID</Form.Label>
-											<Form.Control value={newTask.petId} onChange={(e) => setNewTask(t => ({ ...t, petId: e.target.value }))} />
-										</Col>
-										<Col md="auto">
-											<Button className="btn-orange" type="submit" disabled={!newTask.description || !newTask.dueDate || !newTask.petId}>+ Create</Button>
-										</Col>
-									</Row>
-								</Form>
-								<Table striped hover responsive className="pets-table">
-									<thead>
-										<tr>
-											<th>ID</th>
-											<th>Description</th>
-											<th>Due Date</th>
-											<th>Completed</th>
-											<th>Pet</th>
-											<th>Actions</th>
-										</tr>
-									</thead>
-									<tbody>
-										{careTasks.map(t => (
-											<tr key={t.id}>
-												<td>{t.id}</td>
-												<td>
-													<Form.Control size="sm" value={t.description} onChange={(e) => setCareTasks(prev => prev.map(x => x.id === t.id ? { ...x, description: e.target.value } : x))} />
-												</td>
-												<td>
-													<Form.Control type="date" size="sm" value={(t.dueDate || '').slice(0,10)} onChange={(e) => setCareTasks(prev => prev.map(x => x.id === t.id ? { ...x, dueDate: e.target.value } : x))} />
-												</td>
-												<td>
-													<Form.Check type="checkbox" checked={!!t.isCompleted} onChange={(e) => setCareTasks(prev => prev.map(x => x.id === t.id ? { ...x, isCompleted: e.target.checked } : x))} />
-												</td>
-												<td>
-													<Form.Control size="sm" value={t.petId} onChange={(e) => setCareTasks(prev => prev.map(x => x.id === t.id ? { ...x, petId: Number(e.target.value) } : x))} />
-												</td>
-												<td className="d-flex gap-2">
-													<Button size="sm" variant="success" onClick={() => handleUpdateTask(t)}>Save</Button>
-													<Button size="sm" variant="outline-danger" onClick={() => handleDeleteTask(t.id)}>Delete</Button>
-												</td>
-											</tr>
-										))}
-									</tbody>
-								</Table>
-							</Tab>
-
-							<Tab eventKey="visits" title="Visits">
-								<Form onSubmit={handleCreateVisit} className="mb-2" autoComplete="off">
-									<Row className="g-2 align-items-end">
-										<Col md={4}>
-											<Form.Label className="fw-semibold">Reason</Form.Label>
-											<Form.Control value={newVisit.reason} onChange={(e) => setNewVisit(v => ({ ...v, reason: e.target.value }))} />
-										</Col>
-										<Col md={3}>
-											<Form.Label className="fw-semibold">Visit Date</Form.Label>
-											<Form.Control type="date" value={newVisit.visitDate} onChange={(e) => setNewVisit(v => ({ ...v, visitDate: e.target.value }))} />
-										</Col>
-										<Col md={3}>
-											<Form.Label className="fw-semibold">Pet ID</Form.Label>
-											<Form.Control value={newVisit.petId} onChange={(e) => setNewVisit(v => ({ ...v, petId: e.target.value }))} />
-										</Col>
-										<Col md="auto">
-											<Button className="btn-orange" type="submit" disabled={!newVisit.reason || !newVisit.visitDate || !newVisit.petId}>+ Create</Button>
-										</Col>
-									</Row>
-								</Form>
-								<Table striped hover responsive className="pets-table">
-									<thead>
-										<tr>
-											<th>ID</th>
-											<th>Date</th>
-											<th>Reason</th>
-											<th>Pet</th>
-											<th>Actions</th>
-										</tr>
-									</thead>
-									<tbody>
-										{visits.map(v => (
-											<tr key={v.id}>
-												<td>{v.id}</td>
-												<td>
-													<Form.Control type="date" size="sm" value={(v.visitDate || '').slice(0,10)} onChange={(e) => setVisits(prev => prev.map(x => x.id === v.id ? { ...x, visitDate: e.target.value } : x))} />
-												</td>
-												<td>
-													<Form.Control size="sm" value={v.reason} onChange={(e) => setVisits(prev => prev.map(x => x.id === v.id ? { ...x, reason: e.target.value } : x))} />
-												</td>
-												<td>
-													<Form.Control size="sm" value={v.petId} onChange={(e) => setVisits(prev => prev.map(x => x.id === v.id ? { ...x, petId: Number(e.target.value) } : x))} />
-												</td>
-												<td className="d-flex gap-2">
-													<Button size="sm" variant="success" onClick={() => handleUpdateVisit(v)}>Save</Button>
-													<Button size="sm" variant="outline-danger" onClick={() => handleDeleteVisit(v.id)}>Delete</Button>
-												</td>
-											</tr>
-										))}
-									</tbody>
-								</Table>
-							</Tab>
-
-							<Tab eventKey="users" title="Users">
-								<Form onSubmit={handleCreateUser} className="mb-2" autoComplete="off">
-									<Row className="g-2 align-items-end">
-										<Col md={2}><Form.Label>First</Form.Label><Form.Control value={newUser.firstName} onChange={(e) => setNewUser(u => ({ ...u, firstName: e.target.value }))} /></Col>
-										<Col md={2}><Form.Label>Last</Form.Label><Form.Control value={newUser.lastName} onChange={(e) => setNewUser(u => ({ ...u, lastName: e.target.value }))} /></Col>
-										<Col md={3}><Form.Label>Email</Form.Label><Form.Control type="email" value={newUser.email} onChange={(e) => setNewUser(u => ({ ...u, email: e.target.value }))} /></Col>
-										<Col md={2}><Form.Label>Password</Form.Label><Form.Control type="password" value={newUser.password} onChange={(e) => setNewUser(u => ({ ...u, password: e.target.value }))} /></Col>
-										<Col md={2}><Form.Label>Role</Form.Label><Form.Select value={newUser.role} onChange={(e) => setNewUser(u => ({ ...u, role: e.target.value }))}><option>User</option><option>Admin</option></Form.Select></Col>
-										<Col md="auto"><Button className="btn-orange" type="submit" disabled={!newUser.firstName || !newUser.lastName || !newUser.email || !newUser.password}>+ Create</Button></Col>
-									</Row>
-								</Form>
-								<Table striped hover responsive className="pets-table">
-									<thead>
-										<tr>
-											<th>ID</th>
-											<th>First</th>
-											<th>Last</th>
-											<th>Email</th>
-											<th>Role</th>
-											<th>Active</th>
-											<th>Actions</th>
-										</tr>
-									</thead>
-									<tbody>
-										{users.map(u => (
-											<tr key={u.id}>
-												<td>{u.id}</td>
-												<td><Form.Control size="sm" value={u.firstName || u.FirstName || ''} onChange={(e) => setUsers(prev => prev.map(x => x.id === u.id ? { ...x, firstName: e.target.value } : x))} /></td>
-												<td><Form.Control size="sm" value={u.lastName || u.LastName || ''} onChange={(e) => setUsers(prev => prev.map(x => x.id === u.id ? { ...x, lastName: e.target.value } : x))} /></td>
-												<td><Form.Control size="sm" value={u.email || u.Email || ''} onChange={(e) => setUsers(prev => prev.map(x => x.id === u.id ? { ...x, email: e.target.value } : x))} /></td>
-												<td>
-													<Form.Select size="sm" value={(u.role || u.Role || 'User')} onChange={(e) => setUsers(prev => prev.map(x => x.id === u.id ? { ...x, role: e.target.value } : x))}>
-														<option>User</option>
-														<option>Admin</option>
-													</Form.Select>
-												</td>
-												<td className="text-center"><Form.Check type="checkbox" checked={!!(u.isActive ?? u.IsActive)} onChange={(e) => setUsers(prev => prev.map(x => x.id === u.id ? { ...x, isActive: e.target.checked } : x))} /></td>
-												<td className="d-flex gap-2">
-													<Button size="sm" variant="success" onClick={() => handleUpdateUser(u)}>Save</Button>
-													<Button size="sm" variant="outline-danger" onClick={() => handleDeleteUser(u.id)}>Delete</Button>
-												</td>
-											</tr>
-										))}
-									</tbody>
-								</Table>
-							</Tab>
-						</Tabs>
 					</div>
 				</div>
 			</Container>

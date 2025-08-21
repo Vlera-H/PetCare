@@ -231,7 +231,6 @@ const AdminPage = () => {
         <Container fluid className="py-3 px-0">
           <div className="pc-header">
             <h1 className="pets-header-title pets-header-large m-0">Admin</h1>
-            <small className="text-muted">API status: {apiStatus === 'ok' ? 'connected' : apiStatus}</small>
           </div>
 
           {loading && <div>Loading…</div>}
@@ -280,8 +279,7 @@ const AdminPage = () => {
                     <div className="icon-circle">👥</div>
                     <div className="metric-label">Users</div>
                   </div>
-                  <div className="metric-value">{users.length || '—'}</div>
-                  <div className="small text-muted">Hook up when user API is available</div>
+                  <div className="metric-value">{users.length}</div>
                 </Card.Body>
               </Card>
             </Col>

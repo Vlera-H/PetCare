@@ -383,7 +383,8 @@
 
 
 import React, { useEffect, useMemo, useState } from 'react';
-import { Container, Row, Col, Card, Table, Button, Form, Alert } from 'react-bootstrap';
+import { Container, Row, Col, Card, Table, Button, Form, Alert, Modal } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import { fetchPets, createPet, updatePet, deletePet, fetchCareTasks, createCareTask, updateCareTask, deleteCareTask, fetchVisits, createVisit, updateVisit, deleteVisit } from '../api/petCare';
 import { fetchUsers, createUser, updateUser, deleteUser } from '../api/users';
 import './pet.css';
@@ -391,6 +392,7 @@ import './careguide.css';
 
 
 const AdminPage = () => {
+	const navigate = useNavigate();
 	const [pets, setPets] = useState([]);
 	const [careTasks, setCareTasks] = useState([]);
 	const [visits, setVisits] = useState([]);
@@ -398,6 +400,7 @@ const AdminPage = () => {
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState('');
 	const [activeSection, setActiveSection] = useState('dashboard');
+	const [showLogout, setShowLogout] = useState(false);
 
 	// Minimal create forms
 	const [newPet, setNewPet] = useState({ name: '', breed: '', birthDate: '', userId: '' });
@@ -440,6 +443,14 @@ const AdminPage = () => {
 		const totalVisits = visits.length;
 		return { totalPets, totalTasks, completedTasks, completionRate, totalVisits };
 	}, [pets, careTasks, visits]);
+
+	const confirmLogout = () => {
+		localStorage.removeItem('accessToken');
+		localStorage.removeItem('refreshToken');
+		localStorage.removeItem('role');
+		setShowLogout(false);
+		navigate('/welcome');
+	};
 
 	const handleCreatePet = async (e) => {
 		e.preventDefault();
@@ -575,6 +586,7 @@ const AdminPage = () => {
 									<Button className={(activeSection === 'tasks' ? 'btn-orange' : 'btn-cream') + ' btn-wide'} onClick={() => setActiveSection('tasks')}>Care Tasks</Button>
 									<Button className={(activeSection === 'visits' ? 'btn-orange' : 'btn-cream') + ' btn-wide'} onClick={() => setActiveSection('visits')}>Visits</Button>
 									<Button className={(activeSection === 'users' ? 'btn-orange' : 'btn-cream') + ' btn-wide'} onClick={() => setActiveSection('users')}>Users</Button>
+									<Button className={(activeSection === 'settings' ? 'btn-orange' : 'btn-cream') + ' btn-wide'} onClick={() => setActiveSection('settings')}>Settings</Button>
 								</div>
 							</Col>
 							<Col md={9}>
@@ -829,8 +841,35 @@ const AdminPage = () => {
 										</Table>
 									</>
 								)}
+
+								{activeSection === 'settings' && (
+									<Card className="shadow-sm">
+										<Card.Body>
+											<div className="d-flex align-items-center justify-content-between">
+												<div>
+													<div className="insight-label">Settings</div>
+													<div className="text-muted small">Manage your admin session</div>
+												</div>
+												<Button variant="outline-danger" onClick={() => setShowLogout(true)}>Log out</Button>
+											</div>
+										</Card.Body>
+									</Card>
+								)}
 							</Col>
 						</Row>
+
+						<Modal show={showLogout} onHide={() => setShowLogout(false)} centered>
+							<Modal.Header closeButton>
+								<Modal.Title>Log out</Modal.Title>
+							</Modal.Header>
+							<Modal.Body>
+								Are you sure you want to log out?
+							</Modal.Body>
+							<Modal.Footer>
+								<Button variant="outline-secondary" onClick={() => setShowLogout(false)}>Cancel</Button>
+								<Button variant="dark" onClick={confirmLogout}>Log out</Button>
+							</Modal.Footer>
+						</Modal>
 					</div>
 				</div>
 			</Container>

@@ -82,7 +82,7 @@ html, body {
 
 /* Inputs */
 
-/.form-control, .form-select {
+.form-control, .form-select {
   border-radius: 8px;
   border: 2px solid #ff8c00;
 }

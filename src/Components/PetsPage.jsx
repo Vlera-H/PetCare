@@ -7,7 +7,7 @@ import './pet.css';
 
 const PetsPage = () => {
   const navigate = useNavigate();
-  const { pets, setPets } = useData();
+  const { pets, setPets, currentUserId } = useData();
   const [form, setForm] = useState({ name: '', breed: '', birthDate: '' });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -24,6 +24,7 @@ const PetsPage = () => {
     try {
       console.log('Creating pet with form data:', form);
       console.log('Current userId from localStorage:', localStorage.getItem('userId'));
+      console.log('Current userId from context:', currentUserId);
       
       const created = await createPet({
         name: form.name,
@@ -33,8 +34,16 @@ const PetsPage = () => {
       
       console.log('Pet created successfully:', created);
       
+      // Rifresko të dhënat duke shtuar pet-in e ri
       setPets(prev => [...prev, created]);
+      
+      // Pastro formën
       setForm({ name: '', breed: '', birthDate: '' });
+      
+      // Shfaq mesazh suksesi
+      setError(''); // Pastro error nëse ka pasur
+      alert('Pet u krijua me sukses!');
+      
     } catch (e) {
       console.error('Error creating pet:', e);
       setError(`Gabim gjatë krijimit të pet: ${e.message}`);

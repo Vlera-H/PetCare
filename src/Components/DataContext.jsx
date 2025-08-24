@@ -98,23 +98,26 @@ export const DataProvider = ({ children }) => {
 
   // Filtro të dhënat sipas userId aktual
   const pets = allPets.filter(pet => {
-    console.log(`Checking pet ${pet.id}: pet.userId=${pet.userId}, currentUserId=${currentUserId}, match=${pet.userId === currentUserId}`);
-    return pet.userId === currentUserId;
+    const currentUserIdNum = Number(currentUserId);
+    console.log(`Checking pet ${pet.id}: pet.userId=${pet.userId} (${typeof pet.userId}), currentUserId=${currentUserId} (${typeof currentUserId}), currentUserIdNum=${currentUserIdNum}, match=${pet.userId === currentUserIdNum}`);
+    return pet.userId === currentUserIdNum;
   });
   
   const careTasks = allCareTasks.filter(task => {
     // Gjej pet-in për këtë task dhe kontrollo nëse i përket përdoruesit aktual
     const pet = allPets.find(p => p.id === task.petId);
-    const isUserPet = pet && pet.userId === currentUserId;
-    console.log(`Task ${task.id}: petId=${task.petId}, pet=${pet?.name}, isUserPet=${isUserPet}`);
+    const currentUserIdNum = Number(currentUserId);
+    const isUserPet = pet && pet.userId === currentUserIdNum;
+    console.log(`Task ${task.id}: petId=${task.petId}, pet=${pet?.name}, pet.userId=${pet?.userId}, currentUserIdNum=${currentUserIdNum}, isUserPet=${isUserPet}`);
     return isUserPet;
   });
   
   const visits = allVisits.filter(visit => {
     // Gjej pet-in për këtë visit dhe kontrollo nëse i përket përdoruesit aktual
     const pet = allPets.find(p => p.id === visit.petId);
-    const isUserPet = pet && pet.userId === currentUserId;
-    console.log(`Visit ${visit.id}: petId=${visit.petId}, pet=${pet?.name}, isUserPet=${isUserPet}`);
+    const currentUserIdNum = Number(currentUserId);
+    const isUserPet = pet && pet.userId === currentUserIdNum;
+    console.log(`Visit ${visit.id}: petId=${visit.petId}, pet=${pet?.name}, pet.userId=${pet?.userId}, currentUserIdNum=${currentUserIdNum}, isUserPet=${isUserPet}`);
     return isUserPet;
   });
 

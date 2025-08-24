@@ -44,6 +44,12 @@ const handleSubmit = async (e) => {
 
     const res = await axios.post('https://localhost:7259/api/Auth/register', payload);
     setMessage(res.data.message);
+    
+    // Redirect në login page pas 2 sekondash për të parë mesazhin e suksesit
+    setTimeout(() => {
+      navigate('/login');
+    }, 2000);
+    
   } catch (err) {
     setError('Registration failed');
   } finally {

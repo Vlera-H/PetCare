@@ -4,17 +4,6 @@ import { fetchPets, fetchCareTasks, fetchVisits } from '../api/petCare';
 
 const DataContext = createContext(null);
 
-const loadFromStorage = (key, fallback) => {
-  try {
-    const raw = localStorage.getItem(key);
-    if (!raw) return fallback;
-    const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) ? parsed : fallback;
-  } catch {
-    return fallback;
-  }
-};
-
 export const DataProvider = ({ children }) => {
   const [allPets, setAllPets] = useState([]);
   const [allCareTasks, setAllCareTasks] = useState([]);
@@ -32,23 +21,22 @@ export const DataProvider = ({ children }) => {
     localStorage.removeItem('visits');
   };
 
+  // Monitor userId changes
   useEffect(() => {
     const checkUserChange = () => {
       const userId = localStorage.getItem('userId');
       if (userId !== currentUserId) {
-        if (currentUserId !== null) {
-          clearData();
-        }
+        if (currentUserId !== null) clearData();
         setCurrentUserId(userId);
       }
     };
 
     const interval = setInterval(checkUserChange, 1000);
     checkUserChange();
-
     return () => clearInterval(interval);
   }, [currentUserId]);
 
+  // Load data on user change
   useEffect(() => {
     if (!currentUserId) {
       clearData();
@@ -57,26 +45,17 @@ export const DataProvider = ({ children }) => {
 
     const loadData = async () => {
       try {
-        console.log('Loading data for user:', currentUserId);
         const [p, t, v] = await Promise.all([
           fetchPets(),
           fetchCareTasks(),
           fetchVisits()
         ]);
 
-        console.log('API data loaded:', { pets: p?.length, tasks: t?.length, visits: v?.length });
-        console.log('Raw pets data:', p);
-        console.log('Raw tasks data:', t);
-        console.log('Raw visits data:', v);
-
         setAllPets(p || []);
         setAllCareTasks(t || []);
         setAllVisits(v || []);
         setApiError(false);
-      } catch (e) {
-        console.error('Failed to load user data:', e);
-        console.log('Using demo data instead...');
-
+      } catch {
         setAllPets(demoData.pets);
         setAllCareTasks(demoData.careTasks);
         setAllVisits(demoData.visits);
@@ -87,71 +66,43 @@ export const DataProvider = ({ children }) => {
     loadData();
   }, [currentUserId]);
 
-  const pets = allPets.filter(pet => {
-    const currentUserIdNum = Number(currentUserId);
-    console.log(`🔍 PET FILTER: pet.id=${pet.id}, pet.userId=${pet.userId} (${typeof pet.userId}), currentUserId=${currentUserId} (${typeof currentUserId}), currentUserIdNum=${currentUserIdNum}, match=${pet.userId === currentUserIdNum}`);
-    return pet.userId === currentUserIdNum;
-  });
+  // Filter data by current user
+  const uid = Number(currentUserId);
+  const pets = allPets.filter(p => p.userId === uid);
+  const careTasks = allCareTasks.filter(t => pets.some(p => p.id === t.petId));
+  const visits = allVisits.filter(v => pets.some(p => p.id === v.petId));
 
-  const careTasks = allCareTasks.filter(task => {
-    const pet = allPets.find(p => p.id === task.petId);
-    const currentUserIdNum = Number(currentUserId);
-    const isUserPet = pet && pet.userId === currentUserIdNum;
-    console.log(`🔍 TASK FILTER: task.id=${task.id}, petId=${task.petId}, pet=${pet?.name}, pet.userId=${pet?.userId}, currentUserIdNum=${currentUserIdNum}, isUserPet=${isUserPet}`);
-    return isUserPet;
-  });
-
-  const visits = allVisits.filter(visit => {
-    const pet = allPets.find(p => p.id === visit.petId);
-    const currentUserIdNum = Number(currentUserId);
-    const isUserPet = pet && pet.userId === currentUserIdNum;
-    console.log(`🔍 VISIT FILTER: visit.id=${visit.id}, petId=${visit.petId}, pet=${pet?.name}, pet.userId=${pet?.userId}, currentUserIdNum=${currentUserIdNum}, isUserPet=${isUserPet}`);
-    return isUserPet;
-  });
-
-  console.log('Filtered data:', { 
-    allPets: allPets.length, 
-    pets: pets.length, 
-    allCareTasks: allCareTasks.length, 
-    careTasks: careTasks.length,
-    allVisits: allVisits.length,
-    visits: visits.length,
-    currentUserId 
-  });
-
+  // Persist local data only if user is active
   useEffect(() => {
-    if (currentUserId && pets.length > 0) {
-      console.log('Saving pets to localStorage:', pets);
+    if (currentUserId) {
       localStorage.setItem('pets', JSON.stringify(pets));
     }
   }, [pets, currentUserId]);
 
   useEffect(() => {
-    if (currentUserId && careTasks.length > 0) {
-      console.log('Saving careTasks to localStorage:', careTasks);
+    if (currentUserId) {
       localStorage.setItem('careTasks', JSON.stringify(careTasks));
     }
   }, [careTasks, currentUserId]);
 
   useEffect(() => {
-    if (currentUserId && visits.length > 0) {
-      console.log('Saving visits to localStorage:', visits);
+    if (currentUserId) {
       localStorage.setItem('visits', JSON.stringify(visits));
     }
   }, [visits, currentUserId]);
 
-  const value = { 
-    pets, 
+  const value = {
+    pets,
     setPets: setAllPets,
-    careTasks, 
+    careTasks,
     setCareTasks: setAllCareTasks,
-    visits, 
+    visits,
     setVisits: setAllVisits,
     currentUserId,
     clearData,
-    apiError
+    apiError,
   };
-  
+
   return <DataContext.Provider value={value}>{children}</DataContext.Provider>;
 };
 

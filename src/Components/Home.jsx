@@ -19,7 +19,7 @@ const Home = () => {
     return visits
       .filter(v => new Date(v.visitDate) >= new Date(today.toDateString()))
       .sort((a, b) => new Date(a.visitDate) - new Date(b.visitDate))
-      .slice(0, 5)
+      .slice(0, 1) // Vetëm 1 visit më i afërt
       .map(v => ({
         id: v.id,
         date: new Date(v.visitDate),
@@ -33,7 +33,7 @@ const Home = () => {
     return careTasks
       .filter(t => !t.isCompleted && new Date(t.dueDate) >= new Date(today.toDateString()))
       .sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate))
-      .slice(0, 5)
+      .slice(0, 1) // Vetëm 1 task më i afërt
       .map(t => ({
         id: t.id,
         date: new Date(t.dueDate),

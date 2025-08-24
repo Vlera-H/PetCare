@@ -117,7 +117,6 @@ const PetsPage = () => {
                   <th>Name</th>
                   <th>Breed</th>
                   <th>Birth Date</th>
-                  <th>User ID</th>
                 </tr>
               </thead>
               <tbody>
@@ -126,7 +125,6 @@ const PetsPage = () => {
                     <td>{pet.name}</td>
                     <td>{pet.breed}</td>
                     <td>{new Date(pet.birthDate).toLocaleDateString()}</td>
-                    <td>{pet.userId}</td>
                   </tr>
                 ))}
               </tbody>

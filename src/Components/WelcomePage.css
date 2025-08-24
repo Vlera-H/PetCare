@@ -43,7 +43,7 @@
 }
 
 .btn-orange:hover {
-  background-color: #e67600;
+  background-color: hsl(31, 64%, 78%);
   transform: scale(1.05);
 }
 

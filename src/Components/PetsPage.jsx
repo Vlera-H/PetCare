@@ -7,7 +7,7 @@ import './pet.css';
 
 const PetsPage = () => {
   const navigate = useNavigate();
-  const { pets, setPets } = useData();
+  const { pets, setPets, currentUserId } = useData();
   const [form, setForm] = useState({ name: '', breed: '', birthDate: '' });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -24,6 +24,7 @@ const PetsPage = () => {
     try {
       console.log('Creating pet with form data:', form);
       console.log('Current userId from localStorage:', localStorage.getItem('userId'));
+      console.log('Current userId from context:', currentUserId);
       
       const created = await createPet({
         name: form.name,
@@ -35,6 +36,9 @@ const PetsPage = () => {
       
       setPets(prev => [...prev, created]);
       setForm({ name: '', breed: '', birthDate: '' });
+      setError('');
+      alert('Pet u krijua me sukses!');
+      
     } catch (e) {
       console.error('Error creating pet:', e);
       setError(`Gabim gjatë krijimit të pet: ${e.message}`);
@@ -106,7 +110,6 @@ const PetsPage = () => {
                   <th>Name</th>
                   <th>Breed</th>
                   <th>Birth Date</th>
-                  <th>User ID</th>
                 </tr>
               </thead>
               <tbody>
@@ -115,7 +118,6 @@ const PetsPage = () => {
                     <td>{pet.name}</td>
                     <td>{pet.breed}</td>
                     <td>{new Date(pet.birthDate).toLocaleDateString()}</td>
-                    <td>{pet.userId}</td>
                   </tr>
                 ))}
               </tbody>
@@ -128,12 +130,4 @@ const PetsPage = () => {
 };
 
 export default PetsPage;
-
-
-
-
-
-
-
-
 

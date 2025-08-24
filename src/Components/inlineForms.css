@@ -20,3 +20,18 @@
     gap: 0.5rem;
   }
 }
+
+.btn-gradient {
+  background: linear-gradient(to bottom right, #ffe9c6, #d2b48c) !important;
+  border: 2px solid brown !important;   /* e detyrojmë kafen */
+  color: #000 !important;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-gradient:hover {
+  background: linear-gradient(to bottom right, #f5d7a5, #c19a6b) !important;
+  border-color: #5c4033 !important;  /* kafe më e errët */
+  box-shadow: 0 4px 12px rgba(92, 64, 51, 0.3);
+}
+

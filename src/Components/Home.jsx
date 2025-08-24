@@ -119,7 +119,13 @@ const Home = () => {
                   <div className="home-muted">No upcoming visits.</div>
                 )}
                <div className="mt-3">
-                 <Button className="custom-btn btn-cream btn-wide" onClick={() => navigate('/visits')}>View all</Button>
+                     
+
+                      <Button className="custom-btn btn-wide btn-gradient" onClick={() => navigate('/tasks')}>
+                          View all
+                        </Button>
+
+
                </div>
               </Card.Body>
             </Card>
@@ -144,7 +150,7 @@ const Home = () => {
                   <div className="home-muted">No upcoming tasks.</div>
                 )}
                 <div className="mt-3">
-                  <Button className="custom-btn btn-orange btn-wide" onClick={() => navigate('/tasks')}>View all</Button>
+                 <Button className="custom-btn btn-orange btn-wide" onClick={() => navigate('/visits')}>View all</Button>
                 </div>
               </Card.Body>
             </Card>

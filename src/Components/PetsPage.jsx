@@ -7,7 +7,7 @@ import './pet.css';
 
 const PetsPage = () => {
   const navigate = useNavigate();
-  const { pets, setPets, currentUserId } = useData();
+  const { pets, setPets: setAllPets, currentUserId } = useData();
   const [form, setForm] = useState({ name: '', breed: '', birthDate: '' });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -34,7 +34,7 @@ const PetsPage = () => {
       
       console.log('Pet created successfully:', created);
       
-      setPets(prev => [...prev, created]);
+      setAllPets(prev => [...prev, created]);
       setForm({ name: '', breed: '', birthDate: '' });
       setError('');
       alert('Pet u krijua me sukses!');
@@ -130,4 +130,5 @@ const PetsPage = () => {
 };
 
 export default PetsPage;
+
 

@@ -115,7 +115,7 @@ const Home = () => {
                   <div className="home-muted">No upcoming visits.</div>
                 )}
                <div className="mt-3">
-               <Button className="custom-btn btn-cream btn-wide" onClick={() => navigate('/visits')}>View all</Button>
+               <Button className="custom-btn btn-orange btn-wide" onClick={() => navigate('/visits')}>View all</Button>
                </div>
               </Card.Body>
             </Card>

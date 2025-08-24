@@ -8,19 +8,25 @@ const AppNavbar = () => {
   const navigate = useNavigate();
   const { clearData } = useData();
   const [showLogout, setShowLogout] = useState(false);
+  
+const confirmLogout = () => {
+  // Clear tokens
+  localStorage.removeItem('accessToken');
+  localStorage.removeItem('refreshToken');
+  localStorage.removeItem('userId');
+  localStorage.removeItem('firstName');
+  localStorage.removeItem('role');
+  
+  // Clear data context
+  clearData();
+  
+  // Redirect to welcome with replace (nuk mund të ktheheni më)
+  navigate('/welcome', { replace: true });
+  
+  // Force reload për të parandaluar back navigation
+  window.location.reload();
+};
 
-  const confirmLogout = () => {
-    // Use TokenService for logout
-    tokenService.logout();
-    
-    // Clear application data
-    clearData();
-    
-    setShowLogout(false);
-    
-    // Redirect to welcome
-    navigate('/welcome', { replace: true });
-  };
 
   return (
     <Navbar expand="lg" className="shadow-sm header-tall w-100 pc-navbar">

@@ -494,8 +494,20 @@ export default AdminPage;
 //   };
 
 //   const confirmLogout = () => {
+//     // Pastro të gjitha të dhënat e aplikacionit
+//     localStorage.removeItem('accessToken');
+//     localStorage.removeItem('refreshToken');
+//     localStorage.removeItem('role');
+//     localStorage.removeItem('firstName');
+//     localStorage.removeItem('userId');
+    
+//     // Pastro të dhënat e aplikacionit
+//     localStorage.removeItem('pets');
+//     localStorage.removeItem('careTasks');
+//     localStorage.removeItem('visits');
+    
 //     setShowLogout(false);
-//     handleLogout();
+//     navigate('/welcome');
 //   };
 
 //   return (

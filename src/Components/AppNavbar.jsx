@@ -7,9 +7,18 @@ const AppNavbar = () => {
   const [showLogout, setShowLogout] = useState(false);
 
   const confirmLogout = () => {
+    // Pastro të gjitha të dhënat e aplikacionit
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
     localStorage.removeItem('role');
+    localStorage.removeItem('firstName');
+    localStorage.removeItem('userId');
+    
+    // Pastro të dhënat e aplikacionit
+    localStorage.removeItem('pets');
+    localStorage.removeItem('careTasks');
+    localStorage.removeItem('visits');
+    
     setShowLogout(false);
     navigate('/welcome');
   };

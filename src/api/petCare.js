@@ -117,12 +117,40 @@ export const updatePet = (id, pet) => {
 export const fetchCareTasks = () => client.get('/api/CareTask').then(r => r.data);
 
 export const createCareTask = (task) => {
+  console.log('🔍 CREATE CARE TASK STARTED');
+  console.log('🔍 Task data received:', task);
+  
+  // Për CREATE endpoint, dërgo yyyy-MM-dd (backend pret DateOnly)
+  const createDate = toYYYYMMDD(task.dueDate);
+  console.log('🔍 Original date:', task.dueDate);
+  console.log('🔍 Date for CREATE (yyyy-MM-dd):', createDate);
+  
+  if (!createDate) {
+    console.log('❌ Date conversion failed');
+    throw new Error('Invalid due date format');
+  }
+  
   const payload = {
     description: task.description,
-    dueDate: toDDMMYYYY(task.dueDate), // Konverto në dd-MM-yyyy për backend
+    dueDate: createDate, // Dërgo yyyy-MM-dd për CREATE
     petId: Number(task.petId)
   };
-  return client.post('/api/CareTask', payload).then(r => r.data);
+  
+  console.log('🔍 Final payload:', payload);
+  console.log('🔍 Sending to API...');
+  
+  return client.post('/api/CareTask', payload)
+    .then(response => {
+      console.log('✅ API success:', response.data);
+      return response.data;
+    })
+    .catch(error => {
+      console.log('❌ API ERROR:');
+      console.log('❌ Status:', error.response?.status);
+      console.log('❌ Data:', error.response?.data);
+      console.log('❌ Message:', error.message);
+      throw error;
+    });
 };
 
 export const updateCareTask = (id, task) => {
@@ -141,12 +169,40 @@ export const deleteCareTask = (id) => client.delete(`/api/CareTask/${id}`);
 export const fetchVisits = () => client.get('/api/Visit').then(r => r.data);
 
 export const createVisit = (visit) => {
+  console.log('🔍 CREATE VISIT STARTED');
+  console.log('🔍 Visit data received:', visit);
+  
+  // Për CREATE endpoint, dërgo yyyy-MM-dd (backend pret DateOnly)
+  const createDate = toYYYYMMDD(visit.visitDate);
+  console.log('🔍 Original date:', visit.visitDate);
+  console.log('🔍 Date for CREATE (yyyy-MM-dd):', createDate);
+  
+  if (!createDate) {
+    console.log('❌ Date conversion failed');
+    throw new Error('Invalid visit date format');
+  }
+  
   const payload = {
     reason: visit.reason,
-    visitDate: toDDMMYYYY(visit.visitDate), // Konverto në dd-MM-yyyy për backend
+    visitDate: createDate, // Dërgo yyyy-MM-dd për CREATE
     petId: Number(visit.petId)
   };
-  return client.post('/api/Visit', payload).then(r => r.data);
+  
+  console.log('🔍 Final payload:', payload);
+  console.log('🔍 Sending to API...');
+  
+  return client.post('/api/Visit', payload)
+    .then(response => {
+      console.log('✅ API success:', response.data);
+      return response.data;
+    })
+    .catch(error => {
+      console.log('❌ API ERROR:');
+      console.log('❌ Status:', error.response?.status);
+      console.log('❌ Data:', error.response?.data);
+      console.log('❌ Message:', error.message);
+      throw error;
+    });
 };
 
 export const updateVisit = (id, visit) => {

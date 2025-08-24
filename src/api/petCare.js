@@ -68,11 +68,12 @@ export const createPet = (pet) => {
   const resolvedUserId = pet.userId != null && pet.userId !== '' ? Number(pet.userId) : currentUserId;
   console.log('🔍 Resolved user ID:', resolvedUserId);
   
-  const convertedDate = toDDMMYYYY(pet.birthDate);
+  // Për CREATE endpoint, dërgo yyyy-MM-dd (backend pret DateTime)
+  const createDate = toYYYYMMDD(pet.birthDate);
   console.log('🔍 Original date:', pet.birthDate);
-  console.log('🔍 Converted date:', convertedDate);
+  console.log('🔍 Date for CREATE (yyyy-MM-dd):', createDate);
   
-  if (!convertedDate) {
+  if (!createDate) {
     console.log('❌ Date conversion failed');
     throw new Error('Invalid birth date format');
   }
@@ -80,7 +81,7 @@ export const createPet = (pet) => {
   const payload = {
     name: pet.name,
     breed: pet.breed,
-    birthDate: convertedDate,
+    birthDate: createDate, // Dërgo yyyy-MM-dd për CREATE
     userId: resolvedUserId
   };
   

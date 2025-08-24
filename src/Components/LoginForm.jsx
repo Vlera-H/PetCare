@@ -1,99 +1,57 @@
 import React, { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
-import axios from 'axios';
-import './LoginForm.css';
 import { useNavigate } from 'react-router-dom';
-
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://localhost:7259';
+import tokenService from '../services/tokenService';
+import './LoginForm.css';
 
 const LoginForm = () => {
   const navigate = useNavigate();
-
   const [formData, setFormData] = useState({ email: '', password: '' });
-  const [rememberMe, setRememberMe] = useState(false);
-  const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [submitting, setSubmitting] = useState(false);
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setMessage('');
+    setLoading(true);
     setError('');
-    setSubmitting(true);
-
-    if (!formData.email || !formData.password) {
-      setError('Ju lutem plotësoni të gjitha fushat.');
-      setSubmitting(false);
-      return;
-    }
 
     try {
-      const res = await axios.post('/api/Auth/login', formData, {
-        baseURL: API_BASE_URL,
+      const response = await fetch('https://localhost:7259/api/Auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
       });
 
-      localStorage.removeItem('pets');
-      localStorage.removeItem('careTasks');
-      localStorage.removeItem('visits');
-
-      localStorage.setItem('accessToken', res.data.accessToken);
-      localStorage.setItem('refreshToken', res.data.refreshToken);
-      if (res.data.user?.firstName) {
-        localStorage.setItem('firstName', res.data.user.firstName);
-      }
-      if (res.data.user?.id) {
-        localStorage.setItem('userId', res.data.user.id);
-      }
-      if (rememberMe) {
-        localStorage.setItem('rememberMe', 'true');
-        localStorage.setItem('rememberedEmail', formData.email);
-      } else {
-        localStorage.removeItem('rememberMe');
-        localStorage.removeItem('rememberedEmail');
+      if (!response.ok) {
+        throw new Error('Login failed');
       }
 
-      setMessage('Login successful! Welcome ' + (res.data.user?.firstName || ''));
-      const token = res.data.accessToken;
-      const decodeRoleFromToken = (t) => {
-        try {
-          const base64 = t.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
-          const json = JSON.parse(atob(base64));
-          const claim = json.role || json.roles || json['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
-          if (Array.isArray(claim)) return claim[0];
-          return claim || null;
-        } catch {
-          return null;
-        }
-      };
-      const roleRaw = res.data.user?.role || decodeRoleFromToken(token) || 'User';
-      localStorage.setItem('role', roleRaw);
+      const data = await response.json();
       
-      setTimeout(() => {
-        navigate((roleRaw || '').toLowerCase() === 'admin' ? '/admin' : '/');
-      }, 100);
+      // Use TokenService to set tokens
+      tokenService.setTokens(data.accessToken, data.refreshToken);
       
-    } catch (err) {
-      console.error('Axios error:', {
-        message: err.message,
-        code: err.code,
-        status: err.response?.status,
-        data: err.response?.data,
-      });
+      // Set other user data
+      if (data.user?.firstName) {
+        localStorage.setItem('firstName', data.user.firstName);
+      }
+      if (data.user?.id) {
+        localStorage.setItem('userId', data.user.id);
+      }
+      if (data.user?.role) {
+        localStorage.setItem('role', data.user.role);
+      }
 
-      const status = err.response?.status;
-      const data = err.response?.data;
-      const friendlyMessage =
-        (typeof data === 'string' && data) ||
-        data?.message ||
-        (status ? `HTTP ${status} - ${err.message || 'Login failed'}` : (err.message || 'Network Error'));
+      // Navigate based on role
+      const role = data.user?.role || '';
+      navigate(role.toLowerCase() === 'admin' ? '/admin' : '/');
 
-      setError(friendlyMessage);
+    } catch (error) {
+      setError('Login failed. Please check your credentials.');
     } finally {
-      setSubmitting(false);
+      setLoading(false);
     }
   };
 
@@ -113,20 +71,18 @@ const LoginForm = () => {
 
         <h3 className="login-title">SIGN IN</h3>
 
-        {message && <Alert variant="success">{message}</Alert>}
         {error && <Alert variant="danger">{error}</Alert>}
 
-        <Form onSubmit={handleSubmit} autoComplete="off">
+        <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3" controlId="formEmail">
             <Form.Label className="form-label-custom">EMAIL</Form.Label>
             <Form.Control
               type="email"
               name="email"
               value={formData.email}
-              onChange={handleChange}
+              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
               placeholder="Enter your email"
               required
-              autoComplete="off"
               className="form-control-custom"
             />
           </Form.Group>
@@ -137,31 +93,38 @@ const LoginForm = () => {
               type="password"
               name="password"
               value={formData.password}
-              onChange={handleChange}
+              onChange={(e) => setFormData({ ...formData, password: e.target.value })}
               placeholder="Enter your password"
               required
-              autoComplete="new-password"
               className="form-control-custom"
             />
           </Form.Group>
 
           <div className="row-between mb-3">
-            <Button variant="link" className="link-forgot" onClick={() => navigate('/forgot-password')}>Forgot Password?</Button>
+            <Button variant="link" className="link-forgot" onClick={() => navigate('/forgot-password')}>
+              Forgot Password?
+            </Button>
             <Form.Check
               type="checkbox"
               id="rememberMe"
               label="Remember me"
-              checked={rememberMe}
-              onChange={(e) => setRememberMe(e.target.checked)}
+              checked={false}
+              onChange={(e) => {
+                if (e.target.checked) {
+                  localStorage.setItem('rememberedEmail', formData.email);
+                } else {
+                  localStorage.removeItem('rememberedEmail');
+                }
+              }}
             />
           </div>
 
           <Button
             type="submit"
-            className={`custom-btn ${submitting ? 'btn-invert' : ''}`}
-            disabled={submitting || !formData.email || !formData.password}
+            className={`custom-btn ${loading ? 'btn-invert' : ''}`}
+            disabled={loading || !formData.email || !formData.password}
           >
-            {submitting ? 'Signing in...' : 'SIGN IN'}
+            {loading ? 'Signing in...' : 'SIGN IN'}
           </Button>
         </Form>
 
@@ -174,3 +137,4 @@ const LoginForm = () => {
 };
 
 export default LoginForm;
+

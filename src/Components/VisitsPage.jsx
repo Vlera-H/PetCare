@@ -8,7 +8,7 @@ import './inlineForms.css';
 
 const VisitsPage = () => {
   const navigate = useNavigate();
-  const { pets, visits, setVisits } = useData();
+  const { pets, visits, setVisits: setAllVisits } = useData();
 
   const [form, setForm] = useState({ reason: '', visitDate: '', petId: pets[0]?.id ? String(pets[0].id) : '' });
 
@@ -24,13 +24,13 @@ const VisitsPage = () => {
       visitDate: form.visitDate, // yyyy-MM-dd
       petId: form.petId
     });
-    setVisits(prev => [...prev, created]);
+    setAllVisits(prev => [...prev, created]);
     setForm(f => ({ ...f, reason: '', visitDate: '' }));
   };
 
   const deleteVisit = async (visitId) => {
     await apiDeleteVisit(visitId);
-    setVisits(prev => prev.filter(v => v.id !== visitId));
+    setAllVisits(prev => prev.filter(v => v.id !== visitId));
   };
 
   return (

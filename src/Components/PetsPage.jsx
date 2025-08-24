@@ -7,7 +7,7 @@ import './pet.css';
 
 const PetsPage = () => {
   const navigate = useNavigate();
-  const { pets, setPets, currentUserId } = useData();
+  const { pets, setPets: setAllPets, currentUserId } = useData();
   const [form, setForm] = useState({ name: '', breed: '', birthDate: '' });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -34,8 +34,8 @@ const PetsPage = () => {
       
       console.log('Pet created successfully:', created);
       
-      // Rifresko të dhënat duke shtuar pet-in e ri
-      setPets(prev => [...prev, created]);
+      // Rifresko të dhënat duke shtuar pet-in e ri në allPets
+      setAllPets(prev => [...prev, created]);
       
       // Pastro formën
       setForm({ name: '', breed: '', birthDate: '' });

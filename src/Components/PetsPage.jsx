@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Container, Row, Col, Form, Table, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useData } from './DataContext';
@@ -11,6 +11,17 @@ const PetsPage = () => {
   const [form, setForm] = useState({ name: '', breed: '', birthDate: '' });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState('');
+
+  // Auto-hide success message after 3 seconds
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => {
+        setMessage('');
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [message]);
 
   const handleAdd = async () => {
     if (!form.name || !form.breed || !form.birthDate) {
@@ -40,9 +51,9 @@ const PetsPage = () => {
       // Pastro formën
       setForm({ name: '', breed: '', birthDate: '' });
       
-      // Shfaq mesazh suksesi
+      // Shfaq mesazh suksesi në UI (jo alert)
       setError(''); // Pastro error nëse ka pasur
-      alert('Pet u krijua me sukses!');
+      setMessage('Pet u krijua me sukses!');
       
     } catch (e) {
       console.error('Error creating pet:', e);
@@ -65,6 +76,7 @@ const PetsPage = () => {
 
           <div className="pets-center">
             {error && <Alert variant="danger" className="mb-3">{error}</Alert>}
+            {message && <Alert variant="success" className="mb-3">{message}</Alert>}
             
             <div className="pets-section-title mb-2">Add new pet</div>
             <Form onSubmit={(e) => { e.preventDefault(); handleAdd(); }} autoComplete="off">

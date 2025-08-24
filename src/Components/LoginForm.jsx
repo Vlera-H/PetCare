@@ -36,7 +36,6 @@ const LoginForm = () => {
         baseURL: API_BASE_URL,
       });
 
-      // Pastro të dhënat e vjetra para se të ruash të rejat
       localStorage.removeItem('pets');
       localStorage.removeItem('careTasks');
       localStorage.removeItem('visits');
@@ -73,7 +72,6 @@ const LoginForm = () => {
       const roleRaw = res.data.user?.role || decodeRoleFromToken(token) || 'User';
       localStorage.setItem('role', roleRaw);
       
-      // Navigate me një vonesë të vogël për të lejuar localStorage të përditësohet
       setTimeout(() => {
         navigate((roleRaw || '').toLowerCase() === 'admin' ? '/admin' : '/');
       }, 100);
@@ -118,7 +116,7 @@ const LoginForm = () => {
         {message && <Alert variant="success">{message}</Alert>}
         {error && <Alert variant="danger">{error}</Alert>}
 
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit} autoComplete="off">
           <Form.Group className="mb-3" controlId="formEmail">
             <Form.Label className="form-label-custom">EMAIL</Form.Label>
             <Form.Control
@@ -128,6 +126,7 @@ const LoginForm = () => {
               onChange={handleChange}
               placeholder="Enter your email"
               required
+              autoComplete="off"
               className="form-control-custom"
             />
           </Form.Group>
@@ -141,6 +140,7 @@ const LoginForm = () => {
               onChange={handleChange}
               placeholder="Enter your password"
               required
+              autoComplete="new-password"
               className="form-control-custom"
             />
           </Form.Group>

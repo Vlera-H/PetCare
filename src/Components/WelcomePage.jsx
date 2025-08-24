@@ -29,7 +29,7 @@ const WelcomePage = () => {
         </div>
       </div>
       <div className="welcome-image">
-        <img src="/img/pets.png" alt="Dog and Cat" className="img-fluid" />
+        <img src="/img/76.png" alt="Dog and Cat" className="img-fluid" />
       </div>
     </div>
   );

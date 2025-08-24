@@ -44,7 +44,6 @@ const RegisterForm = () => {
       const res = await axios.post('https://localhost:7259/api/Auth/register', payload);
       setMessage(res.data.message);
       
-      // Redirect në login page pas 2 sekondash për të parë mesazhin e suksesit
       setTimeout(() => {
         navigate('/login');
       }, 2000);
@@ -74,7 +73,7 @@ const RegisterForm = () => {
 
         {message && <Alert variant="success">{message}</Alert>}
         {error && <Alert variant="danger">{error}</Alert>}
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit} autoComplete="off">
           <Form.Group className="mb-3" controlId="formFirstName">
             <Form.Label className="form-label-custom">FIRST NAME</Form.Label>
             <Form.Control
@@ -84,6 +83,7 @@ const RegisterForm = () => {
               onChange={handleChange}
               placeholder="Enter your first name"
               required
+              autoComplete="off"
               className="form-control-custom"
             />
           </Form.Group>
@@ -97,6 +97,7 @@ const RegisterForm = () => {
               onChange={handleChange}
               placeholder="Enter your last name"
               required
+              autoComplete="off"
               className="form-control-custom"
             />
           </Form.Group>
@@ -110,6 +111,7 @@ const RegisterForm = () => {
               onChange={handleChange}
               placeholder="Enter your email"
               required
+              autoComplete="off"
               className="form-control-custom"
             />
           </Form.Group>
@@ -123,6 +125,7 @@ const RegisterForm = () => {
               onChange={handleChange}
               placeholder="Enter your password"
               required
+              autoComplete="new-password"
               className="form-control-custom"
             />
           </Form.Group>
@@ -136,6 +139,7 @@ const RegisterForm = () => {
               onChange={handleChange}
               placeholder="Re-enter your password"
               required
+              autoComplete="new-password"
               className="form-control-custom"
             />
           </Form.Group>
@@ -152,9 +156,6 @@ const RegisterForm = () => {
             Already have an account? <strong>Sign in</strong>
           </Button>
         </Form>
-
-        <div style={{ textAlign: 'right', marginBottom: '1rem' }}>
-        </div>
       </div>
     </div>
   );

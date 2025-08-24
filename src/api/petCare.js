@@ -10,9 +10,13 @@ const toYYYYMMDD = (d) => {
   return `${y}-${m}-${dd}`;
 };
 
+// Helper për të konvertuar yyyy-MM-dd në dd-MM-yyyy për backend
 const toDDMMYYYY = (d) => {
   if (!d) return '';
-  const [y, m, dd] = d.split('-'); // pret 'yyyy-MM-dd'
+  const date = typeof d === 'string' ? new Date(d) : d;
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const dd = String(date.getDate()).padStart(2, '0');
   return `${dd}-${m}-${y}`;
 };
 
@@ -35,7 +39,7 @@ export const createPet = (pet) => {
   const payload = {
     name: pet.name,
     breed: pet.breed,
-    birthDate: toYYYYMMDD(pet.birthDate),
+    birthDate: toDDMMYYYY(pet.birthDate), // Konverto në dd-MM-yyyy për backend
     userId: resolvedUserId
   };
   return client.post('/api/Pet', payload).then(r => r.data);
@@ -46,7 +50,7 @@ export const updatePet = (id, pet) => {
   const payload = {
     name: pet.name,
     breed: pet.breed,
-    birthDate: toYYYYMMDD(pet.birthDate), // gjithmonë yyyy-MM-dd për backend
+    birthDate: toDDMMYYYY(pet.birthDate), // Konverto në dd-MM-yyyy për backend
     userId: pet.userId != null ? Number(pet.userId) : undefined
   };
   return client.put(`/api/Pet/${id}`, payload).then(r => r.data);
@@ -58,7 +62,7 @@ export const fetchCareTasks = () => client.get('/api/CareTask').then(r => r.data
 export const createCareTask = (task) => {
   const payload = {
     description: task.description,
-    dueDate: toYYYYMMDD(task.dueDate),
+    dueDate: toDDMMYYYY(task.dueDate), // Konverto në dd-MM-yyyy për backend
     petId: Number(task.petId)
   };
   return client.post('/api/CareTask', payload).then(r => r.data);
@@ -67,7 +71,7 @@ export const createCareTask = (task) => {
 export const updateCareTask = (id, task) => {
   const payload = {
     description: task.description,
-    dueDate: toYYYYMMDD(task.dueDate), // gjithmonë yyyy-MM-dd për backend
+    dueDate: toDDMMYYYY(task.dueDate), // Konverto në dd-MM-yyyy për backend
     isCompleted: task.isCompleted,
     petId: Number(task.petId)
   };
@@ -82,7 +86,7 @@ export const fetchVisits = () => client.get('/api/Visit').then(r => r.data);
 export const createVisit = (visit) => {
   const payload = {
     reason: visit.reason,
-    visitDate: toYYYYMMDD(visit.visitDate), // gjithmonë yyyy-MM-dd
+    visitDate: toDDMMYYYY(visit.visitDate), // Konverto në dd-MM-yyyy për backend
     petId: Number(visit.petId)
   };
   return client.post('/api/Visit', payload).then(r => r.data);
@@ -91,7 +95,7 @@ export const createVisit = (visit) => {
 export const updateVisit = (id, visit) => {
   const payload = {
     reason: visit.reason,
-    visitDate: toYYYYMMDD(visit.visitDate), // gjithmonë yyyy-MM-dd
+    visitDate: toDDMMYYYY(visit.visitDate), // Konverto në dd-MM-yyyy për backend
     petId: Number(visit.petId)
   };
   return client.put(`/api/Visit/${id}`, payload).then(r => r.data);

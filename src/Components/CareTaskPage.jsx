@@ -8,7 +8,7 @@ import './inlineForms.css';
 
 const CareTasksPage = () => {
   const navigate = useNavigate();
-  const { pets, careTasks, setCareTasks } = useData();
+  const { pets, careTasks, setCareTasks: setAllCareTasks } = useData();
 
   const [form, setForm] = useState({
     description: '',
@@ -28,7 +28,7 @@ const CareTasksPage = () => {
       dueDate: form.dueDate, // yyyy-MM-dd nga input
       petId: form.petId
     });
-    setCareTasks(prev => [...prev, created]);
+    setAllCareTasks(prev => [...prev, created]);
     setForm(f => ({ ...f, description: '', dueDate: '' }));
   };
 
@@ -41,12 +41,12 @@ const CareTasksPage = () => {
       isCompleted: !current.isCompleted,
       petId: current.petId
     });
-    setCareTasks(prev => prev.map(t => t.id === taskId ? { ...t, isCompleted: !t.isCompleted } : t));
+    setAllCareTasks(prev => prev.map(t => t.id === taskId ? { ...t, isCompleted: !t.isCompleted } : t));
   };
 
   const deleteTask = async (taskId) => {
     await apiDeleteTask(taskId);
-    setCareTasks(prev => prev.filter(t => t.id !== taskId));
+    setAllCareTasks(prev => prev.filter(t => t.id !== taskId));
   };
 
   return (

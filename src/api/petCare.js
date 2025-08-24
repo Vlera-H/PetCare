@@ -2,12 +2,30 @@ import client from './client';
 
 // Helpers për format datash
 const toYYYYMMDD = (d) => {
-  if (!d) return '';
+  console.log('🔍 toYYYYMMDD called with:', d);
+  console.log('🔍 toYYYYMMDD type:', typeof d);
+  
+  if (!d) {
+    console.log('❌ toYYYYMMDD: No date provided');
+    return '';
+  }
+  
   const date = typeof d === 'string' ? new Date(d) : d;
+  console.log('🔍 toYYYYMMDD: Date object:', date);
+  console.log('🔍 toYYYYMMDD: Date valid:', !isNaN(date.getTime()));
+  
+  if (isNaN(date.getTime())) {
+    console.log('❌ toYYYYMMDD: Invalid date');
+    return '';
+  }
+  
   const y = date.getFullYear();
   const m = String(date.getMonth() + 1).padStart(2, '0');
   const dd = String(date.getDate()).padStart(2, '0');
-  return `${y}-${m}-${dd}`;
+  const result = `${y}-${m}-${dd}`;
+  
+  console.log('🔍 toYYYYMMDD: Result:', result);
+  return result;
 };
 
 // Helper për të konvertuar yyyy-MM-dd në dd-MM-yyyy për backend

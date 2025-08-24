@@ -1,5 +1,5 @@
 import React, { useMemo, useEffect, useState } from 'react';
-import { Button, Container, Row, Col, Card } from 'react-bootstrap';
+import { Button, Container, Row, Col, Card, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import AppNavbar from './AppNavbar';
 import './Home.css';
@@ -7,7 +7,7 @@ import { useData } from './DataContext';
 
 const Home = () => {
   const navigate = useNavigate();
-  const { pets, careTasks, visits } = useData();
+  const { pets, careTasks, visits, apiError } = useData();
   const [firstName, setFirstName] = useState('');
 
   useEffect(() => {
@@ -47,6 +47,13 @@ const Home = () => {
       <AppNavbar />
 
       <Container fluid className="px-0">
+        {/* API Warning */}
+        {apiError && (
+          <Alert variant="warning" className="m-3">
+            <strong>Demo Mode:</strong> Backend API nuk është duke punuar. Po shfaqen të dhëna demo për testim.
+          </Alert>
+        )}
+
         {/* Welcome band with image */}
         <Row className="g-3 align-items-stretch home-hero">
           <Col lg={7} className="home-hero-content d-flex flex-column">

@@ -20,12 +20,14 @@ export const DataProvider = ({ children }) => {
   const [allCareTasks, setAllCareTasks] = useState([]);
   const [allVisits, setAllVisits] = useState([]);
   const [currentUserId, setCurrentUserId] = useState(null);
+  const [apiError, setApiError] = useState(false);
 
   // Funksion për të pastruar të dhënat
   const clearData = () => {
     setAllPets([]);
     setAllCareTasks([]);
     setAllVisits([]);
+    setApiError(false);
     // Pastro localStorage për të dhënat e aplikacionit
     localStorage.removeItem('pets');
     localStorage.removeItem('careTasks');
@@ -63,20 +65,28 @@ export const DataProvider = ({ children }) => {
 
     const loadData = async () => {
       try {
+        console.log('Loading data for user:', currentUserId);
         const [p, t, v] = await Promise.all([
           fetchPets(),
           fetchCareTasks(),
           fetchVisits()
         ]);
+        
+        console.log('API data loaded:', { pets: p?.length, tasks: t?.length, visits: v?.length });
+        
         setAllPets(p || []);
         setAllCareTasks(t || []);
         setAllVisits(v || []);
+        setApiError(false);
       } catch (e) {
         console.error('Failed to load user data:', e);
-        // Nëse API dështon, përdor demo data për këtë përdorues
+        console.log('Using demo data instead...');
+        
+        // Përdor demo data për këtë përdorues
         setAllPets(demoData.pets);
         setAllCareTasks(demoData.careTasks);
         setAllVisits(demoData.visits);
+        setApiError(true);
       }
     };
 
@@ -123,7 +133,8 @@ export const DataProvider = ({ children }) => {
     visits, 
     setVisits: setAllVisits,
     currentUserId,
-    clearData
+    clearData,
+    apiError
   };
   
   return <DataContext.Provider value={value}>{children}</DataContext.Provider>;

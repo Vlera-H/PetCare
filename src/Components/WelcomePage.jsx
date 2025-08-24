@@ -13,7 +13,7 @@ const WelcomePage = () => {
 </p>
         <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center justify-content-lg-start">
           <Link to="/login">
-            <Button className="btn-cream custom-btn px-4" size="lg">
+            <Button className="btn-signin-custom" size="lg">
               🔐 Sign in
             </Button>
           </Link>

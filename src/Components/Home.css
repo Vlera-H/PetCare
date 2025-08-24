@@ -316,6 +316,45 @@
   background: linear-gradient(to bottom right, #ffe9c6, #d2b48c) !important;
 }
 
+/* Custom buttons with #ffe9c6 background - no transitions */
+.btn-signin-custom {
+  background-color: #ffe9c6 !important;
+  color: #5c4033 !important;
+  border: 2px solid #5c4033 !important;
+  border-radius: 10px;
+  font-weight: 600;
+  padding: 0.65rem 1rem;
+  font-size: 1rem;
+}
+
+.btn-signin-custom:hover,
+.btn-signin-custom:focus,
+.btn-signin-custom:active {
+  background-color: #ffe9c6 !important;
+  color: #5c4033 !important;
+  border-color: #5c4033 !important;
+}
+
+.btn-visits-custom {
+  background-color: #ffe9c6 !important;
+  color: #5c4033 !important;
+  border: 2px solid #5c4033 !important;
+  border-radius: 12px;
+  font-weight: 600;
+  display: block;
+  width: 100%;
+  padding: 0.65rem 1rem;
+  font-size: 1rem;
+}
+
+.btn-visits-custom:hover,
+.btn-visits-custom:focus,
+.btn-visits-custom:active {
+  background-color: #ffe9c6 !important;
+  color: #5c4033 !important;
+  border-color: #5c4033 !important;
+}
+
 /* Mini cards */
 .mini-cards { min-height: 220px; }
 .mini-card {

@@ -13,11 +13,31 @@ const toYYYYMMDD = (d) => {
 // Helper për të konvertuar yyyy-MM-dd në dd-MM-yyyy për backend
 const toDDMMYYYY = (d) => {
   if (!d) return '';
-  const date = typeof d === 'string' ? new Date(d) : d;
-  const y = date.getFullYear();
-  const m = String(date.getMonth() + 1).padStart(2, '0');
-  const dd = String(date.getDate()).padStart(2, '0');
-  return `${dd}-${m}-${y}`;
+  
+  try {
+    // Nëse është string në formatin yyyy-MM-dd
+    if (typeof d === 'string' && d.includes('-')) {
+      const parts = d.split('-');
+      if (parts.length === 3) {
+        const [year, month, day] = parts;
+        return `${day}-${month}-${year}`;
+      }
+    }
+    
+    // Nëse është Date object
+    const date = typeof d === 'string' ? new Date(d) : d;
+    if (isNaN(date.getTime())) {
+      throw new Error('Invalid date');
+    }
+    
+    const y = date.getFullYear();
+    const m = String(date.getMonth() + 1).padStart(2, '0');
+    const dd = String(date.getDate()).padStart(2, '0');
+    return `${dd}-${m}-${y}`;
+  } catch (error) {
+    console.error('Error converting date:', d, error);
+    return '';
+  }
 };
 
 // Helper për të marrë userId aktual
@@ -42,10 +62,17 @@ export const createPet = (pet) => {
   const resolvedUserId = pet.userId != null && pet.userId !== '' ? Number(pet.userId) : currentUserId;
   console.log('resolvedUserId:', resolvedUserId);
   
+  const convertedDate = toDDMMYYYY(pet.birthDate);
+  console.log('Original date:', pet.birthDate, 'Converted date:', convertedDate);
+  
+  if (!convertedDate) {
+    throw new Error('Invalid birth date format');
+  }
+  
   const payload = {
     name: pet.name,
     breed: pet.breed,
-    birthDate: toDDMMYYYY(pet.birthDate), // Konverto në dd-MM-yyyy për backend
+    birthDate: convertedDate,
     userId: resolvedUserId
   };
   
@@ -54,6 +81,9 @@ export const createPet = (pet) => {
   return client.post('/api/Pet', payload).then(r => {
     console.log('API response:', r.data);
     return r.data;
+  }).catch(error => {
+    console.error('API error:', error.response?.data || error.message);
+    throw error;
   });
 };
 

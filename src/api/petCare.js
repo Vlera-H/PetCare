@@ -22,14 +22,8 @@ const getCurrentUserId = () => {
   return userId ? Number(userId) : null;
 };
 
-// Pets (api/Pet) - filtruar sipas userId
-export const fetchPets = () => {
-  const userId = getCurrentUserId();
-  if (!userId) return Promise.resolve([]);
-  
-  // Nëse API suporton filtering, përdor query parameter
-  return client.get(`/api/Pet?userId=${userId}`).then(r => r.data);
-};
+// Pets (api/Pet) - përdor endpoints origjinale
+export const fetchPets = () => client.get('/api/Pet').then(r => r.data);
 
 export const createPet = (pet) => {
   const currentUserId = getCurrentUserId();
@@ -58,14 +52,8 @@ export const updatePet = (id, pet) => {
   return client.put(`/api/Pet/${id}`, payload).then(r => r.data);
 };
 
-// CareTasks (api/CareTask) - filtruar sipas userId përmes petId
-export const fetchCareTasks = () => {
-  const userId = getCurrentUserId();
-  if (!userId) return Promise.resolve([]);
-  
-  // Nëse API suporton filtering, përdor query parameter
-  return client.get(`/api/CareTask?userId=${userId}`).then(r => r.data);
-};
+// CareTasks (api/CareTask) - përdor endpoints origjinale
+export const fetchCareTasks = () => client.get('/api/CareTask').then(r => r.data);
 
 export const createCareTask = (task) => {
   const payload = {
@@ -88,14 +76,8 @@ export const updateCareTask = (id, task) => {
 
 export const deleteCareTask = (id) => client.delete(`/api/CareTask/${id}`);
 
-// Visits (api/Visit) - filtruar sipas userId përmes petId
-export const fetchVisits = () => {
-  const userId = getCurrentUserId();
-  if (!userId) return Promise.resolve([]);
-  
-  // Nëse API suporton filtering, përdor query parameter
-  return client.get(`/api/Visit?userId=${userId}`).then(r => r.data);
-};
+// Visits (api/Visit) - përdor endpoints origjinale
+export const fetchVisits = () => client.get('/api/Visit').then(r => r.data);
 
 export const createVisit = (visit) => {
   const payload = {

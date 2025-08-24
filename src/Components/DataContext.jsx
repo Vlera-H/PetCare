@@ -16,16 +16,16 @@ const loadFromStorage = (key, fallback) => {
 };
 
 export const DataProvider = ({ children }) => {
-  const [pets, setPets] = useState([]);
-  const [careTasks, setCareTasks] = useState([]);
-  const [visits, setVisits] = useState([]);
+  const [allPets, setAllPets] = useState([]);
+  const [allCareTasks, setAllCareTasks] = useState([]);
+  const [allVisits, setAllVisits] = useState([]);
   const [currentUserId, setCurrentUserId] = useState(null);
 
   // Funksion për të pastruar të dhënat
   const clearData = () => {
-    setPets([]);
-    setCareTasks([]);
-    setVisits([]);
+    setAllPets([]);
+    setAllCareTasks([]);
+    setAllVisits([]);
     // Pastro localStorage për të dhënat e aplikacionit
     localStorage.removeItem('pets');
     localStorage.removeItem('careTasks');
@@ -68,20 +68,33 @@ export const DataProvider = ({ children }) => {
           fetchCareTasks(),
           fetchVisits()
         ]);
-        setPets(p || []);
-        setCareTasks(t || []);
-        setVisits(v || []);
+        setAllPets(p || []);
+        setAllCareTasks(t || []);
+        setAllVisits(v || []);
       } catch (e) {
         console.error('Failed to load user data:', e);
         // Nëse API dështon, përdor demo data për këtë përdorues
-        setPets(demoData.pets);
-        setCareTasks(demoData.careTasks);
-        setVisits(demoData.visits);
+        setAllPets(demoData.pets);
+        setAllCareTasks(demoData.careTasks);
+        setAllVisits(demoData.visits);
       }
     };
 
     loadData();
   }, [currentUserId]);
+
+  // Filtro të dhënat sipas userId aktual
+  const pets = allPets.filter(pet => pet.userId === currentUserId);
+  const careTasks = allCareTasks.filter(task => {
+    // Gjej pet-in për këtë task dhe kontrollo nëse i përket përdoruesit aktual
+    const pet = allPets.find(p => p.id === task.petId);
+    return pet && pet.userId === currentUserId;
+  });
+  const visits = allVisits.filter(visit => {
+    // Gjej pet-in për këtë visit dhe kontrollo nëse i përket përdoruesit aktual
+    const pet = allPets.find(p => p.id === visit.petId);
+    return pet && pet.userId === currentUserId;
+  });
 
   // Persistim lokal vetëm kur ka përdorues aktive
   useEffect(() => {
@@ -104,11 +117,11 @@ export const DataProvider = ({ children }) => {
 
   const value = { 
     pets, 
-    setPets, 
+    setPets: setAllPets, // Përdor setAllPets për të përditësuar të gjitha të dhënat
     careTasks, 
-    setCareTasks, 
+    setCareTasks: setAllCareTasks,
     visits, 
-    setVisits,
+    setVisits: setAllVisits,
     currentUserId,
     clearData
   };

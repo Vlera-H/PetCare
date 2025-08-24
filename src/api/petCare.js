@@ -52,8 +52,10 @@ export const fetchPets = () => client.get('/api/Pet').then(r => r.data);
 
 export const createPet = (pet) => {
   const currentUserId = getCurrentUserId();
+  console.log('=== CREATE PET DEBUG ===');
   console.log('createPet called with:', pet);
   console.log('currentUserId:', currentUserId);
+  console.log('pet.userId:', pet.userId);
   
   if (!currentUserId) {
     throw new Error('User not authenticated');
@@ -63,7 +65,9 @@ export const createPet = (pet) => {
   console.log('resolvedUserId:', resolvedUserId);
   
   const convertedDate = toDDMMYYYY(pet.birthDate);
-  console.log('Original date:', pet.birthDate, 'Converted date:', convertedDate);
+  console.log('Original date:', pet.birthDate);
+  console.log('Converted date:', convertedDate);
+  console.log('Date type:', typeof pet.birthDate);
   
   if (!convertedDate) {
     throw new Error('Invalid birth date format');
@@ -76,13 +80,22 @@ export const createPet = (pet) => {
     userId: resolvedUserId
   };
   
-  console.log('Sending payload to API:', payload);
+  console.log('Final payload being sent:', payload);
+  console.log('Payload JSON:', JSON.stringify(payload));
+  console.log('=== END DEBUG ===');
   
   return client.post('/api/Pet', payload).then(r => {
     console.log('API response:', r.data);
     return r.data;
   }).catch(error => {
-    console.error('API error:', error.response?.data || error.message);
+    console.error('=== API ERROR DETAILS ===');
+    console.error('Error object:', error);
+    console.error('Error message:', error.message);
+    console.error('Error response status:', error.response?.status);
+    console.error('Error response data:', error.response?.data);
+    console.error('Error response headers:', error.response?.headers);
+    console.error('Request config:', error.config);
+    console.error('=== END ERROR DETAILS ===');
     throw error;
   });
 };

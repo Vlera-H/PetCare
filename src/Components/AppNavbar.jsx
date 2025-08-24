@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { Navbar, Nav, Container, NavDropdown, Modal, Button } from 'react-bootstrap';
 import { NavLink, useNavigate } from 'react-router-dom';
+import { useData } from './DataContext';
 
 const AppNavbar = () => {
   const navigate = useNavigate();
+  const { clearData } = useData();
   const [showLogout, setShowLogout] = useState(false);
 
   const confirmLogout = () => {
@@ -14,13 +16,14 @@ const AppNavbar = () => {
     localStorage.removeItem('firstName');
     localStorage.removeItem('userId');
     
-    // Pastro të dhënat e aplikacionit
-    localStorage.removeItem('pets');
-    localStorage.removeItem('careTasks');
-    localStorage.removeItem('visits');
+    // Pastro të dhënat e aplikacionit duke përdorur clearData
+    clearData();
     
     setShowLogout(false);
-    navigate('/welcome');
+    
+    // Redirect në welcome dhe rifresko faqen për të pastruar state
+    navigate('/welcome', { replace: true });
+    window.location.reload(); // Rifresko për të pastruar të gjitha state-et
   };
 
   return (

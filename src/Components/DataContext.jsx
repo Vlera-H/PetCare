@@ -118,6 +118,11 @@ export const DataProvider = ({ children }) => {
     const pet = allPets.find(p => p.id === visit.petId);
     const currentUserIdNum = Number(currentUserId);
     const isUserPet = pet && pet.userId === currentUserIdNum;
+    
+    if (!pet) {
+      console.log(`⚠️ VISIT ORPHANED: visit.id=${visit.id}, petId=${visit.petId} - Pet doesn't exist!`);
+    }
+    
     console.log(`🔍 VISIT FILTER: visit.id=${visit.id}, petId=${visit.petId}, pet=${pet?.name}, pet.userId=${pet?.userId}, currentUserIdNum=${currentUserIdNum}, isUserPet=${isUserPet}`);
     return isUserPet;
   });

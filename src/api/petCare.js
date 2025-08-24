@@ -23,6 +23,7 @@ const toDDMMYYYY = (d) => {
 // Helper për të marrë userId aktual
 const getCurrentUserId = () => {
   const userId = localStorage.getItem('userId');
+  console.log('getCurrentUserId called, userId from localStorage:', userId);
   return userId ? Number(userId) : null;
 };
 
@@ -31,18 +32,29 @@ export const fetchPets = () => client.get('/api/Pet').then(r => r.data);
 
 export const createPet = (pet) => {
   const currentUserId = getCurrentUserId();
+  console.log('createPet called with:', pet);
+  console.log('currentUserId:', currentUserId);
+  
   if (!currentUserId) {
     throw new Error('User not authenticated');
   }
   
   const resolvedUserId = pet.userId != null && pet.userId !== '' ? Number(pet.userId) : currentUserId;
+  console.log('resolvedUserId:', resolvedUserId);
+  
   const payload = {
     name: pet.name,
     breed: pet.breed,
     birthDate: toDDMMYYYY(pet.birthDate), // Konverto në dd-MM-yyyy për backend
     userId: resolvedUserId
   };
-  return client.post('/api/Pet', payload).then(r => r.data);
+  
+  console.log('Sending payload to API:', payload);
+  
+  return client.post('/api/Pet', payload).then(r => {
+    console.log('API response:', r.data);
+    return r.data;
+  });
 };
 
 export const deletePet = (id) => client.delete(`/api/Pet/${id}`);

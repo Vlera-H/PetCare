@@ -73,6 +73,9 @@ export const DataProvider = ({ children }) => {
         ]);
         
         console.log('API data loaded:', { pets: p?.length, tasks: t?.length, visits: v?.length });
+        console.log('Raw pets data:', p);
+        console.log('Raw tasks data:', t);
+        console.log('Raw visits data:', v);
         
         setAllPets(p || []);
         setAllCareTasks(t || []);
@@ -94,33 +97,55 @@ export const DataProvider = ({ children }) => {
   }, [currentUserId]);
 
   // Filtro të dhënat sipas userId aktual
-  const pets = allPets.filter(pet => pet.userId === currentUserId);
+  const pets = allPets.filter(pet => {
+    console.log(`Checking pet ${pet.id}: pet.userId=${pet.userId}, currentUserId=${currentUserId}, match=${pet.userId === currentUserId}`);
+    return pet.userId === currentUserId;
+  });
+  
   const careTasks = allCareTasks.filter(task => {
     // Gjej pet-in për këtë task dhe kontrollo nëse i përket përdoruesit aktual
     const pet = allPets.find(p => p.id === task.petId);
-    return pet && pet.userId === currentUserId;
+    const isUserPet = pet && pet.userId === currentUserId;
+    console.log(`Task ${task.id}: petId=${task.petId}, pet=${pet?.name}, isUserPet=${isUserPet}`);
+    return isUserPet;
   });
+  
   const visits = allVisits.filter(visit => {
     // Gjej pet-in për këtë visit dhe kontrollo nëse i përket përdoruesit aktual
     const pet = allPets.find(p => p.id === visit.petId);
-    return pet && pet.userId === currentUserId;
+    const isUserPet = pet && pet.userId === currentUserId;
+    console.log(`Visit ${visit.id}: petId=${visit.petId}, pet=${pet?.name}, isUserPet=${isUserPet}`);
+    return isUserPet;
+  });
+
+  console.log('Filtered data:', { 
+    allPets: allPets.length, 
+    pets: pets.length, 
+    allCareTasks: allCareTasks.length, 
+    careTasks: careTasks.length,
+    allVisits: allVisits.length,
+    visits: visits.length,
+    currentUserId 
   });
 
   // Persistim lokal vetëm kur ka përdorues aktive
   useEffect(() => {
     if (currentUserId && pets.length > 0) {
+      console.log('Saving pets to localStorage:', pets);
       localStorage.setItem('pets', JSON.stringify(pets));
     }
   }, [pets, currentUserId]);
 
   useEffect(() => {
     if (currentUserId && careTasks.length > 0) {
+      console.log('Saving careTasks to localStorage:', careTasks);
       localStorage.setItem('careTasks', JSON.stringify(careTasks));
     }
   }, [careTasks, currentUserId]);
 
   useEffect(() => {
     if (currentUserId && visits.length > 0) {
+      console.log('Saving visits to localStorage:', visits);
       localStorage.setItem('visits', JSON.stringify(visits));
     }
   }, [visits, currentUserId]);

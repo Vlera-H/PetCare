@@ -183,9 +183,8 @@ const AdminPage = () => {
 	return (
 		<div className="pets-page">
 			<Container fluid className="py-3 px-0">
-				<h1 className="text-center pets-header-title pets-header-large" style={{ marginTop: '0.5rem' }}>Admin</h1>
-				<div className="d-flex justify-content-end mb-2" style={{ padding: '0 0.5rem' }}>
-					<small className="text-muted">API status: {apiStatus === 'ok' ? 'connected' : apiStatus}</small>
+				<div className="pc-header">
+					<h1 className="pets-header-title pets-header-large m-0">Admin</h1>
 				</div>
 				<div className="pets-canvas">
 					<div className="pets-center">
@@ -221,8 +220,7 @@ const AdminPage = () => {
 								<Card className="shadow-sm insight-card h-100">
 									<Card.Body>
 										<div className="insight-label">Users</div>
-										<div className="insight-value">—</div>
-										<div className="small text-muted">Hook up when user API is available</div>
+										<div className="insight-value">{users.length || '—'}</div>
 									</Card.Body>
 								</Card>
 							</Col>

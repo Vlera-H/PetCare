@@ -47,6 +47,7 @@ export const DataProvider = ({ children }) => {
 
     const interval = setInterval(checkUserChange, 1000);
     checkUserChange();
+
     return () => clearInterval(interval);
   }, [currentUserId]);
 
@@ -78,6 +79,7 @@ export const DataProvider = ({ children }) => {
       } catch (e) {
         console.error('Failed to load user data:', e);
         console.log('Using demo data instead...');
+
         setAllPets(demoData.pets);
         setAllCareTasks(demoData.careTasks);
         setAllVisits(demoData.visits);
@@ -89,40 +91,63 @@ export const DataProvider = ({ children }) => {
   }, [currentUserId]);
 
   // Filtro të dhënat sipas userId aktual
-  const pets = allPets.filter(pet => pet.userId === currentUserId);
-
+  const pets = allPets.filter(pet => {
+    const currentUserIdNum = Number(currentUserId);
+    console.log(`Checking pet ${pet.id}: pet.userId=${pet.userId} (${typeof pet.userId}), currentUserId=${currentUserId} (${typeof currentUserId}), currentUserIdNum=${currentUserIdNum}, match=${pet.userId === currentUserIdNum}`);
+    return pet.userId === currentUserIdNum;
+  });
+  
   const careTasks = allCareTasks.filter(task => {
     const pet = allPets.find(p => p.id === task.petId);
-    return pet && pet.userId === currentUserId;
+    const currentUserIdNum = Number(currentUserId);
+    const isUserPet = pet && pet.userId === currentUserIdNum;
+    console.log(`Task ${task.id}: petId=${task.petId}, pet=${pet?.name}, pet.userId=${pet?.userId}, currentUserIdNum=${currentUserIdNum}, isUserPet=${isUserPet}`);
+    return isUserPet;
   });
-
+  
   const visits = allVisits.filter(visit => {
     const pet = allPets.find(p => p.id === visit.petId);
-    return pet && pet.userId === currentUserId;
+    const currentUserIdNum = Number(currentUserId);
+    const isUserPet = pet && pet.userId === currentUserIdNum;
+    console.log(`Visit ${visit.id}: petId=${visit.petId}, pet=${pet?.name}, pet.userId=${pet?.userId}, currentUserIdNum=${currentUserIdNum}, isUserPet=${isUserPet}`);
+    return isUserPet;
+  });
+
+  console.log('Filtered data:', { 
+    allPets: allPets.length, 
+    pets: pets.length, 
+    allCareTasks: allCareTasks.length, 
+    careTasks: careTasks.length,
+    allVisits: allVisits.length,
+    visits: visits.length,
+    currentUserId 
   });
 
   // Persistim lokal vetëm kur ka përdorues aktive
   useEffect(() => {
     if (currentUserId && pets.length > 0) {
+      console.log('Saving pets to localStorage:', pets);
       localStorage.setItem('pets', JSON.stringify(pets));
     }
   }, [pets, currentUserId]);
 
   useEffect(() => {
     if (currentUserId && careTasks.length > 0) {
+      console.log('Saving careTasks to localStorage:', careTasks);
       localStorage.setItem('careTasks', JSON.stringify(careTasks));
     }
   }, [careTasks, currentUserId]);
 
   useEffect(() => {
     if (currentUserId && visits.length > 0) {
+      console.log('Saving visits to localStorage:', visits);
       localStorage.setItem('visits', JSON.stringify(visits));
     }
   }, [visits, currentUserId]);
 
   const value = { 
     pets, 
-    setPets: setAllPets,
+    setPets: setAllPets, 
     careTasks, 
     setCareTasks: setAllCareTasks,
     visits, 

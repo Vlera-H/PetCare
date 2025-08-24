@@ -1,5 +1,5 @@
 import React, { useMemo, useEffect, useState } from 'react';
-import { Button, Container, Row, Col, Card } from 'react-bootstrap';
+import { Button, Container, Row, Col, Card, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import AppNavbar from './AppNavbar';
 import './Home.css';
@@ -7,7 +7,7 @@ import { useData } from './DataContext';
 
 const Home = () => {
   const navigate = useNavigate();
-  const { pets, careTasks, visits } = useData();
+  const { pets, careTasks, visits, apiError } = useData();
   const [firstName, setFirstName] = useState('');
 
   useEffect(() => {
@@ -19,7 +19,7 @@ const Home = () => {
     return visits
       .filter(v => new Date(v.visitDate) >= new Date(today.toDateString()))
       .sort((a, b) => new Date(a.visitDate) - new Date(b.visitDate))
-      .slice(0, 5)
+      .slice(0, 1) // Vetëm 1 visit më i afërt
       .map(v => ({
         id: v.id,
         date: new Date(v.visitDate),
@@ -33,7 +33,7 @@ const Home = () => {
     return careTasks
       .filter(t => !t.isCompleted && new Date(t.dueDate) >= new Date(today.toDateString()))
       .sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate))
-      .slice(0, 5)
+      .slice(0, 1) // Vetëm 1 task më i afërt
       .map(t => ({
         id: t.id,
         date: new Date(t.dueDate),
@@ -47,11 +47,22 @@ const Home = () => {
       <AppNavbar />
 
       <Container fluid className="px-0">
+        {/* API Warning */}
+        {apiError && (
+          <Alert variant="warning" className="m-3">
+            <strong>Demo Mode:</strong> Backend API nuk është duke punuar. Po shfaqen të dhëna demo për testim.
+          </Alert>
+        )}
+
         {/* Welcome band with image */}
         <Row className="g-3 align-items-stretch home-hero">
           <Col lg={7} className="home-hero-content d-flex flex-column">
-            <h1 className="home-hero-title">Welcome{((localStorage.getItem('role') || '').toLowerCase() === 'admin') ? '' : (firstName ? `, ${firstName}` : '')}</h1>
-            <p className="home-hero-subtitle">Keep your pets happy and healthy. Track their upcoming visits and care tasks in one place.</p>
+            <h1 className="home-hero-title">
+              Welcome{((localStorage.getItem('role') || '').toLowerCase() === 'admin') ? '' : (firstName ? `, ${firstName}` : '')}
+            </h1>
+            <p className="home-hero-subtitle">
+              Keep your pets happy and healthy. Track their upcoming visits and care tasks in one place.
+            </p>
             <div className="mini-circles">
               <div className="mini-circle-item">
                 <button className="mini-circle" onClick={() => navigate('/pets')}>
@@ -108,7 +119,7 @@ const Home = () => {
                   <div className="home-muted">No upcoming visits.</div>
                 )}
                <div className="mt-3">
-               <Button className="custom-btn btn-cream btn-wide" onClick={() => navigate('/visits')}>View all</Button>
+                 <Button className="custom-btn btn-cream btn-wide" onClick={() => navigate('/visits')}>View all</Button>
                </div>
               </Card.Body>
             </Card>
@@ -133,7 +144,7 @@ const Home = () => {
                   <div className="home-muted">No upcoming tasks.</div>
                 )}
                 <div className="mt-3">
-                <Button className="custom-btn btn-orange btn-wide" onClick={() => navigate('/tasks')}>View all</Button>
+                  <Button className="custom-btn btn-orange btn-wide" onClick={() => navigate('/tasks')}>View all</Button>
                 </div>
               </Card.Body>
             </Card>
@@ -145,15 +156,3 @@ const Home = () => {
 };
 
 export default Home;
-
-
-
-
-
-
-
-
-
-
-
-

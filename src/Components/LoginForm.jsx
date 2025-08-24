@@ -36,6 +36,11 @@ const LoginForm = () => {
         baseURL: API_BASE_URL,
       });
 
+      // Pastro të dhënat e vjetra para se të ruash të rejat
+      localStorage.removeItem('pets');
+      localStorage.removeItem('careTasks');
+      localStorage.removeItem('visits');
+
       localStorage.setItem('accessToken', res.data.accessToken);
       localStorage.setItem('refreshToken', res.data.refreshToken);
       if (res.data.user?.firstName) {
@@ -67,7 +72,12 @@ const LoginForm = () => {
       };
       const roleRaw = res.data.user?.role || decodeRoleFromToken(token) || 'User';
       localStorage.setItem('role', roleRaw);
-      navigate((roleRaw || '').toLowerCase() === 'admin' ? '/admin' : '/');
+      
+      // Navigate me një vonesë të vogël për të lejuar localStorage të përditësohet
+      setTimeout(() => {
+        navigate((roleRaw || '').toLowerCase() === 'admin' ? '/admin' : '/');
+      }, 100);
+      
     } catch (err) {
       console.error('Axios error:', {
         message: err.message,
@@ -156,7 +166,7 @@ const LoginForm = () => {
         </Form>
 
         <Button variant="link" className="signup-btn" onClick={() => navigate('/register')}>
-          Don’t have an account? <strong>Sign up</strong>
+          Don't have an account? <strong>Sign up</strong>
         </Button>
       </div>
     </div>
@@ -164,4 +174,3 @@ const LoginForm = () => {
 };
 
 export default LoginForm;
-

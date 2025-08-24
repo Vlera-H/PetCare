@@ -9,7 +9,6 @@ const RegisterForm = () => {
 
   const [submitting, setSubmitting] = useState(false);
 
-
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -26,31 +25,36 @@ const RegisterForm = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  setSubmitting(true);
-  setError('');
-  setMessage('');
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setSubmitting(true);
+    setError('');
+    setMessage('');
 
-  if (formData.password !== formData.confirmPassword) {
-    setError('Passwords do not match');
-    setSubmitting(false);
-    return;
-  }
+    if (formData.password !== formData.confirmPassword) {
+      setError('Passwords do not match');
+      setSubmitting(false);
+      return;
+    }
 
-  try {
-    const payload = { ...formData };
-    delete payload.confirmPassword;
+    try {
+      const payload = { ...formData };
+      delete payload.confirmPassword;
 
-    const res = await axios.post('https://localhost:7259/api/Auth/register', payload);
-    setMessage(res.data.message);
-  } catch (err) {
-    setError('Registration failed');
-  } finally {
-    setSubmitting(false);
-  }
-};
-
+      const res = await axios.post('https://localhost:7259/api/Auth/register', payload);
+      setMessage(res.data.message);
+      
+      // Redirect në login page pas 2 sekondash për të parë mesazhin e suksesit
+      setTimeout(() => {
+        navigate('/login');
+      }, 2000);
+      
+    } catch (err) {
+      setError('Registration failed');
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   return (
     <div className="login-container">
@@ -136,15 +140,13 @@ const handleSubmit = async (e) => {
             />
           </Form.Group>
 
-
-       <Button
-  type="submit"
-  className={`custom-btn ${submitting ? 'btn-invert' : ''}`}
-  disabled={submitting || !formData.firstName || !formData.lastName || !formData.email || !formData.password || !formData.confirmPassword}
->
-  {submitting ? 'Registering...' : 'CREATE ACCOUNT'}
-</Button>
-
+          <Button
+            type="submit"
+            className={`custom-btn ${submitting ? 'btn-invert' : ''}`}
+            disabled={submitting || !formData.firstName || !formData.lastName || !formData.email || !formData.password || !formData.confirmPassword} 
+          >
+            {submitting ? 'Registering...' : 'CREATE ACCOUNT'}
+          </Button>
 
           <Button variant="link" className="signup-btn" onClick={() => navigate('/login')}>
             Already have an account? <strong>Sign in</strong>

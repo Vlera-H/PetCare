@@ -23,7 +23,7 @@
 
 .btn-gradient {
   background: linear-gradient(to bottom right, #ffe9c6, #d2b48c) !important;
-  border: 2px solid brown !important;   /* e detyrojmë kafen */
+  border: 2px solid #5c4033 !important;   /* e detyrojmë kafen */
   color: #000 !important;
   font-weight: 600;
   transition: all 0.3s ease;

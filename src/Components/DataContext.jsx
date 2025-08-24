@@ -76,6 +76,7 @@ export const DataProvider = ({ children }) => {
         console.log('Raw pets data:', p);
         console.log('Raw tasks data:', t);
         console.log('Raw visits data:', v);
+        console.log('🔍 Visit IDs from API:', v?.map(visit => visit.id));
         
         setAllPets(p || []);
         setAllCareTasks(t || []);

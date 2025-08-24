@@ -214,4 +214,19 @@ export const updateVisit = (id, visit) => {
   return client.put(`/api/Visit/${id}`, payload).then(r => r.data);
 };
 
-export const deleteVisit = (id) => client.delete(`/api/Visit/${id}`);
+export const deleteVisit = (id) => {
+  console.log('🔍 DELETE VISIT: Attempting to delete visit with ID:', id);
+  console.log('🔍 DELETE VISIT: ID type:', typeof id);
+  console.log('🔍 DELETE VISIT: ID value:', id);
+  
+  return client.delete(`/api/Visit/${id}`)
+    .then(response => {
+      console.log('✅ Visit deleted successfully:', id);
+      return response.data;
+    })
+    .catch(error => {
+      console.log('❌ Failed to delete visit:', id);
+      console.log('❌ Error:', error.response?.status, error.response?.data);
+      throw error;
+    });
+};

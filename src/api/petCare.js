@@ -43,7 +43,10 @@ const toDDMMYYYY = (d) => {
 // Helper për të marrë userId aktual
 const getCurrentUserId = () => {
   const userId = localStorage.getItem('userId');
-  console.log('getCurrentUserId called, userId from localStorage:', userId);
+  console.log('🔍 getCurrentUserId called');
+  console.log('🔍 localStorage userId:', userId);
+  console.log('🔍 userId type:', typeof userId);
+  console.log('🔍 userId parsed:', userId ? Number(userId) : null);
   return userId ? Number(userId) : null;
 };
 
@@ -51,25 +54,26 @@ const getCurrentUserId = () => {
 export const fetchPets = () => client.get('/api/Pet').then(r => r.data);
 
 export const createPet = (pet) => {
+  console.log('🔍 CREATE PET STARTED');
+  console.log('🔍 Pet data received:', pet);
+  
   const currentUserId = getCurrentUserId();
-  console.log('=== CREATE PET DEBUG ===');
-  console.log('createPet called with:', pet);
-  console.log('currentUserId:', currentUserId);
-  console.log('pet.userId:', pet.userId);
+  console.log('🔍 Current user ID:', currentUserId);
   
   if (!currentUserId) {
+    console.log('❌ No user ID found');
     throw new Error('User not authenticated');
   }
   
   const resolvedUserId = pet.userId != null && pet.userId !== '' ? Number(pet.userId) : currentUserId;
-  console.log('resolvedUserId:', resolvedUserId);
+  console.log('🔍 Resolved user ID:', resolvedUserId);
   
   const convertedDate = toDDMMYYYY(pet.birthDate);
-  console.log('Original date:', pet.birthDate);
-  console.log('Converted date:', convertedDate);
-  console.log('Date type:', typeof pet.birthDate);
+  console.log('🔍 Original date:', pet.birthDate);
+  console.log('🔍 Converted date:', convertedDate);
   
   if (!convertedDate) {
+    console.log('❌ Date conversion failed');
     throw new Error('Invalid birth date format');
   }
   
@@ -80,24 +84,21 @@ export const createPet = (pet) => {
     userId: resolvedUserId
   };
   
-  console.log('Final payload being sent:', payload);
-  console.log('Payload JSON:', JSON.stringify(payload));
-  console.log('=== END DEBUG ===');
+  console.log('🔍 Final payload:', payload);
+  console.log('🔍 Sending to API...');
   
-  return client.post('/api/Pet', payload).then(r => {
-    console.log('API response:', r.data);
-    return r.data;
-  }).catch(error => {
-    console.error('=== API ERROR DETAILS ===');
-    console.error('Error object:', error);
-    console.error('Error message:', error.message);
-    console.error('Error response status:', error.response?.status);
-    console.error('Error response data:', error.response?.data);
-    console.error('Error response headers:', error.response?.headers);
-    console.error('Request config:', error.config);
-    console.error('=== END ERROR DETAILS ===');
-    throw error;
-  });
+  return client.post('/api/Pet', payload)
+    .then(response => {
+      console.log('✅ API success:', response.data);
+      return response.data;
+    })
+    .catch(error => {
+      console.log('❌ API ERROR:');
+      console.log('❌ Status:', error.response?.status);
+      console.log('❌ Data:', error.response?.data);
+      console.log('❌ Message:', error.message);
+      throw error;
+    });
 };
 
 export const deletePet = (id) => client.delete(`/api/Pet/${id}`);

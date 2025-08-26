@@ -15,6 +15,13 @@ import CareGuide from './CareGuide';
 import AdminPage from './AdminPage';
 
 const AppRoutesLazy = () => {
+	// Check if user is authenticated
+	const isAuthenticated = () => {
+		const token = localStorage.getItem('accessToken');
+		const userId = localStorage.getItem('userId');
+		return token && userId;
+	};
+
 	return (
 		<Routes>
 			{/* Public routes - accessible without login */}
@@ -64,13 +71,16 @@ const AppRoutesLazy = () => {
 				</AdminRoute>
 			} />
 
-			{/* Default redirect to welcome */}
-			<Route path="*" element={<Navigate to="/welcome" replace />} />
+			{/* Default redirect - check if user is logged in */}
+			<Route path="*" element={
+				isAuthenticated() ? <Navigate to="/" replace /> : <Navigate to="/welcome" replace />
+			} />
 		</Routes>
 	);
 };
 
 export default AppRoutesLazy;
+
 
 
 

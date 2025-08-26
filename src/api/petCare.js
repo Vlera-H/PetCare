@@ -1,9 +1,8 @@
 import client from './client';
 
-// Helpers për format datash
+// Helpers për format datash (frontend → backend)
 const toYYYYMMDD = (d) => {
   if (!d) return '';
-  // Accept strings in multiple formats
   if (typeof d === 'string') {
     const s = d.trim();
     if (!s) return '';
@@ -13,58 +12,63 @@ const toYYYYMMDD = (d) => {
     const ddmmyyyy = s.match(/^(\d{1,2})-(\d{1,2})-(\d{4})$/);
     if (ddmmyyyy) {
       const [, dd, mm, yyyy] = ddmmyyyy;
-      return `${yyyy}-${String(mm).padStart(2, '0')}-${String(dd).padStart(2, '0')}`;
+      return `${yyyy}-${String(mm).padStart(2,'0')}-${String(dd).padStart(2,'0')}`;
+    }
+    // dd.MM.yyyy
+    const ddmmyyyyDots = s.match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})$/);
+    if (ddmmyyyyDots) {
+      const [, dd, mm, yyyy] = ddmmyyyyDots;
+      return `${yyyy}-${String(mm).padStart(2,'0')}-${String(dd).padStart(2,'0')}`;
     }
     // mm/dd/yyyy
     const mmddyyyy = s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
     if (mmddyyyy) {
       const [, mm, dd, yyyy] = mmddyyyy;
-      return `${yyyy}-${String(mm).padStart(2, '0')}-${String(dd).padStart(2, '0')}`;
+      return `${yyyy}-${String(mm).padStart(2,'0')}-${String(dd).padStart(2,'0')}`;
     }
   }
   const date = typeof d === 'string' ? new Date(d) : d;
-  if (isNaN(date.getTime())) {
-    return '';
-  }
+  if (isNaN(date.getTime())) return '';
   const y = date.getFullYear();
   const m = String(date.getMonth() + 1).padStart(2, '0');
   const dd = String(date.getDate()).padStart(2, '0');
-  const result = `${y}-${m}-${dd}`;
-  return result;
+  return `${y}-${m}-${dd}`;
 };
 
-// Helper për të konvertuar yyyy-MM-dd në dd-MM-yyyy për backend
+// Helper për të konvertuar në dd-MM-yyyy për backend updates
 const toDDMMYYYY = (d) => {
   if (!d) return '';
   try {
-    // yyyy-MM-dd or ISO
-    if (typeof d === 'string' && /\d{4}-\d{2}-\d{2}/.test(d)) {
-      const parts = d.slice(0,10).split('-');
-      if (parts.length === 3) {
-        const [year, month, day] = parts;
-        return `${day}-${month}-${year}`;
+    if (typeof d === 'string') {
+      const s = d.trim();
+      if (!s) return '';
+      // yyyy-MM-dd or ISO
+      if (/^\d{4}-\d{2}-\d{2}/.test(s)) {
+        const [y, m, dd] = s.slice(0,10).split('-');
+        return `${String(dd).padStart(2,'0')}-${String(m).padStart(2,'0')}-${y}`;
+      }
+      // dd-MM-yyyy already
+      if (/^\d{1,2}-\d{1,2}-\d{4}$/.test(s)) return s;
+      // dd.MM.yyyy
+      const ddmmyyyyDots = s.match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})$/);
+      if (ddmmyyyyDots) {
+        const [, dd, mm, yyyy] = ddmmyyyyDots;
+        return `${String(dd).padStart(2,'0')}-${String(mm).padStart(2,'0')}-${yyyy}`;
+      }
+      // mm/dd/yyyy
+      const mmddyyyy = s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+      if (mmddyyyy) {
+        const [, mm, dd, yyyy] = mmddyyyy;
+        return `${String(dd).padStart(2,'0')}-${String(mm).padStart(2,'0')}-${yyyy}`;
       }
     }
-    // dd-MM-yyyy
-    if (typeof d === 'string' && /\d{1,2}-\d{1,2}-\d{4}/.test(d)) {
-      return d;
-    }
-    // mm/dd/yyyy
-    if (typeof d === 'string' && /\d{1,2}\/\d{1,2}\/\d{4}/.test(d)) {
-      const [, mm, dd, yyyy] = d.match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/);
-      return `${String(dd).padStart(2,'0')}-${String(mm).padStart(2,'0')}-${yyyy}`;
-    }
-    // Date object or fallback
     const date = typeof d === 'string' ? new Date(d) : d;
-    if (isNaN(date.getTime())) {
-      throw new Error('Invalid date');
-    }
+    if (isNaN(date.getTime())) return '';
     const y = date.getFullYear();
     const m = String(date.getMonth() + 1).padStart(2, '0');
     const dd = String(date.getDate()).padStart(2, '0');
     return `${dd}-${m}-${y}`;
-  } catch (error) {
-    console.error('Error converting date:', d, error);
+  } catch {
     return '';
   }
 };
@@ -75,7 +79,7 @@ const getCurrentUserId = () => {
   return userId ? Number(userId) : null;
 };
 
-// Pets (api/Pet) - përdor endpoints origjinale
+// Pets (api/Pet)
 export const fetchPets = () => client.get('/api/Pet').then(r => r.data);
 
 export const createPet = (pet) => {
@@ -102,13 +106,13 @@ export const updatePet = (id, pet) => {
   const payload = {
     name: pet.name,
     breed: pet.breed,
-    birthDate: toDDMMYYYY(pet.birthDate),
+    birthDate: toDDMMYYYY(pet.birthDate), // dd-MM-yyyy
     userId: pet.userId != null ? Number(pet.userId) : undefined
   };
   return client.put(`/api/Pet/${id}`, payload).then(r => r.data);
 };
 
-// CareTasks (api/CareTask) - përdor endpoints origjinale
+// CareTasks (api/CareTask)
 export const fetchCareTasks = () => client.get('/api/CareTask').then(r => r.data);
 
 export const createCareTask = (task) => {
@@ -127,7 +131,7 @@ export const createCareTask = (task) => {
 export const updateCareTask = (id, task) => {
   const payload = {
     description: task.description,
-    dueDate: toDDMMYYYY(task.dueDate),
+    dueDate: toDDMMYYYY(task.dueDate), // dd-MM-yyyy
     isCompleted: task.isCompleted,
     petId: Number(task.petId)
   };
@@ -136,7 +140,7 @@ export const updateCareTask = (id, task) => {
 
 export const deleteCareTask = (id) => client.delete(`/api/CareTask/${id}`);
 
-// Visits (api/Visit) - përdor endpoints origjinale
+// Visits (api/Visit)
 export const fetchVisits = () => client.get('/api/Visit').then(r => r.data);
 
 export const createVisit = (visit) => {
@@ -155,10 +159,13 @@ export const createVisit = (visit) => {
 export const updateVisit = (id, visit) => {
   const payload = {
     reason: visit.reason,
-    visitDate: toDDMMYYYY(visit.visitDate),
+    visitDate: toDDMMYYYY(visit.visitDate), // dd-MM-yyyy
     petId: Number(visit.petId)
   };
   return client.put(`/api/Visit/${id}`, payload).then(r => r.data);
 };
 
 export const deleteVisit = (id) => client.delete(`/api/Visit/${id}`);
+
+
+

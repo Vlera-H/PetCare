@@ -13,7 +13,7 @@ const CareTasksPage = () => {
   const [form, setForm] = useState({
     description: '',
     dueDate: '',
-    petId: pets[0]?.id ? String(pets[0].id) : '',
+    petId: '', // default: show all tasks
   });
 
   const [loading, setLoading] = useState(false);
@@ -144,7 +144,7 @@ const CareTasksPage = () => {
                     onChange={(e) => setForm(f => ({ ...f, petId: e.target.value }))}
                     disabled={loading}
                   >
-                    <option value="">Select pet</option>
+                    <option value="">All pets</option>
                     {pets.map(p => (
                       <option key={p.id} value={String(p.id)}>
                         {p.name} — {p.breed}
@@ -166,7 +166,7 @@ const CareTasksPage = () => {
             </Form>
 
             <div className="d-flex align-items-center justify-content-between mb-2">
-              <h5 className="m-0 pets-section-title">Your care tasks list ({careTasks.length})</h5>
+              <h5 className="m-0 pets-section-title">Your care tasks list ({tasksForSelectedPet.length})</h5>
             </div>
             <Table striped hover responsive className="pets-table">
               <thead>

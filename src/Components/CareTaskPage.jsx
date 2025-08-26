@@ -94,7 +94,7 @@ const CareTasksPage = () => {
   return (
     <div className="pets-page">
       <Container fluid className="py-3 px-0">
-        <span className="back-arrow" onClick={() => navigate('/home')}>←</span>
+        <span className="back-arrow" onClick={() => navigate('/home', { replace: true })}>←</span>
         <h1 className="text-center pets-header-title pets-header-large" style={{ marginTop: '0.5rem' }}>
           Care Tasks
         </h1>

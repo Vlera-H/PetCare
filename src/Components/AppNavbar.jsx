@@ -10,20 +10,22 @@ const AppNavbar = () => {
   const [showLogout, setShowLogout] = useState(false);
   
 const confirmLogout = () => {
-  // Clear tokens
-  localStorage.removeItem('accessToken');
-  localStorage.removeItem('refreshToken');
-  localStorage.removeItem('userId');
-  localStorage.removeItem('firstName');
-  localStorage.removeItem('role');
+  // Backend + local logout
+  try { tokenService.logout(); } catch {}
   
   // Clear data context
   clearData();
   
-  // Redirect to welcome with replace (nuk mund të ktheheni më)
+  // Redirect to welcome with replace
   navigate('/welcome', { replace: true });
   
-  // Force reload për të parandaluar back navigation
+  // Prevent back navigation
+  window.history.pushState(null, '', window.location.href);
+  window.addEventListener('popstate', function () {
+    window.history.pushState(null, '', window.location.href);
+  });
+
+  // Optionally refresh to reset app state
   window.location.reload();
 };
 
@@ -39,7 +41,7 @@ const confirmLogout = () => {
           <div className="d-flex w-100 align-items-center">
             {/* Center links */}
             <Nav className="mx-auto pc-nav-links">
-              <Nav.Link as={NavLink} to="/" end>Home</Nav.Link>
+              <Nav.Link as={NavLink} to="/home">Home</Nav.Link>
               <Nav.Link as={NavLink} to="/pets">Pets</Nav.Link>
               <Nav.Link as={NavLink} to="/tasks">Care Tasks</Nav.Link>
               <Nav.Link as={NavLink} to="/visits">Visits</Nav.Link>

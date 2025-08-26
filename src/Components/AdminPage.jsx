@@ -6,6 +6,7 @@ import { fetchUsers, createUser, updateUser, deleteUser } from '../api/users';
 import './Home.css';
 import './pet.css';
 import './careguide.css';
+import tokenService from '../services/tokenService';
 
 const AdminPage = () => {
   const navigate = useNavigate();
@@ -184,11 +185,14 @@ const AdminPage = () => {
   };
 
   const confirmLogout = () => {
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
-    localStorage.removeItem('role');
+    try { tokenService.logout(); } catch {}
     setShowLogout(false);
-    navigate('/welcome');
+    navigate('/welcome', { replace: true });
+    window.history.pushState(null, '', window.location.href);
+    window.addEventListener('popstate', function () {
+      window.history.pushState(null, '', window.location.href);
+    });
+    window.location.reload();
   };
 
   return (

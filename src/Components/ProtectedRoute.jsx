@@ -6,9 +6,9 @@ const ProtectedRoute = ({ children }) => {
   const userId = localStorage.getItem('userId');
   const location = useLocation();
 
-  // Nëse nuk jeni authenticated, redirect në /login
+  // Nëse nuk jeni authenticated, redirect në /welcome
   if (!accessToken || !userId) {
-    return <Navigate to="/login" replace state={{ from: location }} />;
+    return <Navigate to="/welcome" replace state={{ from: location }} />;
   }
 
   return children;

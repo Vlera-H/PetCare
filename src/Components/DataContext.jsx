@@ -4,6 +4,60 @@ import { fetchPets, fetchCareTasks, fetchVisits } from '../api/petCare';
 
 const DataContext = createContext(null);
 
+// Helpers to normalize dates and ids
+const toIsoDate = (input) => {
+  if (!input) return '';
+  if (input instanceof Date) {
+    if (isNaN(input.getTime())) return '';
+    const y = input.getFullYear();
+    const m = String(input.getMonth() + 1).padStart(2, '0');
+    const d = String(input.getDate()).padStart(2, '0');
+    return `${y}-${m}-${d}`;
+  }
+  const s = String(input).trim();
+  if (!s) return '';
+  // ISO or yyyy-MM-dd
+  if (/^\d{4}-\d{2}-\d{2}/.test(s)) return s.slice(0, 10);
+  // dd-MM-yyyy
+  const ddmmyyyy = s.match(/^(\d{1,2})-(\d{1,2})-(\d{4})$/);
+  if (ddmmyyyy) {
+    const [, dd, mm, yyyy] = ddmmyyyy;
+    return `${yyyy}-${String(mm).padStart(2, '0')}-${String(dd).padStart(2, '0')}`;
+  }
+  // mm/dd/yyyy
+  const mmddyyyy = s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  if (mmddyyyy) {
+    const [, mm, dd, yyyy] = mmddyyyy;
+    return `${yyyy}-${String(mm).padStart(2, '0')}-${String(dd).padStart(2, '0')}`;
+  }
+  // Fallback: Date parse
+  const d = new Date(s);
+  if (!isNaN(d.getTime())) return toIsoDate(d);
+  return '';
+};
+
+const normalizePets = (arr) => (arr || []).map(p => ({
+  ...p,
+  id: Number(p.id),
+  userId: p.userId != null ? Number(p.userId) : undefined,
+  birthDate: toIsoDate(p.birthDate)
+}));
+
+const normalizeTasks = (arr) => (arr || []).map(t => ({
+  ...t,
+  id: Number(t.id),
+  petId: Number(t.petId),
+  dueDate: toIsoDate(t.dueDate),
+  isCompleted: !!t.isCompleted
+}));
+
+const normalizeVisits = (arr) => (arr || []).map(v => ({
+  ...v,
+  id: Number(v.id),
+  petId: Number(v.petId),
+  visitDate: toIsoDate(v.visitDate)
+}));
+
 export const DataProvider = ({ children }) => {
   const [allPets, setAllPets] = useState([]);
   const [allCareTasks, setAllCareTasks] = useState([]);
@@ -51,14 +105,14 @@ export const DataProvider = ({ children }) => {
           fetchVisits()
         ]);
 
-        setAllPets(p || []);
-        setAllCareTasks(t || []);
-        setAllVisits(v || []);
+        setAllPets(normalizePets(p || []));
+        setAllCareTasks(normalizeTasks(t || []));
+        setAllVisits(normalizeVisits(v || []));
         setApiError(false);
       } catch {
-        setAllPets(demoData.pets);
-        setAllCareTasks(demoData.careTasks);
-        setAllVisits(demoData.visits);
+        setAllPets(normalizePets(demoData.pets));
+        setAllCareTasks(normalizeTasks(demoData.careTasks));
+        setAllVisits(normalizeVisits(demoData.visits));
         setApiError(true);
       }
     };
@@ -68,9 +122,9 @@ export const DataProvider = ({ children }) => {
 
   // Filter data by current user
   const uid = Number(currentUserId);
-  const pets = allPets.filter(p => p.userId === uid);
-  const careTasks = allCareTasks.filter(t => pets.some(p => p.id === t.petId));
-  const visits = allVisits.filter(v => pets.some(p => p.id === v.petId));
+  const pets = (allPets || []).filter(p => p.userId === uid);
+  const careTasks = (allCareTasks || []).filter(t => pets.some(p => p.id === t.petId));
+  const visits = (allVisits || []).filter(v => pets.some(p => p.id === v.petId));
 
   // Persist local data only if user is active
   useEffect(() => {
@@ -91,13 +145,35 @@ export const DataProvider = ({ children }) => {
     }
   }, [visits, currentUserId]);
 
+  // Wrapped setters that normalize input
+  const setPetsWrapped = (updater) => {
+    setAllPets(prev => {
+      const next = typeof updater === 'function' ? updater(prev) : updater;
+      return normalizePets(next);
+    });
+  };
+
+  const setCareTasksWrapped = (updater) => {
+    setAllCareTasks(prev => {
+      const next = typeof updater === 'function' ? updater(prev) : updater;
+      return normalizeTasks(next);
+    });
+  };
+
+  const setVisitsWrapped = (updater) => {
+    setAllVisits(prev => {
+      const next = typeof updater === 'function' ? updater(prev) : updater;
+      return normalizeVisits(next);
+    });
+  };
+
   const value = {
     pets,
-    setPets: setAllPets,
+    setPets: setPetsWrapped,
     careTasks,
-    setCareTasks: setAllCareTasks,
+    setCareTasks: setCareTasksWrapped,
     visits,
-    setVisits: setAllVisits,
+    setVisits: setVisitsWrapped,
     currentUserId,
     clearData,
     apiError,

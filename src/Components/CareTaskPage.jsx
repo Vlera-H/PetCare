@@ -40,7 +40,14 @@ const CareTasksPage = () => {
         petId: form.petId,
       });
 
-      setCareTasks(prev => [...prev, created]);
+      // Ensure new task is normalized for immediate display
+      const normalized = {
+        ...created,
+        id: Number(created.id),
+        petId: Number(created.petId),
+        isCompleted: !!created.isCompleted,
+      };
+      setCareTasks(prev => [...prev, normalized]);
       setForm(f => ({ ...f, description: '', dueDate: '' }));
     } catch (e) {
       setError(`Gabim gjatë shtimit të detyrës: ${e.message}`);
@@ -87,7 +94,7 @@ const CareTasksPage = () => {
   return (
     <div className="pets-page">
       <Container fluid className="py-3 px-0">
-        <span className="back-arrow" onClick={() => navigate('/')}>←</span>
+        <span className="back-arrow" onClick={() => navigate('/home')}>←</span>
         <h1 className="text-center pets-header-title pets-header-large" style={{ marginTop: '0.5rem' }}>
           Care Tasks
         </h1>

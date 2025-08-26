@@ -79,7 +79,7 @@ const Dashboard = () => {
   return (
     <div className="pets-page dashboard-page">
       <Container fluid className="py-3 px-0">
-        <span className="back-arrow" onClick={() => navigate('/')}>←</span>
+        <span className="back-arrow" onClick={() => navigate('/home')}>←</span>
         <h1 className="text-center pets-header-title pets-header-large" style={{ marginTop: '0.5rem' }}>Insights</h1>
 
         <div className="pets-canvas">

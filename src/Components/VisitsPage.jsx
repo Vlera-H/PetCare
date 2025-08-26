@@ -40,7 +40,12 @@ const VisitsPage = () => {
         petId: form.petId,
       });
 
-      setVisits(prev => [...prev, created]);
+      const normalized = {
+        ...created,
+        id: Number(created.id),
+        petId: Number(created.petId),
+      };
+      setVisits(prev => [...prev, normalized]);
       setForm(f => ({ ...f, reason: '', visitDate: '' }));
     } catch (e) {
       setError(`Gabim gjatë shtimit të vizitës: ${e.message}`);
@@ -64,7 +69,7 @@ const VisitsPage = () => {
   return (
     <div className="pets-page">
       <Container fluid className="py-3 px-0">
-        <span className="back-arrow" onClick={() => navigate('/')}>←</span>
+        <span className="back-arrow" onClick={() => navigate('/home')}>←</span>
         <h1 className="text-center pets-header-title pets-header-large" style={{ marginTop: '0.5rem' }}>
           Visits
         </h1>

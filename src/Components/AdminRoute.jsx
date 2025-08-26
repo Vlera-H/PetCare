@@ -8,7 +8,7 @@ const AdminRoute = ({ children }) => {
 	const role = (rawRole || '').toLowerCase();
 
 	if (!token || role !== 'admin') {
-		return <Navigate to="/" replace state={{ from: location }} />;
+		return <Navigate to="/welcome" replace state={{ from: location }} />;
 	}
 
 	return children;

@@ -29,12 +29,10 @@ const AppRoutesLazy = () => {
 			<Route path="/login" element={<LoginForm />} />
 			<Route path="/register" element={<RegisterForm />} />
 
+			{/* Make root redirect to welcome by default */}
+			<Route path="/" element={<Navigate to="/welcome" replace />} />
+
 			{/* Protected routes - require login */}
-			<Route path="/" element={
-				<ProtectedRoute>
-					<Home />
-				</ProtectedRoute>
-			} />
 			<Route path="/home" element={
 				<ProtectedRoute>
 					<Home />

@@ -24,6 +24,12 @@ const toIsoDate = (input) => {
     const [, dd, mm, yyyy] = ddmmyyyy;
     return `${yyyy}-${String(mm).padStart(2, '0')}-${String(dd).padStart(2, '0')}`;
   }
+  // dd.MM.yyyy
+  const ddmmyyyyDots = s.match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})$/);
+  if (ddmmyyyyDots) {
+    const [, dd, mm, yyyy] = ddmmyyyyDots;
+    return `${yyyy}-${String(mm).padStart(2, '0')}-${String(dd).padStart(2, '0')}`;
+  }
   // mm/dd/yyyy
   const mmddyyyy = s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
   if (mmddyyyy) {

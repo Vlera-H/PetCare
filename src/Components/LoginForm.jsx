@@ -45,8 +45,8 @@ const LoginForm = () => {
       }
 
       // Navigate based on role
-      const role = data.user?.role || '';
-      navigate(role.toLowerCase() === 'admin' ? '/admin' : '/');
+      const role = (data.user?.role || '').toLowerCase();
+      navigate(role === 'admin' ? '/admin' : '/home', { replace: true });
 
     } catch (error) {
       setError('Login failed. Please check your credentials.');
@@ -137,4 +137,5 @@ const LoginForm = () => {
 };
 
 export default LoginForm;
+
 

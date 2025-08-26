@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Nav, Modal, Button } from 'react-bootstrap';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import tokenService from '../services/tokenService';
 
 const Sidebar = () => {
   const { pathname } = useLocation();
@@ -11,18 +12,21 @@ const Sidebar = () => {
   const isActive = (to) => pathname === to;
 
   const confirmLogout = () => {
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
-    localStorage.removeItem('role');
+    try { tokenService.logout(); } catch {}
     setShowLogout(false);
-    navigate('/welcome');
+    navigate('/welcome', { replace: true });
+    window.history.pushState(null, '', window.location.href);
+    window.addEventListener('popstate', function () {
+      window.history.pushState(null, '', window.location.href);
+    });
+    window.location.reload();
   };
 
   return (
     <aside className="pc-sidebar">
       <div className="pc-brand">🐾 Pet Care</div>
       <Nav className="flex-column pc-nav">
-        <Nav.Link as={Link} to="/" className={isActive('/') ? 'active' : ''}>
+        <Nav.Link as={Link} to="/home" className={isActive('/home') ? 'active' : ''}>
           <span className="pc-icon">🏠</span>
           <span>Home</span>
         </Nav.Link>
@@ -75,3 +79,5 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
+
+

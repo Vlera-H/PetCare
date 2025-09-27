@@ -50,7 +50,7 @@ const Home = () => {
         {/* API Warning */}
         {apiError && (
           <Alert variant="warning" className="m-3">
-            <strong>Demo Mode:</strong> Backend API nuk është duke punuar. Po shfaqen të dhëna demo për testim.
+            <strong>Demo Mode:</strong> Error with backend API.
           </Alert>
         )}
 

@@ -10,12 +10,7 @@ const CareTasksPage = () => {
   const navigate = useNavigate();
   const { pets, careTasks, setCareTasks } = useData();
 
-  const [form, setForm] = useState({
-    description: '',
-    dueDate: '',
-    petId: pets[0]?.id ? String(pets[0].id) : '',
-  });
-
+  const [form, setForm] = useState({ description: '', dueDate: '', petId: '' });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -32,7 +27,6 @@ const CareTasksPage = () => {
 
     setError('');
     setLoading(true);
-
     try {
       const created = await createCareTask({
         description: form.description,
@@ -40,7 +34,13 @@ const CareTasksPage = () => {
         petId: form.petId,
       });
 
-      setCareTasks(prev => [...prev, created]);
+      const normalized = {
+        ...created,
+        id: Number(created.id),
+        petId: Number(created.petId),
+        isCompleted: !!created.isCompleted,
+      };
+      setCareTasks(prev => [...prev, normalized]);
       setForm(f => ({ ...f, description: '', dueDate: '' }));
     } catch (e) {
       setError(`Gabim gjatë shtimit të detyrës: ${e.message}`);
@@ -61,7 +61,6 @@ const CareTasksPage = () => {
         isCompleted: !current.isCompleted,
         petId: current.petId,
       });
-
       setCareTasks(prev =>
         prev.map(t => (t.id === taskId ? { ...t, isCompleted: !t.isCompleted } : t))
       );
@@ -87,7 +86,7 @@ const CareTasksPage = () => {
   return (
     <div className="pets-page">
       <Container fluid className="py-3 px-0">
-        <span className="back-arrow" onClick={() => navigate('/')}>←</span>
+        <span className="back-arrow" onClick={() => navigate('/home')}>←</span>
         <h1 className="text-center pets-header-title pets-header-large" style={{ marginTop: '0.5rem' }}>
           Care Tasks
         </h1>
@@ -137,7 +136,7 @@ const CareTasksPage = () => {
                     onChange={(e) => setForm(f => ({ ...f, petId: e.target.value }))}
                     disabled={loading}
                   >
-                    <option value="">Select pet</option>
+                    <option value="">All pets</option>
                     {pets.map(p => (
                       <option key={p.id} value={String(p.id)}>
                         {p.name} — {p.breed}
@@ -159,7 +158,7 @@ const CareTasksPage = () => {
             </Form>
 
             <div className="d-flex align-items-center justify-content-between mb-2">
-              <h5 className="m-0 pets-section-title">Your care tasks list ({careTasks.length})</h5>
+              <h5 className="m-0 pets-section-title">Your care tasks list ({tasksForSelectedPet.length})</h5>
             </div>
             <Table striped hover responsive className="pets-table">
               <thead>
@@ -211,3 +210,5 @@ const CareTasksPage = () => {
 };
 
 export default CareTasksPage;
+
+
